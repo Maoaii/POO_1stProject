@@ -16,7 +16,7 @@ public interface EvalCalendar {
 	/**
 	 * @return true if there's atleast one person registered in the system
 	 */
-	public boolean isPeopleRegistered();
+	public boolean arePeopleRegistered();
 	
 	
 	
@@ -74,7 +74,7 @@ public interface EvalCalendar {
 	/**
 	 * @return true if there's atleast one course registered
 	 */
-	public boolean isCoursesRegistered();
+	public boolean areCoursesRegistered();
 	
 	
 	
