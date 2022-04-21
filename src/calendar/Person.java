@@ -1,5 +1,7 @@
 package calendar;
 
+import dataStructures.*;
+
 public interface Person {
 	
 	/**
@@ -18,5 +20,7 @@ public interface Person {
 	 */
 	public int getNumCourses();
 	
+	public void enrol(Course course);
 	
+	public Array<Evaluation> getEvaluations();
 }

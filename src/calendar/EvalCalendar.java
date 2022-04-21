@@ -1,5 +1,7 @@
 package calendar;
 
+import dataStructures.*;
+
 public interface EvalCalendar {
 
 	
@@ -11,13 +13,12 @@ public interface EvalCalendar {
 	/**
 	 * Lists all people registered in the system
 	 */
-	public void listPeople();
+	public Iterator<Person> listPeople();
 
 	/**
 	 * @return true if there's atleast one person registered in the system
 	 */
 	public boolean arePeopleRegistered();
-	
 	
 	
 	/**
@@ -45,7 +46,7 @@ public interface EvalCalendar {
 	 * @param name
 	 * @pre id != null && name != null
 	 */
-	public void addStudent(String id, String name);
+	public void addStudent(String name, String id);
 	
 	/**
 	 * @param name
@@ -108,7 +109,7 @@ public interface EvalCalendar {
 	 * @param courseName
 	 * @pre courseName != null && isCourseRegistered(courseName)
 	 */
-	public void listRoster(String courseName);
+	public Iterator<Person> listRoster(String courseName);
 	
 	
 	/**
@@ -177,7 +178,7 @@ public interface EvalCalendar {
 	 * @param courseNames
 	 * @pre courseNames != null
 	 */
-	public void listPeopleIntersection(int numCourses, String[] courseNames);
+	public Iterator<Person> listPeopleIntersection(int numCourses, String[] courseNames);
 
 	/**
 	 * Checks if there's atleast two courses to intersect with
@@ -198,7 +199,7 @@ public interface EvalCalendar {
 	 * @param courseName
 	 * @pre courseName != null
 	 */
-	public void listCourseDeadlines(String courseName);
+	public Iterator<Evaluation> listCourseDeadlines(String courseName);
 	
 	
 	/**
@@ -211,7 +212,7 @@ public interface EvalCalendar {
 	 * @param name
 	 * @pre name != null
 	 */
-	public void listPersonalDeadlines(String name);
+	public Iterator<Evaluation> listPersonalDeadlines(String name);
 
 	
 	/**
@@ -248,7 +249,7 @@ public interface EvalCalendar {
 	 * @param courseName
 	 * @pre courseName != null
 	 */
-	public void listCourseTests(String courseName);
+	public Iterator<Evaluation> listCourseTests(String courseName);
 	
 
 	/**
@@ -261,7 +262,7 @@ public interface EvalCalendar {
 	 * @param name
 	 * @pre name != null
 	 */
-	public void listStudentTests(String name);
+	public Iterator<Evaluation> listStudentTests(String name);
 	
 	
 	/**
@@ -329,5 +330,5 @@ public interface EvalCalendar {
 	 * 
 	 * @param nStudents
 	 */
-	public void listTopNStressedStudents(int nStudents);
+	public Iterator<Person> listTopNStressedStudents(int nStudents);
 }

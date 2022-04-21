@@ -1,6 +1,10 @@
 import java.util.Scanner;
 
 import calendar.EvalCalendar;
+import calendar.EvalCalendarClass;
+import calendar.Person;
+import calendar.StudentClass;
+import dataStructures.Iterator;
 
 public class Main {
 	
@@ -20,31 +24,31 @@ public class Main {
 	
 		// HELP COMMAND
 	private static final String HELP_MESSAGE_HEADER = "Available commands:";
-	private static final String HELP_MESSAGE_PEOPLE = "lists all people";
-	private static final String HELP_MESSAGE_PROFESSOR = "adds a new professor";
-	private static final String HELP_MESSAGE_STUDENT = "adds a new student";
-	private static final String HELP_MESSAGE_COURSES = "lists all courses";
-	private static final String HELP_MESSAGE_COURSE = "adds a new course";
-	private static final String HELP_MESSAGE_ROSTER = "lists the professors and students of a course";
-	private static final String HELP_MESSAGE_ASSIGN = "adds a professor to a course";
-	private static final String HELP_MESSAGE_ENROL = "adds students to a course";
-	private static final String HELP_MESSAGE_INTERSECTION = "lists all the people involved in all the given courses";
-	private static final String HELP_MESSAGE_COURSEDEADLINES = "lists all deadlines in a given course";
-	private static final String HELP_MESSAGE_PERSONALDEADLINES = "lists all the deadlines of a given person";
-	private static final String HELP_MESSAGE_DEADLINE = "adds a new deadline";
-	private static final String HELP_MESSAGE_COURSETESTS = "lists all tests in a given course";
-	private static final String HELP_MESSAGE_PERSONALTESTS = "lists all tests for a given student";
-	private static final String HELP_MESSAGE_SCHEDULE = "add a new test to a course";
-	private static final String HELP_MESSAGE_SUPERPROFESSOR = "presents the professor with more students";
-	private static final String HELP_MESSAGE_STRESSOMETER = "presents the students with the top N stressful sequences of evaluations";
-	private static final String HELP_MESSAGE_HELP = "shows the available commands";
-	private static final String HELP_MESSAGE_EXIT = "terminates the execution of the program";
+	private static final String HELP_MESSAGE_PEOPLE = "people - lists all people";
+	private static final String HELP_MESSAGE_PROFESSOR = "professor - adds a new professor";
+	private static final String HELP_MESSAGE_STUDENT = "student - adds a new student";
+	private static final String HELP_MESSAGE_COURSES = "courses - lists all courses";
+	private static final String HELP_MESSAGE_COURSE = "course - adds a new course";
+	private static final String HELP_MESSAGE_ROSTER = "roster - lists the professors and students of a course";
+	private static final String HELP_MESSAGE_ASSIGN = "assign - adds a professor to a course";
+	private static final String HELP_MESSAGE_ENROL = "enrol - adds students to a course";
+	private static final String HELP_MESSAGE_INTERSECTION = "intersection - lists all the people involved in all the given courses";
+	private static final String HELP_MESSAGE_COURSEDEADLINES = "coursedeadlines - lists all deadlines in a given course";
+	private static final String HELP_MESSAGE_PERSONALDEADLINES = "personaldeadlines - lists all the deadlines of a given person";
+	private static final String HELP_MESSAGE_DEADLINE = "deadline - adds a new deadline";
+	private static final String HELP_MESSAGE_COURSETESTS = "coursetests - lists all tests in a given course";
+	private static final String HELP_MESSAGE_PERSONALTESTS = "personaltests - lists all tests for a given student";
+	private static final String HELP_MESSAGE_SCHEDULE = "schedule - add a new test to a course";
+	private static final String HELP_MESSAGE_SUPERPROFESSOR = "superprofessor - presents the professor with more students";
+	private static final String HELP_MESSAGE_STRESSOMETER = "stressometer - presents the students with the top N stressful sequences of evaluations";
+	private static final String HELP_MESSAGE_HELP = "help - shows the available commands";
+	private static final String HELP_MESSAGE_EXIT = "exit - terminates the execution of the program";
 		
 		// PEOPLE COMMAND
 	private static final String NO_PEOPLE = "No people registered!";
 	private static final String PEOPLE_HEADER = "All people:";
-	private static final String PEOPLE_STUDENT = "[%s] %s (%i)\n";
-	private static final String PEOPLE_PROFESSOR = "%s (%i)\n";
+	private static final String PEOPLE_STUDENT = "[%s] %s (%d)\n";
+	private static final String PEOPLE_PROFESSOR = "%s (%d)\n";
 	
 		// PROFESSOR COMMAND
 	private static final String PERSON_ADDED = "%s added.\n";
@@ -56,7 +60,7 @@ public class Main {
 		// COURSES COMMAND
 	private static final String NO_COURSES_REG = "No courses registerd!";
 	private static final String COURSES_HEADER = "All courses:";
-	private static final String COURSES_LISTING = "%s: %i professors, %i students, %i tests and %i deadlines.\n";
+	private static final String COURSES_LISTING = "%s: %d professors, %d students, %d tests and %d deadlines.\n";
 	
 		// COURSE COMMAND
 	private static final String COURSE_ADDED = "Course %s added.\n";
@@ -76,7 +80,7 @@ public class Main {
 	private static final String PROFESSOR_ALREADY_ASSIGNED = "Professor %s is already assigned to course %s!\n";
 	
 		// ENROL COMMAND
-	private static final String ENROL_SUCCESS = "%i students added to course %s\n";
+	private static final String ENROL_SUCCESS = "%d students added to course %s\n";
 	private static final String ADDING_0_STUDENTS = "Inadequate number of students!";
 	private static final String STUDENT_NOT_EXISTS = "Student %s does not exist!\n";
 	private static final String STUDENT_ALREADY_ASSIGNED = "Student %s is already enrolled in course %s!\n";
@@ -111,55 +115,55 @@ public class Main {
 	private static final String FREE = "free ";
 	private static final String MILD = "mild ";
 	private static final String SEVERE = "severe ";
-	private static final String SCHEDULE_ADDED = "%s %s %s-%s-%s %sh%s-%sh%s (%i, %i)\n";
+	private static final String SCHEDULE_ADDED = "%s %s %s-%s-%s %sh%s-%sh%s (%d, %d)\n";
 	private static final String TEST_ALREADY_EXISTS = "Course %s already has a test named %s!\n";
 	private static final String CANNOT_SCHEDULE = "Cannot schedule test %s at that time!\n";
 	
 		// SUPERPROFESSOR COMMAND
-	private static final String SUPERPROFESSOR = "%s (%i).\n";
+	private static final String SUPERPROFESSOR = "%s (%d).\n";
 	private static final String NO_PROFESSORS = "There are no professors!";
 	
 		// STRESSOMETER COMMAND
 	private static final String STRESSOMETER_HEADER = "Most stressed students:";
-	private static final String STRESSOMETER_LISTING = "%s %s (%i days %i evaluations)\n";
+	private static final String STRESSOMETER_LISTING = "%s %s (%d days %d evaluations)\n";
 	private static final String INVALID_NUM_STUDENTS = "Invalid number of students!";
 
 	
 	
 	public static void main(String[] args) {
-		interpretCommand();
+		processCommand();
 	}
 	
 	
 	/**
-	 * Interprets the user's commands
+	 * processs the user's commands
 	 */
-	private static void interpretCommand() {
+	private static void processCommand() {
 		Scanner in = new Scanner(System.in);
-		//EvalCalendar cal = new EvalCalendarClass();
+		EvalCalendar cal = new EvalCalendarClass();
 		
 		Command command = getCommand(in);
 		
 		while (!command.equals(Command.EXIT)) {
 			switch (command) {
-				case HELP: interpretHelp(); break;
-				case PEOPLE: interpretPeople(); break;
-				case PROFESSOR: interpretProfessor();break;
-				case STUDENT: interpretStudent(); break;
-				case COURSES: interpretCourses(); break;
-				case COURSE: interpretCourse(); break;
-				case ROSTER: interpretRoster(); break;
-				case ASSIGN: interpretAssign(); break;
-				case ENROL: interpretEnrol(); break;
-				case INTERSECTION: interpretIntersection(); break;
-				case COURSEDEADLINES: interpretCourseDeadlines(); break;
-				case PERSONALDEADLINES: interpretPersonalDeadlines(); break;
-				case DEADLINE: interpretDeadline(); break;
-				case COURSETESTS: interpretCourseTests(); break;
-				case PERSONALTESTS: interpretPersonalTests(); break;
-				case SCHEDULE: interpretSchedule(); break;
-				case SUPERPROFESSOR: interpretSuperProfessor(); break;
-				case STRESSOMETER: interpretStressometer(); break;
+				case HELP: processHelp(); break;
+				case PEOPLE: processPeople(cal); break;
+				case PROFESSOR: processProfessor(in, cal);break;
+				case STUDENT: processStudent(in, cal); break;
+				case COURSES: processCourses(); break;
+				case COURSE: processCourse(); break;
+				case ROSTER: processRoster(); break;
+				case ASSIGN: processAssign(); break;
+				case ENROL: processEnrol(); break;
+				case INTERSECTION: processIntersection(); break;
+				case COURSEDEADLINES: processCourseDeadlines(); break;
+				case PERSONALDEADLINES: processPersonalDeadlines(); break;
+				case DEADLINE: processDeadline(); break;
+				case COURSETESTS: processCourseTests(); break;
+				case PERSONALTESTS: processPersonalTests(); break;
+				case SCHEDULE: processSchedule(); break;
+				case SUPERPROFESSOR: processSuperProfessor(); break;
+				case STRESSOMETER: processStressometer(); break;
 				default: System.out.println(UNKNOWN_COMMAND); break;
 			}
 			command = getCommand(in);
@@ -167,109 +171,172 @@ public class Main {
 		in.close();
 	}
 	
-	private static void interpretHelp() {
+	/**
+	 * Lists out all the available commands
+	 */
+	private static void processHelp() {
+		System.out.println(HELP_MESSAGE_HEADER);
+		System.out.println(HELP_MESSAGE_PEOPLE);
+		System.out.println(HELP_MESSAGE_PROFESSOR);
+		System.out.println(HELP_MESSAGE_STUDENT);
+		System.out.println(HELP_MESSAGE_COURSES);
+		System.out.println(HELP_MESSAGE_COURSE);
+		System.out.println(HELP_MESSAGE_ROSTER);
+		System.out.println(HELP_MESSAGE_ASSIGN);
+		System.out.println(HELP_MESSAGE_ENROL);
+		System.out.println(HELP_MESSAGE_INTERSECTION);
+		System.out.println(HELP_MESSAGE_COURSEDEADLINES);
+		System.out.println(HELP_MESSAGE_PERSONALDEADLINES);
+		System.out.println(HELP_MESSAGE_DEADLINE);
+		System.out.println(HELP_MESSAGE_COURSETESTS);
+		System.out.println(HELP_MESSAGE_PERSONALTESTS);
+		System.out.println(HELP_MESSAGE_SCHEDULE);
+		System.out.println(HELP_MESSAGE_SUPERPROFESSOR);
+		System.out.println(HELP_MESSAGE_STRESSOMETER);
+		System.out.println(HELP_MESSAGE_HELP);
+		System.out.println(HELP_MESSAGE_EXIT);
+	}
+
+	/**
+	 * Lists all people in the system
+	 * 
+	 * @param cal: Evaluation Calendar
+	 * @pre cal != null
+	 */
+	private static void processPeople(EvalCalendar cal) {
+		if (cal.arePeopleRegistered()) {
+			Iterator<Person> it = cal.listPeople();
+			System.out.println(PEOPLE_HEADER);
+			
+			while (it.hasNext()) {
+				Person person = (Person) it.next();
+				if (person instanceof StudentClass)
+					System.out.printf(PEOPLE_STUDENT, person.getId(), person.getName(), person.getNumCourses());
+				else
+					System.out.printf(PEOPLE_PROFESSOR, person.getName(), person.getNumCourses());
+			}	
+		}
+		else
+			System.out.println(NO_PEOPLE);
+	}
+
+	/**
+	 * Adds a new professor to the system
+	 * 
+	 * @param in: input reader
+	 * @param cal: Evaluation Calendar
+	 * @pre in != null && cal != null
+	 */
+	private static void processProfessor(Scanner in, EvalCalendar cal) {
+		String name = in.nextLine().trim();
+		
+		if (cal.isPersonRegistered(name))
+			System.out.printf(PERSON_EXISTS, name);
+		else {
+			cal.addProfessor(name);
+			System.out.printf(PERSON_ADDED, name);
+		}
+	}
+	
+	/**
+	 * Adds a new student to the system
+	 * 
+	 * @param in: input reader
+	 * @param cal: Evaluation Calendar
+	 * @pre in != null && cal != null
+	 */
+	private static void processStudent(Scanner in, EvalCalendar cal) {
+		String id = in.next().trim();
+		String name = in.nextLine().trim();
+		
+		if (cal.isPersonRegistered(name))
+			System.out.printf(PERSON_EXISTS, name);
+		else {
+			cal.addStudent(name, id);
+			System.out.printf(PERSON_ADDED, name);
+		}
+	}
+
+
+	private static void processCourses() {
 		// TODO Auto-generated method stub
 		
 	}
 
 
-	private static void interpretPeople() {
+	private static void processCourse() {
 		// TODO Auto-generated method stub
 		
 	}
 
 
-	private static void interpretProfessor() {
+	private static void processRoster() {
 		// TODO Auto-generated method stub
 		
 	}
 
 
-	private static void interpretStudent() {
+	private static void processAssign() {
 		// TODO Auto-generated method stub
 		
 	}
 
 
-	private static void interpretCourses() {
+	private static void processEnrol() {
 		// TODO Auto-generated method stub
 		
 	}
 
 
-	private static void interpretCourse() {
+	private static void processIntersection() {
 		// TODO Auto-generated method stub
 		
 	}
 
 
-	private static void interpretRoster() {
+	private static void processCourseDeadlines() {
 		// TODO Auto-generated method stub
 		
 	}
 
 
-	private static void interpretAssign() {
+	private static void processPersonalDeadlines() {
 		// TODO Auto-generated method stub
 		
 	}
 
 
-	private static void interpretEnrol() {
+	private static void processDeadline() {
 		// TODO Auto-generated method stub
 		
 	}
 
 
-	private static void interpretIntersection() {
+	private static void processCourseTests() {
 		// TODO Auto-generated method stub
 		
 	}
 
 
-	private static void interpretCourseDeadlines() {
+	private static void processPersonalTests() {
 		// TODO Auto-generated method stub
 		
 	}
 
 
-	private static void interpretPersonalDeadlines() {
+	private static void processSchedule() {
 		// TODO Auto-generated method stub
 		
 	}
 
 
-	private static void interpretDeadline() {
+	private static void processSuperProfessor() {
 		// TODO Auto-generated method stub
 		
 	}
 
 
-	private static void interpretCourseTests() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	private static void interpretPersonalTests() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	private static void interpretSchedule() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	private static void interpretSuperProfessor() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	private static void interpretStressometer() {
+	private static void processStressometer() {
 		// TODO Auto-generated method stub
 		
 	}

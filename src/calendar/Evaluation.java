@@ -1,5 +1,8 @@
 package calendar;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public interface Evaluation {
 
 	/**
@@ -10,7 +13,9 @@ public interface Evaluation {
 	/**
 	 * @return this evaluation's date
 	 */
-	public Date getEvalDate();
+	public LocalDate getEvalDate();
+	
+	public LocalTime getEvalTime();
 	
 	
 	public void compareTo();
