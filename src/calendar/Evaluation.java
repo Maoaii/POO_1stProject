@@ -11,4 +11,7 @@ public interface Evaluation {
 	 * @return this evaluation's date
 	 */
 	public Date getEvalDate();
+	
+	
+	public void compareTo();
 }
