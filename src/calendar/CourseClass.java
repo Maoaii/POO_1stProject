@@ -1,66 +1,50 @@
 package calendar;
 
 import dataStructures.Array;
+import dataStructures.ArrayClass;
 
 public class CourseClass implements Course {
-
+	
+	// Instance variables
 	private String courseName;
-	private Array<Person> professors;
-	private Array<Person> students;
-	private Array<Evaluation> deadlines;
-	private Array<Evaluation> tests;
+	private Array<Person> peopleInCourse;
+	private Array<Evaluation> evaluations;
+	
+	/**
+	 * Course class constructor
+	 * 
+	 * @param courseName
+	 * @pre courseName != null
+	 */
+	public CourseClass(String courseName) {
+		this.courseName = courseName;
+		peopleInCourse = new ArrayClass<Person>();
+		evaluations = new ArrayClass<Evaluation>();
+	}
 
 	@Override
 	public String getCourseName() {
 		return courseName;
 	}
-
+	
 	@Override
-	public Array<Person> getProfessors() {
-		// TODO Auto-generated method stub
-		return null;
+	public void assignProfessor(Person professor) {
+		peopleInCourse.insertLast(professor);
 	}
 
 	@Override
-	public Array<Person> getStudents() {
-		// TODO Auto-generated method stub
-		return null;
+	public void enrolStudent(Person student) {
+		peopleInCourse.insertLast(student);
 	}
 
 	@Override
-	public Array<Evaluation> getTests() {
-		// TODO Auto-generated method stub
-		return null;
+	public void addEvaluation(Evaluation evaluation) {
+		evaluations.insertLast(evaluation);
 	}
 
 	@Override
-	public Array<Evaluation> getDeadlines() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void addProfessor(Person professor) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void addStudent(Person student) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void addDeadline(Evaluation deadline) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void addTest(Evaluation test) {
-		// TODO Auto-generated method stub
-
+	public Array<Evaluation> getEvaluations() {
+		return evaluations;
 	}
 
 }

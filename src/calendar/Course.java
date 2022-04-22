@@ -1,6 +1,6 @@
 package calendar;
 
-import dataStructures.*;
+import dataStructures.Array;
 
 public interface Course {
 
@@ -9,19 +9,32 @@ public interface Course {
 	 */
 	public String getCourseName();
 	
-	public Array<Person> getProfessors();
-	
-	public Array<Person> getStudents();
-	
-	public Array<Evaluation> getTests();
-	
-	public Array<Evaluation> getDeadlines();
-	
-	public void addProfessor(Person professor);
+	/**
+	 * Assigns a new professor to the course
+	 * 
+	 * @param professor
+	 * @pre professor != null
+	 */
+	public void assignProfessor(Person professor);
 
-	void addStudent(Person student);
-
-	void addDeadline(Evaluation deadline);
-
-	void addTest(Evaluation test);
+	/**
+	 * Enrolls a new student to the course 
+	 * 
+	 * @param student
+	 * @pre student != null
+	 */
+	void enrolStudent(Person student);
+	
+	/**
+	 * Adds a new evaluation to the course (deadline or test)
+	 * 
+	 * @param evaluation
+	 * @pre evaluation != null
+	 */
+	void addEvaluation(Evaluation evaluation);
+	
+	/**
+	 * @return this course's evaluations
+	 */
+	public Array<Evaluation> getEvaluations();
 }

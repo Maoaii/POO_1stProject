@@ -15,8 +15,16 @@ public interface Evaluation {
 	 */
 	public LocalDate getEvalDate();
 	
+	/**
+	 * @return the this evaluation's time
+	 */
 	public LocalTime getEvalTime();
 	
-	
-	public void compareTo();
+	/**
+	 * Compares this evaluation to <code>other</code>
+	 * 
+	 * @param other
+	 * @pre other != null
+	 */
+	public boolean equals(Object other);
 }

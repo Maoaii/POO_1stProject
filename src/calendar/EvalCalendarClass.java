@@ -10,12 +10,13 @@ public class EvalCalendarClass implements EvalCalendar {
 	private Array<Person> people;
 	private Array<Course> courses;
 	
-	
+	/**
+	 * Evaluation Calendar constructor
+	 */
 	public EvalCalendarClass() {
 		people = new ArrayClass<Person>();
 		courses = new ArrayClass<Course>();
 	}
-	
 	
 	
 	@Override

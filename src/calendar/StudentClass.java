@@ -26,13 +26,11 @@ public class StudentClass extends AbstractPersonClass {
 
 	@Override
 	public void enrol(Course course) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public Array<Evaluation> getEvaluations() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
