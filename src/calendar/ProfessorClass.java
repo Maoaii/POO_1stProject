@@ -21,13 +21,22 @@ public class ProfessorClass extends AbstractPersonClass {
 
 	@Override
 	public void enrol(Course course) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public Array<Evaluation> getEvaluations() {
-		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	/**
+	 * Compares two person's <code>name</code>
+	 * @return true if both people have the same <code>name</code>
+	 */
+	@Override
+	public boolean equals(Object other) {
+		if (this.getName().equals(((Person) other).getName()))
+			return true;
+		return false;
 	}
 }

@@ -30,8 +30,6 @@ abstract public class AbstractPersonClass implements Person {
 		return courses.size();
 	}
 	
-	@Override
-	abstract public String getId();
 }
 
 

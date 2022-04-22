@@ -142,7 +142,8 @@ public class Main {
 		Scanner in = new Scanner(System.in);
 		EvalCalendar cal = new EvalCalendarClass();
 		
-		Command command = getCommand(in);
+		String cmd = in.next().toUpperCase();
+		Command command = getCommand(cmd);
 		
 		while (!command.equals(Command.EXIT)) {
 			switch (command) {
@@ -164,9 +165,10 @@ public class Main {
 				case SCHEDULE: processSchedule(); break;
 				case SUPERPROFESSOR: processSuperProfessor(); break;
 				case STRESSOMETER: processStressometer(); break;
-				default: System.out.println(UNKNOWN_COMMAND); break;
+				default: System.out.printf(UNKNOWN_COMMAND, cmd); break;
 			}
-			command = getCommand(in);
+			cmd = in.next().toUpperCase();
+			command = getCommand(cmd);
 		} System.out.println(EXIT_MESSAGE);
 		in.close();
 	}
@@ -230,7 +232,7 @@ public class Main {
 	private static void processProfessor(Scanner in, EvalCalendar cal) {
 		String name = in.nextLine().trim();
 		
-		if (cal.isPersonRegistered(name))
+		if (cal.isNameRegistered(name))
 			System.out.printf(PERSON_EXISTS, name);
 		else {
 			cal.addProfessor(name);
@@ -249,7 +251,9 @@ public class Main {
 		String id = in.next().trim();
 		String name = in.nextLine().trim();
 		
-		if (cal.isPersonRegistered(name))
+		if (cal.isIdUsed(name, id))
+			System.out.printf(STUDENT_ID_EXISTS, id);
+		else if (cal.isNameRegistered(name))
 			System.out.printf(PERSON_EXISTS, name);
 		else {
 			cal.addStudent(name, id);
@@ -343,16 +347,13 @@ public class Main {
 
 
 	/**
-	 * Reads a command from user input and returns it
-	 * 
 	 * @param in: input reader
 	 * @pre in != null
 	 * @return a command of type <code>Command</code> 
 	 */
-	private static Command getCommand(Scanner in) {
+	private static Command getCommand(String cmd) {
 		try {
-			String comm = in.next().toUpperCase();
-			return Command.valueOf(comm);
+			return Command.valueOf(cmd);
 		} catch (IllegalArgumentException e) {
 			return Command.UNKNOWN;
 		}

@@ -35,4 +35,15 @@ public class StudentClass extends AbstractPersonClass {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	/**
+	 * Compares students <code>id</code>'s
+	 * @return true if both students <code>id</code>'s are the same
+	 */
+	@Override
+	public boolean equals(Object other) {
+		if (this.getId().equals(((Person) other).getId()))
+			return true;
+		return false;
+	}
 }

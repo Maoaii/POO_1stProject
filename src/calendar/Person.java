@@ -16,6 +16,13 @@ public interface Person {
 	abstract public String getId();
 	
 	/**
+	 * @param other
+	 * @pre other != null
+	 * @return true if this object is the same as <code>other</code>
+	 */
+	abstract boolean equals(Object other);
+	
+	/**
 	 * @return the number of courses this person is registered in
 	 */
 	public int getNumCourses();

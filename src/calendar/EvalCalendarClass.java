@@ -39,14 +39,13 @@ public class EvalCalendarClass implements EvalCalendar {
 	}
 
 	@Override
-	public boolean isPersonRegistered(String name) {
+	public boolean isNameRegistered(String name) {
 		return people.searchForward(new ProfessorClass(name));
 	}
 
 	@Override
-	public boolean isIdUsed(String id) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean isIdUsed(String name, String id) {
+		return people.searchForward(new StudentClass(name, id));
 	}
 
 	@Override

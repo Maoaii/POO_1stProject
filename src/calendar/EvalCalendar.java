@@ -51,15 +51,15 @@ public interface EvalCalendar {
 	/**
 	 * @param name
 	 * @pre name != null
-	 * @return true if person with <code>name</code> is registered
+	 * @return true if <code>name</code> is registered in the system
 	 */
-	public boolean isPersonRegistered(String name);
+	public boolean isNameRegistered(String name);
 	
 	/**
 	 * @param id
 	 * @return true if <code>id</code> is used
 	 */
-	public boolean isIdUsed(String id);
+	public boolean isIdUsed(String name, String id);
 	
 	
 	

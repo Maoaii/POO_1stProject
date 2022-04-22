@@ -83,7 +83,7 @@ public class ArrayClass<E> implements Array<E> {
 		int result = -1;
 		boolean found = false;
 		while (i<counter && !found)
-			if (elems[i].equals(e))
+			if (e.equals(elems[i]))
 				found = true;
 			else
 				i++;
