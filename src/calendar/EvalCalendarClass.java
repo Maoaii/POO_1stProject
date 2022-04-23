@@ -120,8 +120,9 @@ public class EvalCalendarClass implements EvalCalendar {
 
 	@Override
 	public boolean isStudentEnroled(String name, String courseName) {
-		// TODO Auto-generated method stub
-		return false;
+		Course course = getCourse(courseName);
+		Person student = getPerson(name);
+		return course.getStudents().searchForward(student);
 	}
 
 	@Override
@@ -212,4 +213,26 @@ public class EvalCalendarClass implements EvalCalendar {
 
 	}
 
+	
+	private Course getCourse(String courseName) {
+		Course course = null;
+		for(int i = 0; i < courses.size(); i++) {
+			course = courses.get(i);
+			if(course.getCourseName().equals(courseName)) {
+				break;
+			}
+		}
+		return course;
+	}
+	
+	private Person getPerson(String name) {
+		Person person = null;
+		for(int i = 0; i < courses.size(); i++) {
+			person = people.get(i);
+			if(person.getName().equals(name)) {
+				break;
+			}
+		}
+		return person;
+	}
 }

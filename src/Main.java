@@ -156,7 +156,7 @@ public class Main {
 				case COURSE: processCourse(in, cal); break;
 				case ROSTER: processRoster(in, cal); break;
 				case ASSIGN: processAssign(in, cal); break;
-				case ENROL: processEnrol(); break;
+				case ENROL: processEnrol(in, cal); break;
 				case INTERSECTION: processIntersection(); break;
 				case COURSEDEADLINES: processCourseDeadlines(); break;
 				case PERSONALDEADLINES: processPersonalDeadlines(); break;
@@ -307,8 +307,11 @@ public class Main {
 	}
 
 	/**
+	 * Lists the names of every professor and the names and IDs of every student in a certain course
 	 * 
-	 * @param cal
+	 * @param in: input reader
+	 * @param cal: Evaluation Calendar
+	 * @pre in != null && cal != null
 	 */
 	private static void processRoster(Scanner in, EvalCalendar cal) {
 		String courseName = in.nextLine().trim();
@@ -338,9 +341,11 @@ public class Main {
 	}
 
 	/**
+	 * Assigns an existing professor to a course
 	 * 
-	 * @param in
-	 * @param cal
+	 * @param in: input reader
+	 * @param cal: Evaluation Calendar
+	 * @pre: in != null && cal != null
 	 */
 	private static void processAssign(Scanner in, EvalCalendar cal) {
 		String professorName = in.nextLine().trim();
@@ -362,9 +367,36 @@ public class Main {
 	}
 
 
-	private static void processEnrol() {
-		// TODO Auto-generated method stub
-		
+	private static void processEnrol(Scanner in, EvalCalendar cal) {
+		int maxNumStudents = in.nextInt();
+		String courseName = in.nextLine().trim();
+		if(maxNumStudents < 1) {
+			System.out.println(ADDING_0_STUDENTS);
+		}
+		else {		
+			String[] students = new String[maxNumStudents];
+			int numStudents = 0;
+			for(int i = 0; i < maxNumStudents; i++) {
+				String name = in.nextLine().trim();
+				if(!cal.isNameRegistered(name)) {
+					System.out.printf(STUDENT_NOT_EXISTS, name);
+				}
+				else if(cal.isStudentEnroled(name, courseName)){
+					System.out.printf(STUDENT_ALREADY_ASSIGNED, name, courseName);
+				}
+				else {
+					students[numStudents] = name;
+					numStudents++;
+				}
+			}
+			if(!cal.isCourseRegistered(courseName)) {
+				System.out.printf(COURSE_NOT_EXISTS, courseName);
+			}
+			else {
+				cal.enrolStudents(numStudents, courseName, students);
+				System.out.printf(ENROL_SUCCESS, numStudents, courseName);
+			}
+		}	
 	}
 
 
