@@ -1,90 +1,98 @@
-Available commands:
-people - lists all people
-professor - adds a new professor
-student - adds a new student
-courses - lists all courses
-course - adds a new course
-roster - lists the professors and students of a course
-assign - adds a professor to a course
-enrol - adds students to a course
-intersection - lists all the people involved in all the given courses
-coursedeadlines - lists all deadlines in a given course
-personaldeadlines - lists all the deadlines of a given person
-deadline - adds a new deadline
-coursetests - lists all tests in a given course
-personaltests - lists all tests for a given student
-schedule - add a new test to a course
-superprofessor - presents the professor with more students
-stressometer - presents the students with the top N stressful sequences of evaluations
-help - shows the available commands
-exit - terminates the execution of the program
-Available commands:
-people - lists all people
-professor - adds a new professor
-student - adds a new student
-courses - lists all courses
-course - adds a new course
-roster - lists the professors and students of a course
-assign - adds a professor to a course
-enrol - adds students to a course
-intersection - lists all the people involved in all the given courses
-coursedeadlines - lists all deadlines in a given course
-personaldeadlines - lists all the deadlines of a given person
-deadline - adds a new deadline
-coursetests - lists all tests in a given course
-personaltests - lists all tests for a given student
-schedule - add a new test to a course
-superprofessor - presents the professor with more students
-stressometer - presents the students with the top N stressful sequences of evaluations
-help - shows the available commands
-exit - terminates the execution of the program
-Unknown command SILLY. Type help to see available commands.
-Unknown command COMMAND. Type help to see available commands.
-Available commands:
-people - lists all people
-professor - adds a new professor
-student - adds a new student
-courses - lists all courses
-course - adds a new course
-roster - lists the professors and students of a course
-assign - adds a professor to a course
-enrol - adds students to a course
-intersection - lists all the people involved in all the given courses
-coursedeadlines - lists all deadlines in a given course
-personaldeadlines - lists all the deadlines of a given person
-deadline - adds a new deadline
-coursetests - lists all tests in a given course
-personaltests - lists all tests for a given student
-schedule - add a new test to a course
-superprofessor - presents the professor with more students
-stressometer - presents the students with the top N stressful sequences of evaluations
-help - shows the available commands
-exit - terminates the execution of the program
-Unknown command NOT. Type help to see available commands.
-Unknown command A. Type help to see available commands.
-Unknown command COMMAND. Type help to see available commands.
-Unknown command NOT. Type help to see available commands.
-Unknown command A. Type help to see available commands.
-Unknown command COMMAND. Type help to see available commands.
-Unknown command EITHER. Type help to see available commands.
-Available commands:
-people - lists all people
-professor - adds a new professor
-student - adds a new student
-courses - lists all courses
-course - adds a new course
-roster - lists the professors and students of a course
-assign - adds a professor to a course
-enrol - adds students to a course
-intersection - lists all the people involved in all the given courses
-coursedeadlines - lists all deadlines in a given course
-personaldeadlines - lists all the deadlines of a given person
-deadline - adds a new deadline
-coursetests - lists all tests in a given course
-personaltests - lists all tests for a given student
-schedule - add a new test to a course
-superprofessor - presents the professor with more students
-stressometer - presents the students with the top N stressful sequences of evaluations
-help - shows the available commands
-exit - terminates the execution of the program
+Course IP does not exist!
+Injun Joe added.
+Aunt Polly added.
+Mr. Walters added.
+Judge Thatcher added.
+Jim added.
+Mr. Sprague added.
+Mr. Jones added.
+Mr. Dobbins added.
+Alfred Temple added.
+Mary added.
+All people:
+Injun Joe (0)
+Aunt Polly (0)
+Mr. Walters (0)
+Judge Thatcher (0)
+Jim (0)
+Mr. Sprague (0)
+Mr. Jones (0)
+Mr. Dobbins (0)
+Alfred Temple (0)
+Mary (0)
+Course IP added.
+Course POO added.
+Course AM I added.
+Course AM II added.
+Course Fancy course name added.
+Course Karaoke 101 added.
+Course Extreme Mooshaking added.
+All courses:
+IP: 0 professors, 0 students, 0 tests and 0 deadlines.
+POO: 0 professors, 0 students, 0 tests and 0 deadlines.
+AM I: 0 professors, 0 students, 0 tests and 0 deadlines.
+AM II: 0 professors, 0 students, 0 tests and 0 deadlines.
+Fancy course name: 0 professors, 0 students, 0 tests and 0 deadlines.
+Karaoke 101: 0 professors, 0 students, 0 tests and 0 deadlines.
+Extreme Mooshaking: 0 professors, 0 students, 0 tests and 0 deadlines.
+Course IP has no assigned professors and no enrolled students.
+Course POO has no assigned professors and no enrolled students.
+Course Fancy course name has no assigned professors and no enrolled students.
+Course Extreme Mooshaking has no assigned professors and no enrolled students.
+Course of a course that I just made up does not exist!
+Professor Santa Claus does not exist!
+Course a course that does not exist does not exist!
+Professor Injun Joe assigned to IP.
+Roster for course IP:
+Professors:
+Injun Joe
+Students:
+Course POO has no assigned professors and no enrolled students.
+Professor Injun Joe assigned to AM II.
+Professor Injun Joe assigned to Extreme Mooshaking.
+Professor Mary assigned to POO.
+Professor Mary is already assigned to course POO!
+Professor Mary assigned to IP.
+Professor Judge Thatcher assigned to Karaoke 101.
+Roster for course IP:
+Professors:
+Injun Joe
+Mary
+Students:
+Roster for course POO:
+Professors:
+Mary
+Students:
+Course AM I has no assigned professors and no enrolled students.
+Roster for course AM II:
+Professors:
+Injun Joe
+Students:
+Roster for course Extreme Mooshaking:
+Professors:
+Injun Joe
+Students:
+Roster for course Karaoke 101:
+Professors:
+Judge Thatcher
+Students:
+All people:
+Injun Joe (3)
+Aunt Polly (0)
+Mr. Walters (0)
+Judge Thatcher (1)
+Jim (0)
+Mr. Sprague (0)
+Mr. Jones (0)
+Mr. Dobbins (0)
+Alfred Temple (0)
+Mary (2)
+All courses:
+IP: 2 professors, 0 students, 0 tests and 0 deadlines.
+POO: 1 professors, 0 students, 0 tests and 0 deadlines.
+AM I: 0 professors, 0 students, 0 tests and 0 deadlines.
+AM II: 1 professors, 0 students, 0 tests and 0 deadlines.
+Fancy course name: 0 professors, 0 students, 0 tests and 0 deadlines.
+Karaoke 101: 1 professors, 0 students, 0 tests and 0 deadlines.
+Extreme Mooshaking: 1 professors, 0 students, 0 tests and 0 deadlines.
 Bye!

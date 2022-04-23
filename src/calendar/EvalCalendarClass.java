@@ -50,46 +50,59 @@ public class EvalCalendarClass implements EvalCalendar {
 	}
 
 	@Override
-	public void listCourses() {
-		// TODO Auto-generated method stub
-
+	public Iterator<Course> listCourses() {
+		return courses.iterator();
 	}
 
 	@Override
 	public boolean areCoursesRegistered() {
-		// TODO Auto-generated method stub
-		return false;
+		return courses.size() > 0;
 	}
 
 	@Override
-	public void addCourse(String name) {
-		// TODO Auto-generated method stub
-
+	public void addCourse(String courseName) {
+		courses.insertLast(new CourseClass(courseName));
 	}
 
 	@Override
-	public boolean isCourseRegistered(String name) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean isCourseRegistered(String courseName) {
+		return courses.searchForward(new CourseClass(courseName));
 	}
 
 	@Override
-	public Iterator<Person> listRoster(String courseName) {
-		return null;
-		// TODO Auto-generated method stub
-
+	public Iterator<Person> listCourseProfessors(String courseName) {
+		Course course = courses.get(courses.searchIndexOf(new CourseClass(courseName)));
+		
+		return course.getProfessors().iterator();
+	}
+	
+	@Override
+	public Iterator<Person> listCourseStudents(String courseName) {
+		Course course = courses.get(courses.searchIndexOf(new CourseClass(courseName)));
+		
+		return course.getStudents().iterator();
+	}
+	
+	@Override
+	public boolean isCourseEmpty(String courseName) {
+		Course course = courses.get(courses.searchIndexOf(new CourseClass(courseName)));
+		
+		return course.getNumStudents() == 0 && course.getNumProfessors() == 0;
 	}
 
 	@Override
 	public void assignProfessor(String name, String courseName) {
-		// TODO Auto-generated method stub
-
+		Course course = courses.get(courses.searchIndexOf(new CourseClass(courseName)));
+		Person professor = people.get(people.searchIndexOf(new ProfessorClass(name)));
+		
+		course.assignProfessor(professor);
+		professor.addCourse(course);
 	}
 
 	@Override
 	public boolean isProfessorAssigned(String name, String courseName) {
-		// TODO Auto-generated method stub
-		return false;
+		Person professor = people.get(people.searchIndexOf(new ProfessorClass(name)));
+		return professor.isInCourse(courseName);
 	}
 
 	@Override

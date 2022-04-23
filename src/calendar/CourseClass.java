@@ -7,8 +7,10 @@ public class CourseClass implements Course {
 	
 	// Instance variables
 	private String courseName;
-	private Array<Person> peopleInCourse;
-	private Array<Evaluation> evaluations;
+	private Array<Person> students;
+	private Array<Person> professors;
+	private Array<Evaluation> tests;
+	private Array<Evaluation> deadlines;
 	
 	/**
 	 * Course class constructor
@@ -18,8 +20,10 @@ public class CourseClass implements Course {
 	 */
 	public CourseClass(String courseName) {
 		this.courseName = courseName;
-		peopleInCourse = new ArrayClass<Person>();
-		evaluations = new ArrayClass<Evaluation>();
+		students = new ArrayClass<Person>();
+		professors = new ArrayClass<Person>();
+		tests = new ArrayClass<Evaluation>();
+		deadlines = new ArrayClass<Evaluation>();
 	}
 
 	@Override
@@ -29,22 +33,68 @@ public class CourseClass implements Course {
 	
 	@Override
 	public void assignProfessor(Person professor) {
-		peopleInCourse.insertLast(professor);
+		professors.insertLast(professor);
 	}
 
 	@Override
 	public void enrolStudent(Person student) {
-		peopleInCourse.insertLast(student);
+		students.insertLast(student);
 	}
 
 	@Override
-	public void addEvaluation(Evaluation evaluation) {
-		evaluations.insertLast(evaluation);
+	public void addTest(Evaluation test) {
+		tests.insertLast(test);
+	}
+	
+	@Override
+	public void addDeadline(Evaluation deadline) {
+		deadlines.insertLast(deadline);
 	}
 
 	@Override
-	public Array<Evaluation> getEvaluations() {
-		return evaluations;
+	public Array<Evaluation> getTests() {
+		return tests;
+	}
+	
+	@Override
+	public Array<Evaluation> getDeadlines() {
+		return deadlines;
+	}
+	
+	@Override
+	public Array<Person> getStudents() {
+		return students;
+	}
+	
+	@Override
+	public Array<Person> getProfessors() {
+		return professors;
 	}
 
+	@Override
+	public int getNumProfessors() {
+		return professors.size();
+	}
+
+	@Override
+	public int getNumStudents() {
+		return students.size();
+	}
+
+	@Override
+	public int getNumTests() {
+		return tests.size();
+	}
+
+	@Override
+	public int getNumDeadlines() {
+		return deadlines.size();
+	}
+	
+	@Override
+	public boolean equals(Object other) {
+		if (this.getCourseName().equals(((CourseClass) other).getCourseName()))
+			return true;
+		return false;
+	}
 }

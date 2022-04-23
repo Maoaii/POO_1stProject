@@ -30,6 +30,16 @@ abstract public class AbstractPersonClass implements Person {
 		return courses.size();
 	}
 	
+	@Override
+	public void addCourse(Course course) {
+		courses.insertLast(course);
+	}
+	
+	@Override
+	public boolean isInCourse(String courseName) {
+		return courses.searchForward(new CourseClass(courseName));
+	}
+	
 }
 
 

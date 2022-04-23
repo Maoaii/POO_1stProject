@@ -70,7 +70,7 @@ public interface EvalCalendar {
 	/**
 	 * List all courses registered in the system
 	 */
-	public void listCourses();
+	public Iterator<Course> listCourses();
 	
 	/**
 	 * @return true if there's atleast one course registered
@@ -89,14 +89,14 @@ public interface EvalCalendar {
 	 * @param name
 	 * @pre name != null
 	 */
-	public void addCourse(String name);
+	public void addCourse(String courseName);
 	
 	/**
 	 * @param name
 	 * @pre name != null
 	 * @return true if there's a course with <code>name</code> registered
 	 */
-	public boolean isCourseRegistered(String name);
+	public boolean isCourseRegistered(String courseName);
 	
 	
 	
@@ -105,11 +105,28 @@ public interface EvalCalendar {
 	 */
 	
 	/**
-	 * Lists all professors and students registered to course with <code>courseName</code>
+	 * Lists all <code>professors</code> registered to course with <code>courseName</code>
+	 * 
 	 * @param courseName
 	 * @pre courseName != null && isCourseRegistered(courseName)
 	 */
-	public Iterator<Person> listRoster(String courseName);
+	public Iterator<Person> listCourseProfessors(String courseName);
+	
+	/**
+	 * Lists all <code>students</code> registered to course with <code>courseName</code>
+	 * 
+	 * @param courseName
+	 * @pre courseName != null && isCourseRegistered(courseName)
+	 */
+	public Iterator<Person> listCourseStudents(String courseName);
+	
+	/**
+	 * @param courseName
+	 * @pre courseName != null
+	 * @return true if course with <code>courseName</code> has any <code>students</code> or 
+	 * <code>professors</code>
+	 */
+	public boolean isCourseEmpty(String courseName);
 	
 	
 	/**

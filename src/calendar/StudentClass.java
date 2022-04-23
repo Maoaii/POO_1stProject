@@ -25,11 +25,6 @@ public class StudentClass extends AbstractPersonClass {
 	}
 
 	@Override
-	public void enrol(Course course) {
-		
-	}
-
-	@Override
 	public Array<Evaluation> getEvaluations() {
 		return null;
 	}

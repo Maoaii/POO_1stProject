@@ -26,15 +26,67 @@ public interface Course {
 	void enrolStudent(Person student);
 	
 	/**
-	 * Adds a new evaluation to the course (deadline or test)
+	 * Adds a new test to the course
 	 * 
-	 * @param evaluation
-	 * @pre evaluation != null
+	 * @param test
+	 * @pre test != null
 	 */
-	void addEvaluation(Evaluation evaluation);
+	void addTest(Evaluation test);
 	
 	/**
-	 * @return this course's evaluations
+	 * Adds a new deadline to the course
+	 * 
+	 * @param deadline
+	 * @pre deadline != null
 	 */
-	public Array<Evaluation> getEvaluations();
+	void addDeadline(Evaluation deadline);
+	
+	/**
+	 * @return this course's <code>deadlines</code>
+	 */
+	public Array<Evaluation> getDeadlines();
+	
+	/**
+	 * @return this course's <code>tests</code>
+	 */
+	public Array<Evaluation> getTests();
+	
+	/**
+	 * @return this course's <code>students</code>
+	 */
+	public Array<Person> getStudents();
+	
+	/**
+	 * @return this course's <code>professors</code>
+	 */
+	public Array<Person> getProfessors();
+	
+	/**
+	 * @return the number of professors assigned to this course
+	 */
+	public int getNumProfessors();
+	
+	/**
+	 * @return the number of students enrolled in this course
+	 */
+	public int getNumStudents();
+	
+	/**
+	 * @return the number of test from this course
+	 */
+	public int getNumTests();
+	
+	/**
+	 * @return the number of deadlines from this course
+	 */
+	public int getNumDeadlines();
+	
+	/**
+	 * Compare's two courses names
+	 * 
+	 * @param other
+	 * @pre other != null
+	 * @return true if this course has the same name as <code>other</code> course
+	 */
+	public boolean equals(Object other);
 }
