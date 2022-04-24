@@ -26,6 +26,7 @@ public class ProfessorClass extends AbstractPersonClass {
 	
 	/**
 	 * Compares two person's <code>name</code>
+	 * 
 	 * @return true if both people have the same <code>name</code>
 	 */
 	@Override

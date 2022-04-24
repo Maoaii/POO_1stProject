@@ -5,14 +5,14 @@ import dataStructures.*;
 public interface Person {
 	
 	/**
-	 * @return the name of this person
+	 * @return this person's <code>name</code>
 	 */
 	public String getName();
 	
 	/**
 	 * To be implemented in <code>StudentClass</code>
 	 * 
-	 * @return the id of this student
+	 * @return this student's <code>id</code>
 	 */
 	abstract public String getId();
 	
@@ -31,7 +31,7 @@ public interface Person {
 	public int getNumCourses();
 	
 	/**
-	 * Adds this person to <code>course</code>
+	 * Adds <code>course</code> to this person's <code>courses</code>
 	 * 
 	 * @param course
 	 * @pre course != null
@@ -39,7 +39,7 @@ public interface Person {
 	public void addCourse(Course course);
 	
 	/**
-	 * @return this person's evaluations
+	 * @return this person's <code>evaluations</code>
 	 */
 	public Array<Evaluation> getEvaluations();
 	

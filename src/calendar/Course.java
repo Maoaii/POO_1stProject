@@ -10,7 +10,7 @@ public interface Course {
 	public String getCourseName();
 	
 	/**
-	 * Assigns a new professor to the course
+	 * Assigns a new <code>professor</code> to this course
 	 * 
 	 * @param professor
 	 * @pre professor != null
@@ -18,7 +18,7 @@ public interface Course {
 	public void assignProfessor(Person professor);
 
 	/**
-	 * Enrolls a new student to the course 
+	 * Enrolls a new <code>student</code> to this course 
 	 * 
 	 * @param student
 	 * @pre student != null
@@ -26,7 +26,14 @@ public interface Course {
 	void enrolStudent(Person student);
 	
 	/**
-	 * Adds a new test to the course
+	 * @param name
+	 * @pre name != null
+	 * @return true if student with <code>name</code> is enrolled in this course
+	 */
+	public boolean isStudentEnrolled(String name);
+	
+	/**
+	 * Adds a new <code>test</code> to this course
 	 * 
 	 * @param test
 	 * @pre test != null
@@ -34,7 +41,7 @@ public interface Course {
 	void addTest(Evaluation test);
 	
 	/**
-	 * Adds a new deadline to the course
+	 * Adds a new <code>deadline</code> to this course
 	 * 
 	 * @param deadline
 	 * @pre deadline != null
@@ -72,7 +79,7 @@ public interface Course {
 	public int getNumStudents();
 	
 	/**
-	 * @return the number of test from this course
+	 * @return the number of tests from this course
 	 */
 	public int getNumTests();
 	
@@ -86,7 +93,8 @@ public interface Course {
 	 * 
 	 * @param other
 	 * @pre other != null
-	 * @return true if this course has the same name as <code>other</code> course
+	 * @return true if this course has the same 
+	 * 		   <code>courseName</code> as <code>other</code> course
 	 */
 	public boolean equals(Object other);
 }

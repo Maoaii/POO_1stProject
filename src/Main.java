@@ -137,7 +137,7 @@ public class Main {
 	
 	
 	/**
-	 * processs the user's commands
+	 * Processs the user's commands
 	 */
 	private static void processCommand() {
 		Scanner in = new Scanner(System.in);
@@ -201,13 +201,16 @@ public class Main {
 	}
 
 	/**
-	 * Lists all people in the <code>EvalCalendar</code>
+	 * Lists all people in the <code>EvalCalendar</code> system,
+	 * by insertion order
 	 * 
 	 * @param cal: Evaluation Calendar
 	 * @pre cal != null
 	 */
 	private static void processPeople(EvalCalendar cal) {
-		if (cal.arePeopleRegistered()) {
+		if (!cal.arePeopleRegistered())
+			System.out.println(NO_PEOPLE);
+		else {
 			Iterator<Person> it = cal.listPeople();
 			System.out.println(PEOPLE_HEADER);
 			
@@ -217,14 +220,12 @@ public class Main {
 					System.out.printf(PEOPLE_STUDENT, person.getId(), person.getName(), person.getNumCourses());
 				else
 					System.out.printf(PEOPLE_PROFESSOR, person.getName(), person.getNumCourses());
-			}	
+			}
 		}
-		else
-			System.out.println(NO_PEOPLE);
 	}
 
 	/**
-	 * Adds a new professor to the <code>EvalCalendar</code>
+	 * Adds a new professor to the <code>EvalCalendar</code> system
 	 * 
 	 * @param in: input reader
 	 * @param cal: Evaluation Calendar
@@ -242,7 +243,7 @@ public class Main {
 	}
 	
 	/**
-	 * Adds a new student to the <code>EvalCalendar</code>
+	 * Adds a new student to the <code>EvalCalendar</code> system
 	 * 
 	 * @param in: input reader
 	 * @param cal: Evaluation Calendar
@@ -289,7 +290,7 @@ public class Main {
 	}
 
 	/**
-	 * Adds a new course to the <code>EvalCalendar</code>
+	 * Adds a new course to the <code>EvalCalendar</code> system
 	 * 
 	 * @param in: input reader
 	 * @param cal: Evaluation Calendar
@@ -307,10 +308,12 @@ public class Main {
 	}
 
 	/**
-	 * Lists the names of every professor and the names and IDs of every student in a certain course
+	 * Lists out all the professors and students in a given <code>course</code>.
+	 * The professors are listed first, by assigned order, and then the students,
+	 * by enrolled order.
 	 * 
-	 * @param in: input reader
 	 * @param cal: Evaluation Calendar
+	 * @param in: input reader
 	 * @pre in != null && cal != null
 	 */
 	private static void processRoster(Scanner in, EvalCalendar cal) {
@@ -326,26 +329,47 @@ public class Main {
 			
 			System.out.printf(ROSTER_HEADER, courseName);
 			
-			System.out.println(ROSTER_PROFESSOR_HEADER);
-			while (itProfessors.hasNext()) {
-				Person professor = itProfessors.next();
-				System.out.println(professor.getName());
-			}
-			
-			System.out.println(ROSTER_STUDENT_HEADER);
-			while (itStudents.hasNext()) {
-				Person student = itStudents.next();
-				System.out.printf(ROSTER_STUDENT_LISTING, student.getId(), student.getName());
-			}
+			listProfessors(itProfessors);
+			listStudents(itStudents);
+		}
+	}
+	
+	/**
+	 * Lists out all professors on given <code>course</code> by
+	 * assignment order
+	 * 
+	 * @param itProfessors
+	 * @pre itProfessors != null
+	 */
+	private static void listProfessors(Iterator<Person> itProfessors) {
+		System.out.println(ROSTER_PROFESSOR_HEADER);
+		while (itProfessors.hasNext()) {
+			Person professor = itProfessors.next();
+			System.out.println(professor.getName());
+		}
+	}
+	
+	/**
+	 * Lists out all students on given <code>course</code> by
+	 * enrollment order
+	 * 
+	 * @param itStudents
+	 * @pre itStudents != null
+	 */
+	private static void listStudents(Iterator<Person> itStudents) {
+		System.out.println(ROSTER_STUDENT_HEADER);
+		while (itStudents.hasNext()) {
+			Person student = itStudents.next();
+			System.out.printf(ROSTER_STUDENT_LISTING, student.getId(), student.getName());
 		}
 	}
 
 	/**
-	 * Assigns an existing professor to a course
+	 * Assigns a new professor to a given course
 	 * 
 	 * @param in: input reader
 	 * @param cal: Evaluation Calendar
-	 * @pre: in != null && cal != null
+	 * @pre in != null && cal != null
 	 */
 	private static void processAssign(Scanner in, EvalCalendar cal) {
 		String professorName = in.nextLine().trim();
@@ -361,44 +385,41 @@ public class Main {
 			cal.assignProfessor(professorName, courseName);
 			System.out.printf(PROFESSOR_ASSIGNED, professorName, courseName);
 		}
-			
-			
-		
 	}
 
 
 	private static void processEnrol(Scanner in, EvalCalendar cal) {
-		int maxNumStudents = in.nextInt();
+		int numStudentsToEnrol = in.nextInt();
 		String courseName = in.nextLine().trim();
-		if(maxNumStudents < 1) {
+		int validStudents = 0;
+		
+		if (numStudentsToEnrol <= 0)
 			System.out.println(ADDING_0_STUDENTS);
-		}
-		else {		
-			String[] students = new String[maxNumStudents];
-			int numStudents = 0;
-			for(int i = 0; i < maxNumStudents; i++) {
-				String name = in.nextLine().trim();
-				if(!cal.isNameRegistered(name)) {
-					System.out.printf(STUDENT_NOT_EXISTS, name);
-				}
-				else if(cal.isStudentEnroled(name, courseName)){
-					System.out.printf(STUDENT_ALREADY_ASSIGNED, name, courseName);
-				}
+		else {
+			String[] studentNames = new String[numStudentsToEnrol];
+			for (int index = 0; index < studentNames.length; index++) {
+				String studentName = in.nextLine().trim();
+				
+				if (!cal.isNameRegistered(studentName))
+					System.out.printf(STUDENT_NOT_EXISTS, studentName);
+				else if (cal.isStudentEnroled(studentName, courseName))
+					System.out.printf(STUDENT_ALREADY_ASSIGNED, studentName, courseName);
 				else {
-					students[numStudents] = name;
-					numStudents++;
+					studentNames[validStudents] = studentName;
+					validStudents++;
 				}
+					
 			}
-			if(!cal.isCourseRegistered(courseName)) {
+			if (!cal.isCourseRegistered(courseName))
 				System.out.printf(COURSE_NOT_EXISTS, courseName);
-			}
 			else {
-				cal.enrolStudents(numStudents, courseName, students);
-				System.out.printf(ENROL_SUCCESS, numStudents, courseName);
+				cal.enrolStudents(validStudents, courseName, studentNames);
+				System.out.printf(ENROL_SUCCESS, validStudents, courseName);
 			}
-		}	
+		}		
+		
+		
 	}
-
 
 	private static void processIntersection() {
 		// TODO Auto-generated method stub

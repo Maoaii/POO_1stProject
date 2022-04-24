@@ -3,20 +3,18 @@ package calendar;
 import dataStructures.*;
 
 public interface EvalCalendar {
-
-	
-	
 	/**
 	 * 2.3 people COMMAND
 	 */
 	
 	/**
-	 * Lists all people registered in the system
+	 * Lists all people registered in the <code>EvalCalendar</code> system
 	 */
 	public Iterator<Person> listPeople();
 
 	/**
-	 * @return true if there's atleast one person registered in the system
+	 * @return true if there's atleast one person 
+	 *         registered in the <code>EvalCalendar</code> system
 	 */
 	public boolean arePeopleRegistered();
 	
@@ -26,7 +24,7 @@ public interface EvalCalendar {
 	 */ 
 	
 	/**
-	 * Adds a new professor to the system
+	 * Adds a new <code>professor</code> to the <code>EvalCalendar</code> system
 	 * 
 	 * @param name
 	 * @pre name != null
@@ -40,7 +38,7 @@ public interface EvalCalendar {
 	 */
 	
 	/**
-	 * Adds a new student to the system
+	 * Adds a new <code>student</code> to the <code>EvalCalendar</code> system
 	 * 
 	 * @param id
 	 * @param name
@@ -51,7 +49,7 @@ public interface EvalCalendar {
 	/**
 	 * @param name
 	 * @pre name != null
-	 * @return true if <code>name</code> is registered in the system
+	 * @return true if <code>name</code> is registered in the <code>EvalCalendar</code> system
 	 */
 	public boolean isNameRegistered(String name);
 	
@@ -68,7 +66,7 @@ public interface EvalCalendar {
 	 */
 	
 	/**
-	 * List all courses registered in the system
+	 * List all courses registered in the <code>EvalCalendar</code> system
 	 */
 	public Iterator<Course> listCourses();
 	
@@ -84,7 +82,7 @@ public interface EvalCalendar {
 	 */
 	
 	/**
-	 * Adds a new course to the system
+	 * Adds a new course to the <code>EvalCalendar</code> system
 	 * 
 	 * @param name
 	 * @pre name != null
@@ -159,20 +157,11 @@ public interface EvalCalendar {
 	/**
 	 * Enrolls students to a course
 	 * 
-	 * @param numStudents
 	 * @param courseName
 	 * @param studentNames
 	 * @pre courseName != null && studentNames != null
 	 */
 	public void enrolStudents(int numStudents, String courseName, String[] studentNames);
-
-	/**
-	 * Checks if there's atleast one student to enrol in a course
-	 * 
-	 * @param numStudents
-	 * @return true if <code>numStudents > 0</code>
-	 */
-	public boolean atleastOneEnrol(int numStudents);
 
 	/**
 	 * Checks if student is enroled in class
@@ -330,7 +319,7 @@ public interface EvalCalendar {
 	 */
 	
 	/**
-	 * Gets the professor with the most students
+	 * Gets the <code>professor</code> with the most students
 	 * 
 	 * @return the name of the professor
 	 */
@@ -342,7 +331,7 @@ public interface EvalCalendar {
 	 */
 	
 	/**
-	 * Lists the top <code>nStudents</code> stressed students.
+	 * Lists the top n<code>Students</code> stressed students.
 	 * A student is stressed based on the amount of tests in one week
 	 * 
 	 * @param nStudents

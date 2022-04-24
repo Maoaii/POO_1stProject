@@ -30,7 +30,8 @@ public class StudentClass extends AbstractPersonClass {
 	}
 	
 	/**
-	 * Compares students <code>id</code>'s
+	 * Compares two students <code>id</code>'s
+	 * 
 	 * @return true if both students <code>id</code>'s are the same
 	 */
 	@Override

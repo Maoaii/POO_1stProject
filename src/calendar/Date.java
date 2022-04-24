@@ -4,5 +4,5 @@ public interface Date {
 
 	public String toString();
 	
-	public int CompareTo(Date other);
+	public boolean equals(Date other);
 }

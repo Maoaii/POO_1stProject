@@ -6,17 +6,17 @@ import java.time.LocalTime;
 public interface Evaluation {
 
 	/**
-	 * @return this evaluation's name
+	 * @return this evaluation's <code>name</code>
 	 */
 	public String getEvalName();
 	
 	/**
-	 * @return this evaluation's date
+	 * @return this evaluation's <code>date</code>
 	 */
 	public LocalDate getEvalDate();
 	
 	/**
-	 * @return the this evaluation's time
+	 * @return the this evaluation's <code>time</code>
 	 */
 	public LocalTime getEvalTime();
 	

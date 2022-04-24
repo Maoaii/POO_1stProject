@@ -102,27 +102,26 @@ public class EvalCalendarClass implements EvalCalendar {
 	@Override
 	public boolean isProfessorAssigned(String name, String courseName) {
 		Person professor = people.get(people.searchIndexOf(new ProfessorClass(name)));
+		
 		return professor.isInCourse(courseName);
 	}
 
 	@Override
-	public void enrolStudents(int numStudents, String courseName,
-			String[] studentNames) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean atleastOneEnrol(int numStudents) {
-		// TODO Auto-generated method stub
-		return false;
+	public void enrolStudents(int numStudents, String courseName, String[] studentNames) {
+		Course course = courses.get(courses.searchIndexOf(new CourseClass(courseName)));
+		
+		for (int student = 0; student < numStudents; student++) {
+			Person person = people.get(people.searchIndexOf(new ProfessorClass(studentNames[student])));
+			course.enrolStudent(person);
+			person.addCourse(course);
+		}
 	}
 
 	@Override
 	public boolean isStudentEnroled(String name, String courseName) {
-		Course course = getCourse(courseName);
-		Person student = getPerson(name);
-		return course.getStudents().searchForward(student);
+		Person student = people.get(people.searchIndexOf(new ProfessorClass(name)));
+		
+		return student.isInCourse(courseName);
 	}
 
 	@Override
@@ -211,28 +210,5 @@ public class EvalCalendarClass implements EvalCalendar {
 		return null;
 		// TODO Auto-generated method stub
 
-	}
-
-	
-	private Course getCourse(String courseName) {
-		Course course = null;
-		for(int i = 0; i < courses.size(); i++) {
-			course = courses.get(i);
-			if(course.getCourseName().equals(courseName)) {
-				break;
-			}
-		}
-		return course;
-	}
-	
-	private Person getPerson(String name) {
-		Person person = null;
-		for(int i = 0; i < courses.size(); i++) {
-			person = people.get(i);
-			if(person.getName().equals(name)) {
-				break;
-			}
-		}
-		return person;
 	}
 }

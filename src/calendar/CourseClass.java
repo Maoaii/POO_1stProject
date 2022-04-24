@@ -40,6 +40,11 @@ public class CourseClass implements Course {
 	public void enrolStudent(Person student) {
 		students.insertLast(student);
 	}
+	
+	@Override
+	public boolean isStudentEnrolled(String name) {
+		return students.searchForward(new ProfessorClass(name));
+	}
 
 	@Override
 	public void addTest(Evaluation test) {
