@@ -55,6 +55,11 @@ public class CourseClass implements Course {
 	public void addDeadline(Evaluation deadline) {
 		deadlines.insertLast(deadline);
 	}
+	
+	@Override
+	public boolean isDeadlineSet(String deadlineName) {
+		return deadlines.searchForward(new DeadlineClass(deadlineName, null));
+	}
 
 	@Override
 	public Array<Evaluation> getTests() {

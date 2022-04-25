@@ -49,6 +49,13 @@ public interface Course {
 	void addDeadline(Evaluation deadline);
 	
 	/**
+	 * @param deadlineName
+	 * @pre deadlineName != null
+	 * @return true if deadline with <code>deadlineName</code> is in course
+	 */
+	public boolean isDeadlineSet(String deadlineName);
+	
+	/**
 	 * @return this course's <code>deadlines</code>
 	 */
 	public Array<Evaluation> getDeadlines();

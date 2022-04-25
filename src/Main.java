@@ -1,8 +1,10 @@
+import java.time.LocalDate;
 import java.util.Scanner;
 
 import calendar.Course;
 import calendar.EvalCalendar;
 import calendar.EvalCalendarClass;
+import calendar.Evaluation;
 import calendar.Person;
 import calendar.StudentClass;
 import dataStructures.Iterator;
@@ -81,7 +83,7 @@ public class Main {
 	private static final String PROFESSOR_ALREADY_ASSIGNED = "Professor %s is already assigned to course %s!\n";
 	
 		// ENROL COMMAND
-	private static final String ENROL_SUCCESS = "%d students added to course %s\n";
+	private static final String ENROL_SUCCESS = "%d students added to course %s.\n";
 	private static final String ADDING_0_STUDENTS = "Inadequate number of students!";
 	private static final String STUDENT_NOT_EXISTS = "Student %s does not exist!\n";
 	private static final String STUDENT_ALREADY_ASSIGNED = "Student %s is already enrolled in course %s!\n";
@@ -89,10 +91,11 @@ public class Main {
 		// INTERSECTION COMMAND
 	private static final String INTERSECTION_HEADER = "Intersection:";
 	private static final String INADEQUATE_NUM_COURSES = "Inadequate number of courses!";
+	private static final String NO_INTERSECTION = "No professors or students to list!";
 	
 		// COURSEDEADLINES COMMAND
 	private static final String COURSEDEADLINES_HEADER = "Deadlines for course %s:\n";
-	private static final String COURSEDEADLINES_LISTING = "%s: %s-%s-%s\n";
+	private static final String COURSEDEADLINES_LISTING = "%s: %s\n";
 	private static final String NO_DEADLINES = "No deadlines defined for %s!\n";
 	
 		// PERSONALDDEADLINES COMMAND
@@ -157,10 +160,10 @@ public class Main {
 				case ROSTER: processRoster(in, cal); break;
 				case ASSIGN: processAssign(in, cal); break;
 				case ENROL: processEnrol(in, cal); break;
-				case INTERSECTION: processIntersection(); break;
-				case COURSEDEADLINES: processCourseDeadlines(); break;
-				case PERSONALDEADLINES: processPersonalDeadlines(); break;
-				case DEADLINE: processDeadline(); break;
+				case INTERSECTION: processIntersection(in, cal); break;
+				case COURSEDEADLINES: processCourseDeadlines(in, cal); break;
+				case PERSONALDEADLINES: processPersonalDeadlines(in, cal); break;
+				case DEADLINE: processDeadline(in, cal); break;
 				case COURSETESTS: processCourseTests(); break;
 				case PERSONALTESTS: processPersonalTests(); break;
 				case SCHEDULE: processSchedule(); break;
@@ -387,7 +390,13 @@ public class Main {
 		}
 	}
 
-
+	/**
+	 * Enrolls a new student to a given course
+	 * 
+	 * @param in: input reader
+	 * @param cal: Evaluation Calendar
+	 * @pre in != null && cal != null
+	 */
 	private static void processEnrol(Scanner in, EvalCalendar cal) {
 		int numStudentsToEnrol = in.nextInt();
 		String courseName = in.nextLine().trim();
@@ -420,28 +429,77 @@ public class Main {
 		
 		
 	}
+	
+	/**
+	 * 
+	 * @param in: input reader
+	 * @param cal: Evaluation Calendar
+	 * @pre in != null && cal != null
+	 */
+	private static void processIntersection(Scanner in, EvalCalendar cal) {
+		
+	}
 
-	private static void processIntersection() {
+	/**
+	 * Lists all the deadlines for a given course in:
+	 * ascending order of date;
+	 * ascending order of deadline name;
+	 * 
+	 * @param in: input reader
+	 * @param cal: Evaluation Calendar
+	 * @pre in != null && cal != null
+	 */
+	private static void processCourseDeadlines(Scanner in, EvalCalendar cal) {
+		String courseName = in.nextLine().trim();
+		
+		if (!cal.isCourseRegistered(courseName)) {
+			System.out.printf(COURSE_NOT_EXISTS, courseName);
+		}
+		else if (!cal.atleastOneDeadline(courseName))
+			System.out.printf(NO_DEADLINES, courseName);
+		else {
+			System.out.printf(COURSEDEADLINES_HEADER, courseName);
+			
+			Iterator<Evaluation> deadlineIt = cal.listCourseDeadlines(courseName);
+			while (deadlineIt.hasNext()) {
+				Evaluation deadline = deadlineIt.next();
+				
+				System.out.printf(COURSEDEADLINES_LISTING, deadline.getEvalName(), deadline.getEvalDate().toString());
+			}
+		}
+	}
+
+
+	private static void processPersonalDeadlines(Scanner in, EvalCalendar cal) {
 		// TODO Auto-generated method stub
 		
 	}
 
-
-	private static void processCourseDeadlines() {
-		// TODO Auto-generated method stub
+	/**
+	 * Adds a new deadline to a given course
+	 * 
+	 * @param in: input reader
+	 * @param cal: Evaluation Calendar
+	 * @pre in != null && cal != null
+	 */
+	private static void processDeadline(Scanner in, EvalCalendar cal) {
 		
-	}
-
-
-	private static void processPersonalDeadlines() {
-		// TODO Auto-generated method stub
+		String courseName = in.nextLine().trim();
+		int year = in.nextInt();
+		int month = in.nextInt();
+		int day = in.nextInt();
+		String deadlineName = in.nextLine().trim();
 		
-	}
-
-
-	private static void processDeadline() {
-		// TODO Auto-generated method stub
-		
+		if (!cal.isCourseRegistered(courseName))
+			System.out.printf(COURSE_NOT_EXISTS, courseName);
+		else if (cal.doesCourseHaveDeadline(courseName, deadlineName))
+			System.out.printf(DEADLINE_ALREADY_EXISTS, deadlineName);
+		else {
+			LocalDate date = LocalDate.of(year, month, day);
+			cal.addDeadline(courseName, date, deadlineName);
+			
+			System.out.printf(DEADLINE_ADDED, date.toString(), courseName);
+		}
 	}
 
 

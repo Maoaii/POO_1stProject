@@ -1,5 +1,7 @@
 package calendar;
 
+import java.time.LocalDate;
+
 import dataStructures.Array;
 import dataStructures.ArrayClass;
 import dataStructures.Iterator;
@@ -125,23 +127,29 @@ public class EvalCalendarClass implements EvalCalendar {
 	}
 
 	@Override
-	public Iterator<Person> listPeopleIntersection(int numCourses, String[] courseNames) {
+	public Iterator<Person> listPeopleIntersection(String[] courseNames) {
+		
 		return null;
-		// TODO Auto-generated method stub
-
 	}
-
+	
 	@Override
-	public boolean atleastTwoCourses(int numCourses) {
-		// TODO Auto-generated method stub
+	public boolean isThereIntersection(String[] courseNames) {
+		
 		return false;
 	}
 
 	@Override
 	public Iterator<Evaluation> listCourseDeadlines(String courseName) {
-		return null;
-		// TODO Auto-generated method stub
-
+		Course course = courses.get(courses.searchIndexOf(new CourseClass(courseName)));
+		
+		return course.getDeadlines().sort().iterator();
+	}
+	
+	@Override
+	public boolean atleastOneDeadline(String courseName) {
+		Course course = courses.get(courses.searchIndexOf(new CourseClass(courseName)));
+		
+		return course.getNumDeadlines() > 0;
 	}
 
 	@Override
@@ -152,17 +160,19 @@ public class EvalCalendarClass implements EvalCalendar {
 	}
 
 	@Override
-	public void addDeadline(String courseName, int year, int month, int day,
+	public void addDeadline(String courseName, LocalDate date,
 			String deadlineName) {
-		// TODO Auto-generated method stub
-
+		Course course = courses.get(courses.searchIndexOf(new CourseClass(courseName)));
+		
+		course.addDeadline(new DeadlineClass(deadlineName, date));
 	}
 
 	@Override
-	public boolean doesCourseHaveDealine(String courseName,
+	public boolean doesCourseHaveDeadline(String courseName,
 			String deadlineName) {
-		// TODO Auto-generated method stub
-		return false;
+		Course course = courses.get(courses.searchIndexOf(new CourseClass(courseName)));
+		
+		return course.isDeadlineSet(deadlineName);
 	}
 
 	@Override

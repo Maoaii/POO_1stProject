@@ -1,5 +1,7 @@
 package calendar;
 
+import java.time.LocalDate;
+
 import dataStructures.*;
 
 public interface EvalCalendar {
@@ -180,19 +182,19 @@ public interface EvalCalendar {
 	/**
 	 * Lists all people that are enroled in all courses given
 	 * 
-	 * @param numCourses
 	 * @param courseNames
 	 * @pre courseNames != null
 	 */
-	public Iterator<Person> listPeopleIntersection(int numCourses, String[] courseNames);
-
+	public Iterator<Person> listPeopleIntersection(String[] courseNames);
+	
 	/**
-	 * Checks if there's atleast two courses to intersect with
+	 * Checks if there's people that are enroled in all the given courses
 	 * 
-	 * @param numCourses
-	 * @return true if <code>numCourses >= 2</code>
+	 * @param courseNames
+	 * @pre courseNames != null
+	 * @return true if there's atleast one person on all the given courses
 	 */
-	public boolean atleastTwoCourses(int numCourses);
+	public boolean isThereIntersection(String[] courseNames);
 
 	
 	/**
@@ -206,6 +208,13 @@ public interface EvalCalendar {
 	 * @pre courseName != null
 	 */
 	public Iterator<Evaluation> listCourseDeadlines(String courseName);
+	
+	/**
+	 * @param courseName
+	 * @pre courseName != null
+	 * @return true if there's atleast one deadline on course with <code>courseName</code>
+	 */
+	public boolean atleastOneDeadline(String courseName);
 	
 	
 	/**
@@ -233,7 +242,7 @@ public interface EvalCalendar {
 	 * @param deadlineName
 	 * @pre courseName != null && date != null && deadlineName != null
 	 */
-	public void addDeadline(String courseName, int year, int month, int day, String deadlineName);
+	public void addDeadline(String courseName, LocalDate date, String deadlineName);
 
 	/**
 	 * Checks if course with <code>courseName</code> has deadline with <code>deadlineName</code>
@@ -242,7 +251,7 @@ public interface EvalCalendar {
 	 * @pre deadlineName != null
 	 * @return true if course with <code>courseName</code> has deadline with <code>dealineName</code> 
 	 */
-	public boolean doesCourseHaveDealine(String courseName, String deadlineName);
+	public boolean doesCourseHaveDeadline(String courseName, String deadlineName);
 
 
 	/**
