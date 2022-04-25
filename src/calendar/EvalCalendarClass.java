@@ -48,7 +48,7 @@ public class EvalCalendarClass implements EvalCalendar {
 
 	@Override
 	public boolean isIdUsed(String name, String id) {
-		return people.searchForward(new StudentClass(name, id));
+		return people.searchForward(new StudentClass("", id));
 	}
 
 	@Override

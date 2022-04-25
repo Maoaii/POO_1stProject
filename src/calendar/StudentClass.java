@@ -36,8 +36,15 @@ public class StudentClass extends AbstractPersonClass {
 	 */
 	@Override
 	public boolean equals(Object other) {
-		if (this.getId().equals(((Person) other).getId()))
-			return true;
-		return false;
+		if (other instanceof StudentClass)
+			if (this.getId().equals(((Person) other).getId()))
+				return true;
+			else
+				return false;
+		else
+			if (this.getName().equals(((Person) other).getName()))
+				return true;
+			else
+				return false;
 	}
 }
