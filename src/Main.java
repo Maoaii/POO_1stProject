@@ -101,6 +101,7 @@ public class Main {
 		// PERSONALDDEADLINES COMMAND
 	private static final String PERSONALDEADLINES_HEADER = "Deadlines for %s:\n";
 	private static final String PERSONALDEADLINES_LISTING = "[%s] %s: %s-%s-%s\n";
+	private static final String PERSON_NOT_EXISTS = "%s does not exist!\n";
 	
 		// DEADLINE COMMAND
 	private static final String DEADLINE_ADDED = "Deadline %s added to %s.\n";
@@ -165,7 +166,7 @@ public class Main {
 				case PERSONALDEADLINES: processPersonalDeadlines(in, cal); break;
 				case DEADLINE: processDeadline(in, cal); break;
 				case COURSETESTS: processCourseTests(); break;
-				case PERSONALTESTS: processPersonalTests(); break;
+				case PERSONALTESTS: processPersonalTests(in, cal); break;
 				case SCHEDULE: processSchedule(); break;
 				case SUPERPROFESSOR: processSuperProfessor(); break;
 				case STRESSOMETER: processStressometer(); break;
@@ -508,9 +509,27 @@ public class Main {
 		
 	}
 
-
-	private static void processPersonalTests() {
-		// TODO Auto-generated method stub
+	/**
+	 * 
+	 * @param in
+	 * @param cal
+	 */
+	private static void processPersonalTests(Scanner in, EvalCalendar cal) {
+		String name = in.nextLine().trim();
+		
+		if (!cal.isNameRegistered(name))
+			System.out.printf(PERSON_NOT_EXISTS, name);
+		else if (!cal.doesStudentHaveDeadlines(name))
+			System.out.printf(NO_DEADLINES, name);
+		else {
+			System.out.printf(PERSONALDEADLINES_HEADER, name);
+			Iterator<Evaluation> deadlineIt = cal.listPersonalDeadlines(name);
+			
+			while (deadlineIt.hasNext()) {
+				Evaluation deadline = deadlineIt.next();
+				System.out.printf(PERSONALDEADLINES_LISTING);
+			}
+		}
 		
 	}
 

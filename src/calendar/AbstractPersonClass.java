@@ -40,6 +40,8 @@ abstract public class AbstractPersonClass implements Person {
 		return courses.searchForward(new CourseClass(courseName));
 	}
 	
+	
+	
 }
 
 

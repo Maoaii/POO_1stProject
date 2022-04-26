@@ -228,6 +228,13 @@ public interface EvalCalendar {
 	 * @pre name != null
 	 */
 	public Iterator<Evaluation> listPersonalDeadlines(String name);
+	
+	/**
+	 * @param name
+	 * @pre name != null
+	 * @return true if student with <code>name</code> has atleast one <code>deadline</code>
+	 */
+	public boolean doesStudentHaveDeadlines(String name);
 
 	
 	/**

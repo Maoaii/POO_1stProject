@@ -158,6 +158,11 @@ public class EvalCalendarClass implements EvalCalendar {
 		// TODO Auto-generated method stub
 
 	}
+	
+	@Override
+	public boolean doesStudentHaveDeadlines(String name) {
+		return false;
+	}
 
 	@Override
 	public void addDeadline(String courseName, LocalDate date,
