@@ -1,5 +1,7 @@
 package calendar;
 
+import client.Person;
+import client.ProfessorClass;
 import dataStructures.Array;
 import dataStructures.ArrayClass;
 

@@ -5,8 +5,8 @@ import calendar.Course;
 import calendar.EvalCalendar;
 import calendar.EvalCalendarClass;
 import calendar.Evaluation;
-import calendar.Person;
-import calendar.StudentClass;
+import client.Person;
+import client.Student;
 import dataStructures.Iterator;
 
 public class Main {
@@ -220,8 +220,8 @@ public class Main {
 			
 			while (it.hasNext()) {
 				Person person = (Person) it.next();
-				if (person instanceof StudentClass)
-					System.out.printf(PEOPLE_STUDENT, person.getId(), person.getName(), person.getNumCourses());
+				if (person instanceof Student)
+					System.out.printf(PEOPLE_STUDENT, ((Student) person).getId(), person.getName(), person.getNumCourses());
 				else
 					System.out.printf(PEOPLE_PROFESSOR, person.getName(), person.getNumCourses());
 			}
@@ -364,7 +364,7 @@ public class Main {
 		System.out.println(ROSTER_STUDENT_HEADER);
 		while (itStudents.hasNext()) {
 			Person student = itStudents.next();
-			System.out.printf(ROSTER_STUDENT_LISTING, student.getId(), student.getName());
+			System.out.printf(ROSTER_STUDENT_LISTING, ((Student) student).getId(), student.getName());
 		}
 	}
 
@@ -472,8 +472,21 @@ public class Main {
 
 
 	private static void processPersonalDeadlines(Scanner in, EvalCalendar cal) {
-		// TODO Auto-generated method stub
+		String name = in.nextLine().trim();
 		
+		if (!cal.isNameRegistered(name))
+			System.out.printf(PERSON_NOT_EXISTS, name);
+		else if (!cal.doesStudentHaveDeadlines(name))
+			System.out.printf(NO_DEADLINES, name);
+		else {
+			System.out.printf(PERSONALDEADLINES_HEADER, name);
+			Iterator<Evaluation> deadlineIt = cal.listPersonalDeadlines(name);
+			
+			while (deadlineIt.hasNext()) {
+				Evaluation deadline = deadlineIt.next();
+				System.out.printf(PERSONALDEADLINES_LISTING);
+			}
+		}
 	}
 
 	/**
@@ -515,21 +528,7 @@ public class Main {
 	 * @param cal
 	 */
 	private static void processPersonalTests(Scanner in, EvalCalendar cal) {
-		String name = in.nextLine().trim();
 		
-		if (!cal.isNameRegistered(name))
-			System.out.printf(PERSON_NOT_EXISTS, name);
-		else if (!cal.doesStudentHaveDeadlines(name))
-			System.out.printf(NO_DEADLINES, name);
-		else {
-			System.out.printf(PERSONALDEADLINES_HEADER, name);
-			Iterator<Evaluation> deadlineIt = cal.listPersonalDeadlines(name);
-			
-			while (deadlineIt.hasNext()) {
-				Evaluation deadline = deadlineIt.next();
-				System.out.printf(PERSONALDEADLINES_LISTING);
-			}
-		}
 		
 	}
 

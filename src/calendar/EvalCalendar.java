@@ -2,6 +2,7 @@ package calendar;
 
 import java.time.LocalDate;
 
+import client.Person;
 import dataStructures.*;
 
 public interface EvalCalendar {

@@ -2,6 +2,9 @@ package calendar;
 
 import java.time.LocalDate;
 
+import client.Person;
+import client.ProfessorClass;
+import client.StudentClass;
 import dataStructures.Array;
 import dataStructures.ArrayClass;
 import dataStructures.Iterator;

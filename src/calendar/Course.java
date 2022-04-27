@@ -1,5 +1,6 @@
 package calendar;
 
+import client.Person;
 import dataStructures.Array;
 
 public interface Course {
