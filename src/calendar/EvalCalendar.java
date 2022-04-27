@@ -3,6 +3,8 @@ package calendar;
 import java.time.LocalDate;
 
 import client.Person;
+import course.Course;
+import course.Evaluation;
 import dataStructures.*;
 
 public interface EvalCalendar {

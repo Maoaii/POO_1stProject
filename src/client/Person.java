@@ -1,7 +1,7 @@
 package client;
 
-import calendar.Course;
-import calendar.Evaluation;
+import course.Course;
+import course.Evaluation;
 import dataStructures.*;
 
 public interface Person extends Comparable<Person>{

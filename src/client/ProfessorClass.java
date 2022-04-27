@@ -1,6 +1,6 @@
 package client;
 
-import calendar.Evaluation;
+import course.Evaluation;
 import dataStructures.Array;
 
 public class ProfessorClass extends AbstractPersonClass implements Professor {

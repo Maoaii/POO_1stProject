@@ -1,12 +1,12 @@
 import java.time.LocalDate;
 import java.util.Scanner;
 
-import calendar.Course;
 import calendar.EvalCalendar;
 import calendar.EvalCalendarClass;
-import calendar.Evaluation;
 import client.Person;
 import client.Student;
+import course.Course;
+import course.Evaluation;
 import dataStructures.Iterator;
 
 public class Main {
@@ -19,7 +19,7 @@ public class Main {
 		STRESSOMETER;
 	};
 	
-	// Output messages
+		// Output messages
 	private static final String UNKNOWN_COMMAND = "Unknown command %s. Type help to see available commands.\n";
 	
 		// EXIT COMMAND

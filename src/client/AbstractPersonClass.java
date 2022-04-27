@@ -1,7 +1,7 @@
 package client;
 
-import calendar.Course;
-import calendar.CourseClass;
+import course.Course;
+import course.CourseClass;
 import dataStructures.Array;
 import dataStructures.ArrayClass;
 
