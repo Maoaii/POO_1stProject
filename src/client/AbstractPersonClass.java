@@ -2,14 +2,16 @@ package client;
 
 import course.Course;
 import course.CourseClass;
+import course.Evaluation;
 import dataStructures.Array;
 import dataStructures.ArrayClass;
+import dataStructures.Iterator;
 
 abstract public class AbstractPersonClass implements Person {
 	
 	// Instance variables
 	private String name;
-	private Array<Course> courses;
+	protected Array<Course> courses;
 	
 	/**
 	 * Abstract Person constructor
@@ -40,6 +42,40 @@ abstract public class AbstractPersonClass implements Person {
 	@Override
 	public boolean isInCourse(String courseName) {
 		return courses.searchForward(new CourseClass(courseName));
+	}
+	
+	@Override
+	public Array<Evaluation> getDeadlines() {
+		Array<Evaluation> deadlines = new ArrayClass<Evaluation>();
+		
+		Iterator<Course> courseIt = courses.iterator();
+		
+		while (courseIt.hasNext()) {
+			Course course = courseIt.next();
+			
+			Iterator<Evaluation> courseDeadlinesIt = course.getDeadlines().iterator();
+			
+			while (courseDeadlinesIt.hasNext()) {
+				deadlines.insertLast(courseDeadlinesIt.next());
+			}
+		}
+
+		return deadlines.sort();
+	}
+	
+	@Override
+	public boolean hasDeadlines() {
+		Iterator<Course> courseIt = courses.iterator();
+		boolean found = false;
+		
+		while (!found && courseIt.hasNext()) {
+			Course course = courseIt.next();
+			
+			if (course.getDeadlines().size() > 0)
+				found = true;
+		}
+		
+		return found;
 	}
 	
 	@Override

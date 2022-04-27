@@ -100,7 +100,7 @@ public class Main {
 	
 		// PERSONALDDEADLINES COMMAND
 	private static final String PERSONALDEADLINES_HEADER = "Deadlines for %s:\n";
-	private static final String PERSONALDEADLINES_LISTING = "[%s] %s: %s-%s-%s\n";
+	private static final String PERSONALDEADLINES_LISTING = "[%s] %s: %s\n";
 	private static final String PERSON_NOT_EXISTS = "%s does not exist!\n";
 	
 		// DEADLINE COMMAND
@@ -470,7 +470,11 @@ public class Main {
 		}
 	}
 
-
+	/**
+	 * 
+	 * @param in
+	 * @param cal
+	 */
 	private static void processPersonalDeadlines(Scanner in, EvalCalendar cal) {
 		String name = in.nextLine().trim();
 		
@@ -484,7 +488,8 @@ public class Main {
 			
 			while (deadlineIt.hasNext()) {
 				Evaluation deadline = deadlineIt.next();
-				System.out.printf(PERSONALDEADLINES_LISTING);
+				System.out.printf(PERSONALDEADLINES_LISTING, deadline.getCourseName(),
+						deadline.getEvalName(), deadline.getEvalDate().toString());
 			}
 		}
 	}

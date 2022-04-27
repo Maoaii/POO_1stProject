@@ -15,8 +15,8 @@ public class TestClass extends AbstractEvaluationClass implements Test {
 	 * @param time
 	 * @pre name != null && date != nunll && time != null
 	 */
-	public TestClass(String name, LocalDate date, LocalTime time) {
-		super(name, date);
+	public TestClass(String name, LocalDate date, LocalTime time, String courseName) {
+		super(name, date, courseName);
 		this.time = time;
 	}
 

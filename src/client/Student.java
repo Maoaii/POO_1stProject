@@ -1,5 +1,8 @@
 package client;
 
+import course.Evaluation;
+import dataStructures.Array;
+
 public interface Student {
 	
 	/**

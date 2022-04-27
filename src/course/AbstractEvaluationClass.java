@@ -10,6 +10,7 @@ public abstract class AbstractEvaluationClass implements Evaluation {
 	// Instance variables
 	private String name;
 	private LocalDate date;
+	private String courseName;
 	
 	/**
 	 * Abstract Evaluation Constructor
@@ -18,9 +19,10 @@ public abstract class AbstractEvaluationClass implements Evaluation {
 	 * @param date
 	 * @pre name != null && date != null
 	 */
-	public AbstractEvaluationClass(String name, LocalDate date) {
+	public AbstractEvaluationClass(String name, LocalDate date, String courseName) {
 		this.name = name;
 		this.date = date;
+		this.courseName = courseName;
 	}
 	
 	@Override
@@ -31,6 +33,11 @@ public abstract class AbstractEvaluationClass implements Evaluation {
 	@Override
 	public LocalDate getEvalDate() {
 		return date;
+	}
+	
+	@Override
+	public String getCourseName() {
+		return courseName;
 	}
 	
 	@Override
@@ -52,10 +59,18 @@ public abstract class AbstractEvaluationClass implements Evaluation {
 	@Override
 	public int compareTo(Evaluation other) {
 		int cmpDate = this.getEvalDate().compareTo(other.getEvalDate());
+		int cmpCourseName = this.getCourseName().compareTo(other.getCourseName());
+		
 		if (cmpDate > 0) {
 			return IS_AFTER;
 		}
 		else if (cmpDate < 0) {
+			return IS_BEFORE;
+		}
+		else if (cmpCourseName > 0) {
+			return IS_AFTER;
+		}
+		else if (cmpCourseName < 0) {
 			return IS_BEFORE;
 		}
 		else {

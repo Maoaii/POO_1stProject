@@ -1,8 +1,5 @@
 package client;
 
-import course.Evaluation;
-import dataStructures.Array;
-
 public class StudentClass extends AbstractPersonClass implements Student {
 	
 	// Instance variables
@@ -23,11 +20,6 @@ public class StudentClass extends AbstractPersonClass implements Student {
 	@Override
 	public String getId() {
 		return id;
-	}
-
-	@Override
-	public Array<Evaluation> getEvaluations() {
-		return null;
 	}
 	
 	/**

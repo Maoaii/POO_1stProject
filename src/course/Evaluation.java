@@ -15,6 +15,11 @@ public interface Evaluation extends Comparable<Evaluation>{
 	public LocalDate getEvalDate();
 	
 	/**
+	 * @return the course this evaluation belongs to
+	 */
+	public String getCourseName();
+	
+	/**
 	 * Compares this evaluation to <code>other</code>
 	 * 
 	 * @param other

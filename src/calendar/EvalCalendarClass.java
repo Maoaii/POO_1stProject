@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import client.Person;
 import client.ProfessorClass;
+import client.Student;
 import client.StudentClass;
 import course.Course;
 import course.CourseClass;
@@ -161,14 +162,15 @@ public class EvalCalendarClass implements EvalCalendar {
 
 	@Override
 	public Iterator<Evaluation> listPersonalDeadlines(String name) {
-		return null;
-		// TODO Auto-generated method stub
-
+		Person student = people.get(people.searchIndexOf(new ProfessorClass(name)));
+		
+		return student.getDeadlines().iterator();
 	}
 	
 	@Override
 	public boolean doesStudentHaveDeadlines(String name) {
-		return false;
+		Person student = people.get(people.searchIndexOf(new ProfessorClass(name)));
+		return student.hasDeadlines();
 	}
 
 	@Override
@@ -176,7 +178,7 @@ public class EvalCalendarClass implements EvalCalendar {
 			String deadlineName) {
 		Course course = courses.get(courses.searchIndexOf(new CourseClass(courseName)));
 		
-		course.addDeadline(new DeadlineClass(deadlineName, date));
+		course.addDeadline(new DeadlineClass(deadlineName, date, courseName));
 	}
 
 	@Override

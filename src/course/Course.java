@@ -3,7 +3,7 @@ package course;
 import client.Person;
 import dataStructures.Array;
 
-public interface Course {
+public interface Course extends Comparable<Course>{
 
 	/**
 	 * @return this courses' name
@@ -105,4 +105,6 @@ public interface Course {
 	 * 		   <code>courseName</code> as <code>other</code> course
 	 */
 	public boolean equals(Object other);
+	
+	public int compareTo(Course other);
 }

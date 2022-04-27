@@ -11,7 +11,9 @@ public class DeadlineClass extends AbstractEvaluationClass implements Deadline {
 	 * @param date
 	 * @pre name != null && date != null
 	 */
-	public DeadlineClass(String name, LocalDate date) {
-		super(name, date);
+	public DeadlineClass(String name, LocalDate date, String courseName) {
+		super(name, date, courseName);
 	}
+
+	
 }

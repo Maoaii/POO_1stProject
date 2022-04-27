@@ -60,7 +60,7 @@ public class CourseClass implements Course {
 	
 	@Override
 	public boolean isDeadlineSet(String deadlineName) {
-		return deadlines.searchForward(new DeadlineClass(deadlineName, null));
+		return deadlines.searchForward(new DeadlineClass(deadlineName, null, null));
 	}
 
 	@Override
@@ -108,5 +108,18 @@ public class CourseClass implements Course {
 		if (this.getCourseName().equals(((CourseClass) other).getCourseName()))
 			return true;
 		return false;
+	}
+	
+	@Override
+	public int compareTo(Course other) {
+		int cmpName = this.getCourseName().compareTo(other.getCourseName());
+		if (cmpName > 0) {
+			return -1;
+		}
+		else if (cmpName < 0) {
+			return 1;
+		}
+		
+		return cmpName;
 	}
 }

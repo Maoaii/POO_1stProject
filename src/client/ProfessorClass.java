@@ -14,12 +14,6 @@ public class ProfessorClass extends AbstractPersonClass implements Professor {
 	public ProfessorClass(String name) {
 		super(name);
 	}
-
-	@Override
-	public Array<Evaluation> getEvaluations() {
-		return null;
-	}
-	
 	
 	/**
 	 * Compares two person's <code>name</code>
