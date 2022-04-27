@@ -45,6 +45,15 @@ abstract public class AbstractPersonClass implements Person {
 	}
 	
 	@Override
+	public boolean isInAllCourses(String[] courseName, int numCourses) {
+		for (int courseIndex = 0; courseIndex < numCourses; courseIndex++) {
+			if (!courses.searchForward(new CourseClass(courseName[courseIndex])))
+					return false;
+		}
+		return true;
+	}
+	
+	@Override
 	public Array<Evaluation> getDeadlines() {
 		Array<Evaluation> deadlines = new ArrayClass<Evaluation>();
 		

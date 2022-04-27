@@ -62,4 +62,7 @@ public interface Person extends Comparable<Person>{
 	
 	
 	public boolean hasDeadlines();
+
+
+	public boolean isInAllCourses(String[] courseNames, int numCourses);
 }

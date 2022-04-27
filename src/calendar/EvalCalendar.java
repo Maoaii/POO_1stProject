@@ -183,12 +183,20 @@ public interface EvalCalendar {
 	 */
 	
 	/**
-	 * Lists all people that are enroled in all courses given
+	 * Lists all professors that are enroled in all courses given
 	 * 
 	 * @param courseNames
 	 * @pre courseNames != null
 	 */
-	public Iterator<Person> listPeopleIntersection(String[] courseNames);
+	public Iterator<Person> listProfessorIntersection(String[] courseNames, int numCourses);
+	
+	/**
+	 * Lists all students that are enroled in all courses given
+	 * 
+	 * @param courseNames
+	 * @pre courseNames != null
+	 */
+	public Iterator<Person> listStudentIntersection(String[] courseNames, int numCourses);
 	
 	/**
 	 * Checks if there's people that are enroled in all the given courses

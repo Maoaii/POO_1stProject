@@ -3,6 +3,7 @@ package calendar;
 import java.time.LocalDate;
 
 import client.Person;
+import client.Professor;
 import client.ProfessorClass;
 import client.Student;
 import client.StudentClass;
@@ -135,9 +136,43 @@ public class EvalCalendarClass implements EvalCalendar {
 	}
 
 	@Override
-	public Iterator<Person> listPeopleIntersection(String[] courseNames) {
+	public Iterator<Person> listProfessorIntersection(String[] courseNames, int numCourses) {
+		Array<Person> professorIntersection = new ArrayClass<Person>();
 		
-		return null;
+		for (int courseIndex = 0; courseIndex < numCourses; courseIndex++) {
+			Course course = courses.get(courses.searchIndexOf(new CourseClass(courseNames[courseIndex])));
+			Array<Person> professors = course.getProfessors();
+			
+			
+			for (int professorIndex = 0; professorIndex < professors.size(); professorIndex++) {
+				Person professor = professors.get(professorIndex);
+				if (professor instanceof Professor && 
+						professor.isInAllCourses(courseNames, numCourses) && 
+						!professorIntersection.searchForward(professor))
+					professorIntersection.insertLast(professor);
+			}	
+		}
+		
+		return professorIntersection.iterator();
+	}
+	
+	@Override
+	public Iterator<Person> listStudentIntersection(String[] courseNames, int numCourses) {
+		Array<Person> studentIntersection = new ArrayClass<Person>();
+		
+		for (int courseIndex = 0; courseIndex < numCourses; courseIndex++) {
+			Course course = courses.get(courses.searchIndexOf(new CourseClass(courseNames[courseIndex])));
+			Array<Person> students = course.getStudents();
+			
+			for (int studentIndex = 0; studentIndex < students.size(); studentIndex++) {
+				Person student = students.get(studentIndex);
+				if (student instanceof Student && 
+						student.isInAllCourses(courseNames, numCourses) && 
+						!studentIntersection.searchForward(student))
+					studentIntersection.insertLast(student);
+			}
+		}
+		return studentIntersection.iterator();
 	}
 	
 	@Override

@@ -4,6 +4,7 @@ import java.util.Scanner;
 import calendar.EvalCalendar;
 import calendar.EvalCalendarClass;
 import client.Person;
+import client.Professor;
 import client.Student;
 import course.Course;
 import course.Evaluation;
@@ -438,7 +439,62 @@ public class Main {
 	 * @pre in != null && cal != null
 	 */
 	private static void processIntersection(Scanner in, EvalCalendar cal) {
+		int numCourses = in.nextInt();
+		int validCourses = 0;
 		
+		String firstInvalidCourse = "";
+		
+		if (numCourses < 0) {
+			System.out.println(INADEQUATE_NUM_COURSES);
+			return;
+		}
+		String[] courseNames = new String[numCourses];
+		
+		for (int course = 0; course < numCourses; course++) {
+			String courseName = in.nextLine().trim();
+			
+			if (cal.isCourseRegistered(courseName)) {
+				courseNames[validCourses] = courseName;
+				validCourses++;
+			}
+			else if (firstInvalidCourse == "") {
+				firstInvalidCourse = courseName;
+			}
+		}
+		
+		if (numCourses < 2) {
+			System.out.println(INADEQUATE_NUM_COURSES);
+			return;
+		}
+		
+		if (validCourses < 2) {
+			System.out.printf(COURSE_NOT_EXISTS, firstInvalidCourse);
+			return;
+		}
+			
+		Iterator<Person> professorIt = cal.listProfessorIntersection(courseNames, validCourses);
+		Iterator<Person> studentIt = cal.listStudentIntersection(courseNames, validCourses);
+		listPeople(professorIt, studentIt);
+	}
+	
+	private static void listPeople(Iterator<Person> professorIt, Iterator<Person> studentIt) {
+		System.out.println(INTERSECTION_HEADER);
+		
+		System.out.println(ROSTER_PROFESSOR_HEADER);
+		while (professorIt.hasNext()) {
+			Person person = professorIt.next();
+			
+			if (person instanceof Professor)
+				System.out.println(person.getName());
+		}
+		
+		System.out.println(ROSTER_STUDENT_HEADER);
+		while (studentIt.hasNext()) {
+			Person person = studentIt.next();
+			
+			if (person instanceof Student)
+				System.out.printf(ROSTER_STUDENT_LISTING, ((Student) person).getId(), person.getName());
+		}
 	}
 
 	/**
