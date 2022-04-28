@@ -166,7 +166,7 @@ public class Main {
 				case COURSEDEADLINES: processCourseDeadlines(in, cal); break;
 				case PERSONALDEADLINES: processPersonalDeadlines(in, cal); break;
 				case DEADLINE: processDeadline(in, cal); break;
-				case COURSETESTS: processCourseTests(); break;
+				case COURSETESTS: processCourseTests(in, cal); break;
 				case PERSONALTESTS: processPersonalTests(in, cal); break;
 				case SCHEDULE: processSchedule(); break;
 				case SUPERPROFESSOR: processSuperProfessor(); break;
@@ -444,37 +444,37 @@ public class Main {
 		
 		String firstInvalidCourse = "";
 		
-		if (numCourses < 0) {
+		if (numCourses <= 0) {
 			System.out.println(INADEQUATE_NUM_COURSES);
-			return;
 		}
-		String[] courseNames = new String[numCourses];
-		
-		for (int course = 0; course < numCourses; course++) {
-			String courseName = in.nextLine().trim();
+		else {
+			String[] courseNames = new String[numCourses];
 			
-			if (cal.isCourseRegistered(courseName)) {
-				courseNames[validCourses] = courseName;
-				validCourses++;
+			for (int course = 0; course < numCourses; course++) {
+				String courseName = in.nextLine().trim();
+				
+				if (cal.isCourseRegistered(courseName)) {
+					courseNames[validCourses] = courseName;
+					validCourses++;
+				}
+				else if (firstInvalidCourse.equals("")) {
+					firstInvalidCourse = courseName;
+				}
 			}
-			else if (firstInvalidCourse == "") {
-				firstInvalidCourse = courseName;
-			}
-		}
-		
-		if (numCourses < 2) {
-			System.out.println(INADEQUATE_NUM_COURSES);
-			return;
-		}
-		
-		if (validCourses < 2) {
-			System.out.printf(COURSE_NOT_EXISTS, firstInvalidCourse);
-			return;
-		}
 			
-		Iterator<Person> professorIt = cal.listProfessorIntersection(courseNames, validCourses);
-		Iterator<Person> studentIt = cal.listStudentIntersection(courseNames, validCourses);
-		listPeople(professorIt, studentIt);
+			if (numCourses < 2) {
+				System.out.println(INADEQUATE_NUM_COURSES);
+			}
+			else if (validCourses < 2) {
+				System.out.printf(COURSE_NOT_EXISTS, firstInvalidCourse);
+			}
+			else {	
+				Iterator<Person> professorIt = cal.listProfessorIntersection(courseNames, validCourses);
+				Iterator<Person> studentIt = cal.listStudentIntersection(courseNames, validCourses);
+				listPeople(professorIt, studentIt);
+			}
+		}
+		
 	}
 	
 	private static void listPeople(Iterator<Person> professorIt, Iterator<Person> studentIt) {
@@ -578,9 +578,20 @@ public class Main {
 	}
 
 
-	private static void processCourseTests() {
-		// TODO Auto-generated method stub
-		
+	private static void processCourseTests(Scanner in, EvalCalendar cal) {
+		String courseName = in.next().trim();
+		if(!cal.isCourseRegistered(courseName)) {
+			System.out.printf(COURSE_NOT_EXISTS, courseName);
+		}
+		else {
+			System.out.printf(COURSETESTS_HEADER, courseName);
+			Iterator<Evaluation> testIt = cal.listCourseTests(courseName);
+			
+			while(testIt.hasNext()) {
+				Evaluation test = testIt.next();
+				//System.out.printf(COURSETESTS_LISTING, test.g)
+			}
+		}
 	}
 
 	/**

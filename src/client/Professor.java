@@ -1,5 +1,5 @@
 package client;
 
-public interface Professor {
+public interface Professor extends Person{
 
 }

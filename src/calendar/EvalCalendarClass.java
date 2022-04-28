@@ -146,7 +146,7 @@ public class EvalCalendarClass implements EvalCalendar {
 			
 			for (int professorIndex = 0; professorIndex < professors.size(); professorIndex++) {
 				Person professor = professors.get(professorIndex);
-				if (professor instanceof Professor && 
+				if (/*professor instanceof Professor && */
 						professor.isInAllCourses(courseNames, numCourses) && 
 						!professorIntersection.searchForward(professor))
 					professorIntersection.insertLast(professor);
@@ -166,7 +166,7 @@ public class EvalCalendarClass implements EvalCalendar {
 			
 			for (int studentIndex = 0; studentIndex < students.size(); studentIndex++) {
 				Person student = students.get(studentIndex);
-				if (student instanceof Student && 
+				if (/*student instanceof Student && */
 						student.isInAllCourses(courseNames, numCourses) && 
 						!studentIntersection.searchForward(student))
 					studentIntersection.insertLast(student);
