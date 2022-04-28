@@ -21,25 +21,4 @@ public class StudentClass extends AbstractPersonClass implements Student {
 	public String getId() {
 		return id;
 	}
-	
-	/**
-	 * Compares two students <code>id</code>'s
-	 * 
-	 * @return true if both students <code>id</code>'s are the same
-	 */
-	/*
-	@Override
-	public boolean equals(Object other) {
-		if (other instanceof StudentClass)
-			if (this.getId().equals(((Person) other).getId()))
-				return true;
-			else
-				return false;
-		else
-			if (this.getName().equals(((Person) other).getName()))
-				return true;
-			else
-				return false;
-	}
-	*/
 }

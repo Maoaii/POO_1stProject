@@ -11,8 +11,6 @@ public interface Person extends Comparable<Person>{
 	 */
 	public String getName();
 	
-	
-	
 	/**
 	 * Checks if <code>this</code> person is the same as <code>other</code>,
 	 * based on parameters such as the <code>name</code> and/or <code>id</code>
@@ -59,6 +57,10 @@ public interface Person extends Comparable<Person>{
 	
 	
 	public Array<Evaluation> getDeadlines();
+	
+	public Array<Evaluation> getTests();
+	
+	public Array<Evaluation> getEvaluations();
 	
 	
 	public boolean hasDeadlines();

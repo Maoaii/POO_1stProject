@@ -1,9 +1,13 @@
 package course;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import client.Person;
 import client.ProfessorClass;
 import dataStructures.Array;
 import dataStructures.ArrayClass;
+import dataStructures.Iterator;
 
 public class CourseClass implements Course {
 	
@@ -49,7 +53,7 @@ public class CourseClass implements Course {
 	}
 
 	@Override
-	public void addTest(Evaluation test) {
+	public void scheduleTest(Evaluation test) {
 		tests.insertLast(test);
 	}
 	
@@ -61,6 +65,48 @@ public class CourseClass implements Course {
 	@Override
 	public boolean isDeadlineSet(String deadlineName) {
 		return deadlines.searchForward(new DeadlineClass(deadlineName, null, null));
+	}
+	
+	@Override
+	public boolean isTestNameTaken(String testName) {
+		return tests.searchForward(new TestClass(null, null, null, null, testName));
+	}
+	
+	@Override
+	public boolean isTestTimeConflicting(LocalDate date, LocalTime startTime, LocalTime endTime) {
+		Iterator<Evaluation> testIt = tests.iterator();
+		boolean hasConflictingTime = false;
+		
+		while (!hasConflictingTime && testIt.hasNext()) {
+			Evaluation test = testIt.next();
+			
+			if (date.equals(((Evaluation) test).getEvalDate())) {
+				if (!(endTime.isBefore(((Test) test).getTestStartTime()) || startTime.isAfter(((Test) test).getTestEndTime()))) {
+					hasConflictingTime = true;
+				}
+			}
+			
+		}
+		
+		
+		return hasConflictingTime;
+	}
+	
+	@Override
+	public boolean isTestDateConflicting(LocalDate date) {
+		Iterator<Evaluation> testIt = tests.iterator();
+		boolean hasConflictingDate = false;
+		
+		while (!hasConflictingDate && testIt.hasNext()) {
+			Evaluation test = testIt.next();
+			
+			if (date.equals(((Evaluation) test).getEvalDate())) {
+				hasConflictingDate = true;
+			}
+		}
+		
+		
+		return hasConflictingDate;
 	}
 
 	@Override

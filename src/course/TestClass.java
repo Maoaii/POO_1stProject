@@ -1,27 +1,34 @@
-package course;
+-package course;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class TestClass extends AbstractEvaluationClass implements Test {
 	// Instance variables
-	private LocalTime time;
+	private LocalTime startTime;
+	private LocalTime endTime;
+	
 	
 	/**
 	 * Test Class constructor
 	 * 
 	 * @param name
 	 * @param date
-	 * @param time
+	 * @param startTime
 	 * @pre name != null && date != nunll && time != null
 	 */
-	public TestClass(String name, LocalDate date, LocalTime time, String courseName) {
+	public TestClass(LocalDate date, LocalTime startTime, LocalTime endTime, String courseName, String name) {
 		super(name, date, courseName);
-		this.time = time;
+		this.startTime = startTime;
+		this.endTime = endTime;
 	}
 
 	@Override
-	public LocalTime getTestTime() {
-		return time;
+	public LocalTime getTestStartTime() {
+		return startTime;
+	}
+	
+	public LocalTime getTestEndTime(){
+		return endTime;
 	}
 }

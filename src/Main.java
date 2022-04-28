@@ -1,4 +1,6 @@
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import calendar.EvalCalendar;
@@ -8,6 +10,7 @@ import client.Professor;
 import client.Student;
 import course.Course;
 import course.Evaluation;
+import course.Test;
 import dataStructures.Iterator;
 
 public class Main {
@@ -110,20 +113,18 @@ public class Main {
 	
 		// COURSETESTS COMMAND
 	private static final String COURSETESTS_HEADER = "Tests for course %s:\n";
-	private static final String COURSETESTS_LISTING = "%s-%s-%s %sh%s-%sh%s: %s\n";
+	private static final String COURSETESTS_LISTING = "%s %dh%d-%dh%d: %s\n";
 	private static final String NO_TESTS_SCHEDULED = "No scheduled tests for %s!\n";
 	
 		// PERSONALTESTS COMMAND
 	private static final String PERSONALTESTS_HEADER = "Tests for %s:\n";
-	private static final String PERSONALTESTS_LISTIN = "%s-%s-%s %sh%s-%sh%s: %s - %s\n";
+	private static final String PERSONALTESTS_LISTIN = "%s %dh%d-%dh%d: %s - %s\n";
 	
 		// SCHEDULE COMMAND
-	private static final String FREE = "free ";
-	private static final String MILD = "mild ";
-	private static final String SEVERE = "severe ";
-	private static final String SCHEDULE_ADDED = "%s %s %s-%s-%s %sh%s-%sh%s (%d, %d)\n";
+	private static final String TEST_SCHEDULED = "%s %s %s %s %s-%s (%d, %d)\n";
 	private static final String TEST_ALREADY_EXISTS = "Course %s already has a test named %s!\n";
 	private static final String CANNOT_SCHEDULE = "Cannot schedule test %s at that time!\n";
+	private static final String WRITE_TIME_FORMAT = "HH'h'mm";
 	
 		// SUPERPROFESSOR COMMAND
 	private static final String SUPERPROFESSOR = "%s (%d).\n";
@@ -168,8 +169,8 @@ public class Main {
 				case DEADLINE: processDeadline(in, cal); break;
 				case COURSETESTS: processCourseTests(in, cal); break;
 				case PERSONALTESTS: processPersonalTests(in, cal); break;
-				case SCHEDULE: processSchedule(); break;
-				case SUPERPROFESSOR: processSuperProfessor(); break;
+				case SCHEDULE: processSchedule(in, cal); break;
+				case SUPERPROFESSOR: processSuperProfessor(cal); break;
 				case STRESSOMETER: processStressometer(); break;
 				default: System.out.printf(UNKNOWN_COMMAND, cmd); break;
 			}
@@ -471,10 +472,16 @@ public class Main {
 			else {	
 				Iterator<Person> professorIt = cal.listProfessorIntersection(courseNames, validCourses);
 				Iterator<Person> studentIt = cal.listStudentIntersection(courseNames, validCourses);
-				listPeople(professorIt, studentIt);
+				if (professorIt.hasNext() || studentIt.hasNext()) {
+					listPeople(professorIt, studentIt);
+				}
+				else {
+					System.out.println(NO_INTERSECTION);
+				}
+				
 			}
 		}
-		
+
 	}
 	
 	private static void listPeople(Iterator<Person> professorIt, Iterator<Person> studentIt) {
@@ -584,13 +591,21 @@ public class Main {
 			System.out.printf(COURSE_NOT_EXISTS, courseName);
 		}
 		else {
-			System.out.printf(COURSETESTS_HEADER, courseName);
 			Iterator<Evaluation> testIt = cal.listCourseTests(courseName);
-			
-			while(testIt.hasNext()) {
-				Evaluation test = testIt.next();
-				//System.out.printf(COURSETESTS_LISTING, test.g)
+			if(!testIt.hasNext()){
+				System.out.printf(NO_TESTS_SCHEDULED, courseName);
 			}
+			else {
+				System.out.printf(COURSETESTS_HEADER, courseName);
+				while(testIt.hasNext()) {
+					Evaluation test = testIt.next();
+					System.out.printf(COURSETESTS_LISTING, test.getEvalDate().toString(), 
+					((Test)test).getTestStartTime().getHour(), ((Test)test).getTestStartTime().getMinute(), 
+					((Test)test).getTestEndTime().getHour(), ((Test)test).getTestEndTime().getMinute(), 
+					test.getEvalName());
+				}
+			}
+			
 		}
 	}
 
@@ -600,19 +615,110 @@ public class Main {
 	 * @param cal
 	 */
 	private static void processPersonalTests(Scanner in, EvalCalendar cal) {
+		String name = in.nextLine().trim();
 		
+		if(!cal.isNameRegistered(name)){
+			System.out.printf(PERSON_NOT_EXISTS, name);
+		}
+		else{
+			Iterator<Evaluation> testIt = cal.listStudentTests(name);
+			if(!testIt.hasNext()){
+				System.out.printf(NO_TESTS_SCHEDULED, name);
+			}
+			else{
+				System.out.printf(PERSONALTESTS_HEADER, name);
+				while(testIt.hasNext()){
+					Evaluation test = testIt.next();
+					System.out.printf(PERSONALTESTS_LISTIN, test.getEvalDate().toString(), 
+					((Test)test).getTestStartTime().getHour(), ((Test)test).getTestStartTime().getMinute(), 
+					((Test)test).getTestEndTime().getHour(), ((Test)test).getTestEndTime().getMinute(), 
+					test.getEvalName(), test.getCourseName());
+
+				}
+			}
+		}
 		
 	}
 
-
-	private static void processSchedule() {
-		// TODO Auto-generated method stub
+	/**
+	 * 
+	 * @param in
+	 * @param cal
+	 */
+	/**
+	 * TODO:
+	 * Criar uma classe conflito. Ela guarda:
+	 * - o tipo de conflito que é (free, mild, severe);
+	 * - um array de alunos que têm conflitos;
+	 * - um array de professores que têm conflitos;
+	 * 
+	 * Quando fazemos schedule de um teste, ele retorna
+	 * um objeto do tipo conflito, do qual posso tirar o seu tipo, número de estudantes e professores em conflito.
+	 * 
+	 * 
+	 * Dentro do método que faz schedule no sistema:
+	 * - Crio um objeto temporário "teste" - o teste que queremos inserir;
+	 * 
+	 * - Arranjo o curso no qual queremos inserir o teste;
+	 * 
+	 * - Faço a interseção dos alunos/professores desse curso com os outros e recebo um iterador de alunos/professores;
+	 * 
+	 * - Pego em cada aluno/professor e passo-lhe o teste;
+	 * 
+	 * 		Classe Pessoa:
+	 * 		- O aluno/professor pega no teste e vai aos cursos em que está inserido, à exceção do curso em que o teste vai ser inserido,
+	 * 		e vê se há conflito de data e hora, ou só de data, entre o teste que vai ser marcado e os testes dos outros cursos;
+	 * 
+	 * - Se existir algum conflito, incremento um counter de estudante/professor em conflito, e retiro o tipo de conflito que tem;
+	 * 
+	 * - Assim que vi todos os alunos/professores, retorno à main um objeto do tipo conflito com o tipo de conflito,
+	 * número de estudantes em conflito e número de professores em conflito
+	 */
+	private static void processSchedule(Scanner in, EvalCalendar cal) {
 		
+		LocalDate testDate = LocalDate.of(in.nextInt(), in.nextInt(), in.nextInt());
+		LocalTime startTime = LocalTime.of(in.nextInt(), in.nextInt());
+		LocalTime endTime = startTime.plusMinutes(in.nextInt());
+		
+		DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern(WRITE_TIME_FORMAT);
+		
+		String courseName = in.nextLine().trim();
+		String testName = in.nextLine().trim();
+		
+		if (!cal.isCourseRegistered(courseName)) {
+			System.out.printf(COURSE_NOT_EXISTS, courseName);
+		}
+		else if (cal.isTestNameTaken(courseName, testName)) {
+			System.out.printf(TEST_ALREADY_EXISTS, courseName, testName);
+		}
+		else if (cal.isTestTimeTaken(testDate, startTime, endTime, courseName, testName)) {
+			System.out.printf(CANNOT_SCHEDULE, testName);
+		}
+		else {
+			int numProfessorsConflict = cal.getProfessorsConflict(); // TODO
+			int numStudentsConflict = cal.getStudentsConflict(); // TODO
+			
+			cal.scheduleTest(testDate, startTime, endTime, courseName, testName);
+			
+			System.out.printf(TEST_SCHEDULED, cal.getTestConflictType(testDate, startTime, endTime, courseName, testName),
+					courseName, testName, 
+					testDate.toString(), formatterTime.format(startTime), formatterTime.format(endTime),
+					numProfessorsConflict, numStudentsConflict); 
+		}
 	}
 
-
-	private static void processSuperProfessor() {
-		// TODO Auto-generated method stub
+	/**
+	 * 
+	 * @param cal
+	 */
+	private static void processSuperProfessor(EvalCalendar cal) {
+		if (!cal.areProfessorsRegistered()) {
+			System.out.println(NO_PROFESSORS);
+		}
+		else {
+			Person superProfessor = cal.getSuperProfessor();
+			System.out.printf(SUPERPROFESSOR, superProfessor.getName(), ((Professor) superProfessor).getNumStudents());
+		}
 		
 	}
 

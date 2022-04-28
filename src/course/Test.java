@@ -5,7 +5,13 @@ import java.time.LocalTime;
 public interface Test {
 	
 	/**
-	 * @return the this test's <code>time</code>
+	 * @return this test's <code>startTime</code>
 	 */
-	abstract public LocalTime getTestTime();
+	public LocalTime getTestStartTime();
+	
+	/**
+	 * 
+	 * @return this test's <code>endTime</code>
+	 */
+	public LocalTime getTestEndTime();
 }

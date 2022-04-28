@@ -47,7 +47,7 @@ public abstract class AbstractEvaluationClass implements Evaluation {
 		}
 		else {
 			if (this instanceof Test && other instanceof Test) {
-				if (((Test) this).getTestTime().equals(((Test) other).getTestTime())) {
+				if (((Test) this).getTestStartTime().equals(((Test) other).getTestStartTime())) {
 					return true;
 				}
 			}
@@ -75,7 +75,7 @@ public abstract class AbstractEvaluationClass implements Evaluation {
 		}
 		else {
 			if (this instanceof Test && other instanceof Test) {
-				int cmpTime = ((Test) this).getTestTime().compareTo(((Test) other).getTestTime());
+				int cmpTime = ((Test) this).getTestStartTime().compareTo(((Test) other).getTestStartTime());
 				if (cmpTime > 0) {
 					return IS_AFTER;
 				}

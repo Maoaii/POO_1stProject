@@ -1,5 +1,8 @@
 package course;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import client.Person;
 import dataStructures.Array;
 
@@ -39,7 +42,7 @@ public interface Course extends Comparable<Course>{
 	 * @param test
 	 * @pre test != null
 	 */
-	void addTest(Evaluation test);
+	void scheduleTest(Evaluation test);
 	
 	/**
 	 * Adds a new <code>deadline</code> to this course
@@ -55,6 +58,31 @@ public interface Course extends Comparable<Course>{
 	 * @return true if deadline with <code>deadlineName</code> is in course
 	 */
 	public boolean isDeadlineSet(String deadlineName);
+	
+	/**
+	 * @param testName
+	 * @pre testName != null
+	 * @return true if test with <code>testName</code> is in course
+	 */
+	public boolean isTestNameTaken(String testName);
+	
+	/**
+	 * @param date
+	 * @param startTime
+	 * @param endTime
+	 * @pre date != null && startTime != null && endTime != null
+	 * @return true if this test has a conflicting time with another one
+	 */
+	public boolean isTestTimeConflicting(LocalDate date, LocalTime startTime, LocalTime endTime);
+	
+	/**
+	 * @param date
+	 * @param startTime
+	 * @param endTime
+	 * @pre date != null && startTime != null && endTime != null
+	 * @return true if this test has a conflicting date with another one
+	 */
+	public boolean isTestDateConflicting(LocalDate date);
 	
 	/**
 	 * @return this course's <code>deadlines</code>

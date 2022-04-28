@@ -72,6 +72,34 @@ abstract public class AbstractPersonClass implements Person {
 		return deadlines.sort();
 	}
 	
+	public Array<Evaluation> getTests(){
+		Array<Evaluation> tests = new ArrayClass<Evaluation>();
+		
+		Iterator<Course> courseIt = courses.iterator();
+		
+		while (courseIt.hasNext()) {
+			Course course = courseIt.next();
+			
+			Iterator<Evaluation> courseTestsIt = course.getTests().iterator();
+			
+			while (courseTestsIt.hasNext()) {
+				tests.insertLast(courseTestsIt.next());
+			}
+		}
+
+		return tests.sort();
+	}
+	
+	public Array<Evaluation> getEvaluations(){
+		Array<Evaluation> deadlines = getDeadlines();
+		Array<Evaluation> tests = getTests();
+		Iterator<Evaluation> it = tests.iterator();
+		while(it.hasNext()){
+			deadlines.insertLast(it.next());
+		}
+		return deadlines.sort();
+	}
+	
 	@Override
 	public boolean hasDeadlines() {
 		Iterator<Course> courseIt = courses.iterator();

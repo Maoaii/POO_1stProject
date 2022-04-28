@@ -3,7 +3,7 @@ package client;
 import course.Evaluation;
 import dataStructures.Array;
 
-public interface Student extends  Person{
+public interface Student {
 	
 	/**
 	 * @return this student's <code>id</code>

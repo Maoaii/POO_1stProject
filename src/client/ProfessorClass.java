@@ -1,7 +1,9 @@
 package client;
 
+import course.Course;
 import course.Evaluation;
 import dataStructures.Array;
+import dataStructures.Iterator;
 
 public class ProfessorClass extends AbstractPersonClass implements Professor {
 
@@ -15,17 +17,16 @@ public class ProfessorClass extends AbstractPersonClass implements Professor {
 		super(name);
 	}
 	
-	/**
-	 * Compares two person's <code>name</code>
-	 * 
-	 * @return true if both people have the same <code>name</code>
-	 */
-	/*
 	@Override
-	public boolean equals(Object other) {
-		if (this.getName().equals(((Person) other).getName()))
-			return true;
-		return false;
+	public int getNumStudents() {
+		int numStudents = 0;
+		
+		Iterator<Course> courseIt = courses.iterator();
+		
+		while (courseIt.hasNext()) {
+			numStudents += courseIt.next().getNumStudents();
+		}
+		
+		return numStudents;
 	}
-	*/
 }
