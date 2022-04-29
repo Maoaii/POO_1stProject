@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import client.Person;
+import client.Stress;
 import course.Course;
 import course.Evaluation;
 import dataStructures.*;
@@ -19,7 +20,7 @@ public interface EvalCalendar {
 	public Iterator<Person> listPeople();
 
 	/**
-	 * @return true if there's atleast one person 
+	 * @return true if there's at least one person 
 	 *         registered in the <code>EvalCalendar</code> system
 	 */
 	public boolean arePeopleRegistered();
@@ -214,7 +215,7 @@ public interface EvalCalendar {
 	/**
 	 * @param courseName
 	 * @pre courseName != null
-	 * @return true if there's atleast one deadline on course with <code>courseName</code>
+	 * @return true if there's at least one deadline on course with <code>courseName</code>
 	 */
 	public boolean atleastOneDeadline(String courseName);
 	
@@ -234,7 +235,7 @@ public interface EvalCalendar {
 	/**
 	 * @param name
 	 * @pre name != null
-	 * @return true if student with <code>name</code> has atleast one <code>deadline</code>
+	 * @return true if student with <code>name</code> has at least one <code>deadline</code>
 	 */
 	public boolean doesStudentHaveDeadlines(String name);
 
@@ -365,5 +366,5 @@ public interface EvalCalendar {
 	 * 
 	 * @param nStudents
 	 */
-	public Iterator<Person> listTopNStressedStudents(int nStudents);
+	public Iterator<Stress> listStressedStudents();
 }

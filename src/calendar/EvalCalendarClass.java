@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import client.Person;
 import client.Professor;
 import client.ProfessorClass;
+import client.Stress;
 import client.Student;
 import client.StudentClass;
 import course.Course;
@@ -339,9 +340,18 @@ public class EvalCalendarClass implements EvalCalendar {
 	}
 
 	@Override
-	public Iterator<Person> listTopNStressedStudents(int nStudents) {
-		return null;
-		// TODO Auto-generated method stub
-
+	public Iterator<Stress> listStressedStudents() {
+		Array<Stress> strStudents = new ArrayClass<Stress>();
+		
+		for(int index = 0; index < people.size(); index++) {
+			Person person = people.get(index);
+			if(person instanceof Student) {
+				Stress stress = ((Student)person).getStress();
+				if(stress.hasStress()) {
+					strStudents.insertLast(stress);
+				}
+			}
+		}		
+		return strStudents.sort().iterator();
 	}
 }

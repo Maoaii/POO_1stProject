@@ -7,6 +7,7 @@ import calendar.EvalCalendar;
 import calendar.EvalCalendarClass;
 import client.Person;
 import client.Professor;
+import client.Stress;
 import client.Student;
 import course.Course;
 import course.Evaluation;
@@ -134,6 +135,7 @@ public class Main {
 	private static final String STRESSOMETER_HEADER = "Most stressed students:";
 	private static final String STRESSOMETER_LISTING = "%s %s (%d days %d evaluations)\n";
 	private static final String INVALID_NUM_STUDENTS = "Invalid number of students!";
+	private static final String NO_STRESS = "There are no stressed students right now!";
 
 	
 	
@@ -171,7 +173,7 @@ public class Main {
 				case PERSONALTESTS: processPersonalTests(in, cal); break;
 				case SCHEDULE: processSchedule(in, cal); break;
 				case SUPERPROFESSOR: processSuperProfessor(cal); break;
-				case STRESSOMETER: processStressometer(); break;
+				case STRESSOMETER: processStressometer(in, cal); break;
 				default: System.out.printf(UNKNOWN_COMMAND, cmd); break;
 			}
 			cmd = in.next().toUpperCase();
@@ -648,31 +650,31 @@ public class Main {
 	/**
 	 * TODO:
 	 * Criar uma classe conflito. Ela guarda:
-	 * - o tipo de conflito que é (free, mild, severe);
-	 * - um array de alunos que têm conflitos;
-	 * - um array de professores que têm conflitos;
+	 * - o tipo de conflito que ï¿½ (free, mild, severe);
+	 * - um array de alunos que tï¿½m conflitos;
+	 * - um array de professores que tï¿½m conflitos;
 	 * 
 	 * Quando fazemos schedule de um teste, ele retorna
-	 * um objeto do tipo conflito, do qual posso tirar o seu tipo, número de estudantes e professores em conflito.
+	 * um objeto do tipo conflito, do qual posso tirar o seu tipo, nï¿½mero de estudantes e professores em conflito.
 	 * 
 	 * 
-	 * Dentro do método que faz schedule no sistema:
-	 * - Crio um objeto temporário "teste" - o teste que queremos inserir;
+	 * Dentro do mï¿½todo que faz schedule no sistema:
+	 * - Crio um objeto temporï¿½rio "teste" - o teste que queremos inserir;
 	 * 
 	 * - Arranjo o curso no qual queremos inserir o teste;
 	 * 
-	 * - Faço a interseção dos alunos/professores desse curso com os outros e recebo um iterador de alunos/professores;
+	 * - Faï¿½o a interseï¿½ï¿½o dos alunos/professores desse curso com os outros e recebo um iterador de alunos/professores;
 	 * 
 	 * - Pego em cada aluno/professor e passo-lhe o teste;
 	 * 
 	 * 		Classe Pessoa:
-	 * 		- O aluno/professor pega no teste e vai aos cursos em que está inserido, à exceção do curso em que o teste vai ser inserido,
-	 * 		e vê se há conflito de data e hora, ou só de data, entre o teste que vai ser marcado e os testes dos outros cursos;
+	 * 		- O aluno/professor pega no teste e vai aos cursos em que estï¿½ inserido, ï¿½ exceï¿½ï¿½o do curso em que o teste vai ser inserido,
+	 * 		e vï¿½ se hï¿½ conflito de data e hora, ou sï¿½ de data, entre o teste que vai ser marcado e os testes dos outros cursos;
 	 * 
 	 * - Se existir algum conflito, incremento um counter de estudante/professor em conflito, e retiro o tipo de conflito que tem;
 	 * 
-	 * - Assim que vi todos os alunos/professores, retorno à main um objeto do tipo conflito com o tipo de conflito,
-	 * número de estudantes em conflito e número de professores em conflito
+	 * - Assim que vi todos os alunos/professores, retorno ï¿½ main um objeto do tipo conflito com o tipo de conflito,
+	 * nï¿½mero de estudantes em conflito e nï¿½mero de professores em conflito
 	 */
 	private static void processSchedule(Scanner in, EvalCalendar cal) {
 		
@@ -723,9 +725,27 @@ public class Main {
 	}
 
 
-	private static void processStressometer() {
-		// TODO Auto-generated method stub
-		
+	private static void processStressometer(Scanner in, EvalCalendar cal) {
+		int numStudents = in.nextInt();
+		in.nextLine();
+		if(numStudents < 1) {
+			System.out.println(INVALID_NUM_STUDENTS);
+		}
+		else {
+			Iterator<Stress> stressIt = cal.listStressedStudents();
+			if(!stressIt.hasNext()) {
+				System.out.println(NO_STRESS);
+			}
+			else {
+				System.out.println(STRESSOMETER_HEADER);
+				int numPrinted = 0;
+				while(stressIt.hasNext() && numPrinted < numStudents) {
+					Stress stress = stressIt.next();
+					System.out.printf(STRESSOMETER_LISTING, stress.getID(), stress.getName(), stress.getNumDays(), stress.getNumEvaluations());
+					numPrinted++;
+				}
+			}
+		}
 	}
 
 

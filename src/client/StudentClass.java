@@ -21,4 +21,9 @@ public class StudentClass extends AbstractPersonClass implements Student {
 	public String getId() {
 		return id;
 	}
+
+	@Override
+	public Stress getStress() {
+		return new StressClass(getEvaluations(), courses.size(), this);
+	}
 }
