@@ -26,13 +26,13 @@ public class StressClass implements Stress {
 					currentNumEvaluations++;
 					currentNumDays++;
 				}
-				else {
-					if(currentNumDays > numDays || (currentNumDays == numDays && currentNumEvaluations > numEvaluations)) {
-						numDays = currentNumDays;
-						numEvaluations = currentNumEvaluations;
-					}
+				else {					
 					currentNumDays = 1;
 					currentNumEvaluations = 1;
+				}
+				if(currentNumDays > numDays || (currentNumDays == numDays && currentNumEvaluations > numEvaluations)) {
+					numDays = currentNumDays;
+					numEvaluations = currentNumEvaluations;
 				}
 			}
 		}
