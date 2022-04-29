@@ -60,12 +60,25 @@ public abstract class AbstractEvaluationClass implements Evaluation {
 	public int compareTo(Evaluation other) {
 		int cmpDate = this.getEvalDate().compareTo(other.getEvalDate());
 		int cmpCourseName = this.getCourseName().compareTo(other.getCourseName());
+		int cmpEvalName = this.getEvalName().compareTo(other.getEvalName());
 		
 		if (cmpDate > 0) {
 			return IS_AFTER;
 		}
 		else if (cmpDate < 0) {
 			return IS_BEFORE;
+		}
+		else if (this instanceof Test && other instanceof Test) {
+			int cmpTime = ((Test) this).getTestStartTime().compareTo(((Test) other).getTestStartTime());
+			if (cmpTime > 0) {
+				return IS_AFTER;
+			}
+			else if (cmpTime < 0) {
+				return IS_BEFORE;
+			}
+			else {
+				return cmpCourseName;
+			}
 		}
 		else if (cmpCourseName > 0) {
 			return IS_AFTER;
@@ -74,17 +87,7 @@ public abstract class AbstractEvaluationClass implements Evaluation {
 			return IS_BEFORE;
 		}
 		else {
-			if (this instanceof Test && other instanceof Test) {
-				int cmpTime = ((Test) this).getTestStartTime().compareTo(((Test) other).getTestStartTime());
-				if (cmpTime > 0) {
-					return IS_AFTER;
-				}
-				else if (cmpTime < 0) {
-					return IS_BEFORE;
-				}
-			}
-			
-			return this.getEvalName().compareTo(other.getEvalName());
+			return cmpEvalName;
 		}
 	}
 }

@@ -176,18 +176,15 @@ public class EvalCalendarClass implements EvalCalendar {
 	public Iterator<Person> listProfessorIntersection(String[] courseNames, int numCourses) {
 		Array<Person> professorIntersection = new ArrayClass<Person>();
 		
-		for (int courseIndex = 0; courseIndex < numCourses; courseIndex++) {
-			Course course = courses.get(courses.searchIndexOf(new CourseClass(courseNames[courseIndex])));
-			Array<Person> professors = course.getProfessors();
+		Course course = courses.get(courses.searchIndexOf(new CourseClass(courseNames[0])));
+		Array<Person> professors = course.getProfessors();
 			
 			
-			for (int professorIndex = 0; professorIndex < professors.size(); professorIndex++) {
-				Person professor = professors.get(professorIndex);
-				if (professor.isInAllCourses(courseNames, numCourses) && 
-						!professorIntersection.searchForward(professor))
-					professorIntersection.insertLast(professor);
+		for (int professorIndex = 0; professorIndex < professors.size(); professorIndex++) {
+			Person professor = professors.get(professorIndex);
+			if (professor.isInAllCourses(courseNames, numCourses))
+				professorIntersection.insertLast(professor);
 			}	
-		}
 		
 		return professorIntersection.iterator();
 	}
@@ -195,18 +192,15 @@ public class EvalCalendarClass implements EvalCalendar {
 	@Override
 	public Iterator<Person> listStudentIntersection(String[] courseNames, int numCourses) {
 		Array<Person> studentIntersection = new ArrayClass<Person>();
-		
-		for (int courseIndex = 1; courseIndex < numCourses; courseIndex++) {
-			Course course = courses.get(courses.searchIndexOf(new CourseClass(courseNames[courseIndex])));
-			Array<Person> students = course.getStudents();
+
+		Course course = courses.get(courses.searchIndexOf(new CourseClass(courseNames[0])));
+		Array<Person> students = course.getStudents();
 			
-			for (int studentIndex = 0; studentIndex < students.size(); studentIndex++) {
-				Person student = students.get(studentIndex);
-				if (student.isInAllCourses(courseNames, numCourses) && 
-						!studentIntersection.searchForward(student))
-					studentIntersection.insertLast(student);
+		for (int studentIndex = 0; studentIndex < students.size(); studentIndex++) {
+			Person student = students.get(studentIndex);
+			if (student.isInAllCourses(courseNames, numCourses))
+				studentIntersection.insertLast(student);
 			}
-		}
 		return studentIntersection.iterator();
 	}
 
@@ -257,14 +251,21 @@ public class EvalCalendarClass implements EvalCalendar {
 	public Iterator<Evaluation> listCourseTests(String courseName) {
 		Course course = courses.get(courses.searchIndexOf(new CourseClass(courseName)));
 		
-		return course.getTests().iterator();
+		return course.getTests().sort().iterator();
 
 	}
 
 	@Override
 	public Iterator<Evaluation> listStudentTests(String name) {
 		Person student = people.get(people.searchIndexOf(new ProfessorClass(name)));
-		return student.getTests().iterator();
+		
+		
+		return student.getTests().sort().iterator();
+	}
+	
+	@Override
+	public boolean isStudent(String name) {
+		return people.get(people.searchIndexOf(new ProfessorClass(name))) instanceof Student;
 	}
 
 	@Override
@@ -286,37 +287,6 @@ public class EvalCalendarClass implements EvalCalendar {
 		Course course = courses.get(courses.searchIndexOf(new CourseClass(courseName)));
 		
 		return course.isTestTimeConflicting(date, startTime, endTime);
-	}
-	
-	@Override
-	public String getTestConflictType(LocalDate date, LocalTime startTime, LocalTime endTime, String courseName, String testName) {
-		Iterator<Course> courseIt = courses.iterator();
-		String conflict = FREE;
-		
-		while (courseIt.hasNext()) {
-			Course course = courseIt.next();
-			
-			if (!course.getCourseName().equals(courseName)) {
-				if (course.isTestTimeConflicting(date, startTime, endTime)) {
-					conflict = SEVERE;
-				}
-				else if (course.isTestDateConflicting(date) && conflict != SEVERE) {
-					conflict = MILD;
-				}
-			}
-		}
-		
-		return conflict;
-	}
-	
-	@Override
-	public int getProfessorsConflict() {
-		return 0;
-	}
-	
-	@Override
-	public int getStudentsConflict() {
-		return 0;
 	}
 
 	@Override

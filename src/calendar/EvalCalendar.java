@@ -289,6 +289,7 @@ public interface EvalCalendar {
 	 */
 	public Iterator<Evaluation> listStudentTests(String name);
 	
+	public boolean isStudent(String name);
 	
 	/**
 	 * 2.17 schedule COMMAND
@@ -332,13 +333,6 @@ public interface EvalCalendar {
 	 * @return true if test has conflicting times
 	 */
 	public boolean isTestTimeTaken(LocalDate date, LocalTime startTime, LocalTime endTime, String courseName, String testName);
-	
-	public String getTestConflictType(LocalDate date, LocalTime startTime, LocalTime endTime, String courseName, String testName);
-	
-	public int getProfessorsConflict();
-	
-	public int getStudentsConflict();
-	
 	
 	/**
 	 * 2.18 superprofessor COMMAND

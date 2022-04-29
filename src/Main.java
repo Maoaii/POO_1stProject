@@ -114,12 +114,12 @@ public class Main {
 	
 		// COURSETESTS COMMAND
 	private static final String COURSETESTS_HEADER = "Tests for course %s:\n";
-	private static final String COURSETESTS_LISTING = "%s %dh%d-%dh%d: %s\n";
+	private static final String COURSETESTS_LISTING = "%s %s-%s: %s\n";
 	private static final String NO_TESTS_SCHEDULED = "No scheduled tests for %s!\n";
 	
 		// PERSONALTESTS COMMAND
 	private static final String PERSONALTESTS_HEADER = "Tests for %s:\n";
-	private static final String PERSONALTESTS_LISTIN = "%s %dh%d-%dh%d: %s - %s\n";
+	private static final String PERSONALTESTS_LISTING = "%s %s-%s: %s - %s\n";
 	
 		// SCHEDULE COMMAND
 	private static final String TEST_SCHEDULED = "%s %s %s %s %s-%s (%d, %d)\n";
@@ -588,7 +588,7 @@ public class Main {
 
 
 	private static void processCourseTests(Scanner in, EvalCalendar cal) {
-		String courseName = in.next().trim();
+		String courseName = in.nextLine().trim();
 		if(!cal.isCourseRegistered(courseName)) {
 			System.out.printf(COURSE_NOT_EXISTS, courseName);
 		}
@@ -601,10 +601,11 @@ public class Main {
 				System.out.printf(COURSETESTS_HEADER, courseName);
 				while(testIt.hasNext()) {
 					Evaluation test = testIt.next();
+					DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern(WRITE_TIME_FORMAT);
 					System.out.printf(COURSETESTS_LISTING, test.getEvalDate().toString(), 
-					((Test)test).getTestStartTime().getHour(), ((Test)test).getTestStartTime().getMinute(), 
-					((Test)test).getTestEndTime().getHour(), ((Test)test).getTestEndTime().getMinute(), 
-					test.getEvalName());
+							formatterTime.format(((Test) test).getTestStartTime()),
+							formatterTime.format(((Test) test).getTestEndTime()),
+							test.getEvalName());
 				}
 			}
 			
@@ -619,8 +620,8 @@ public class Main {
 	private static void processPersonalTests(Scanner in, EvalCalendar cal) {
 		String name = in.nextLine().trim();
 		
-		if(!cal.isNameRegistered(name)){
-			System.out.printf(PERSON_NOT_EXISTS, name);
+		if(!cal.isNameRegistered(name) || !cal.isStudent(name)){
+			System.out.printf(STUDENT_NOT_EXISTS, name);
 		}
 		else{
 			Iterator<Evaluation> testIt = cal.listStudentTests(name);
@@ -631,10 +632,11 @@ public class Main {
 				System.out.printf(PERSONALTESTS_HEADER, name);
 				while(testIt.hasNext()){
 					Evaluation test = testIt.next();
-					System.out.printf(PERSONALTESTS_LISTIN, test.getEvalDate().toString(), 
-					((Test)test).getTestStartTime().getHour(), ((Test)test).getTestStartTime().getMinute(), 
-					((Test)test).getTestEndTime().getHour(), ((Test)test).getTestEndTime().getMinute(), 
-					test.getEvalName(), test.getCourseName());
+					DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern(WRITE_TIME_FORMAT);
+					System.out.printf(PERSONALTESTS_LISTING, test.getEvalDate().toString(), 
+							formatterTime.format(((Test) test).getTestStartTime()),
+							formatterTime.format(((Test) test).getTestEndTime()),
+							test.getCourseName(), test.getEvalName());
 
 				}
 			}
@@ -647,40 +649,11 @@ public class Main {
 	 * @param in
 	 * @param cal
 	 */
-	/**
-	 * TODO:
-	 * Criar uma classe conflito. Ela guarda:
-	 * - o tipo de conflito que � (free, mild, severe);
-	 * - um array de alunos que t�m conflitos;
-	 * - um array de professores que t�m conflitos;
-	 * 
-	 * Quando fazemos schedule de um teste, ele retorna
-	 * um objeto do tipo conflito, do qual posso tirar o seu tipo, n�mero de estudantes e professores em conflito.
-	 * 
-	 * 
-	 * Dentro do m�todo que faz schedule no sistema:
-	 * - Crio um objeto tempor�rio "teste" - o teste que queremos inserir;
-	 * 
-	 * - Arranjo o curso no qual queremos inserir o teste;
-	 * 
-	 * - Fa�o a interse��o dos alunos/professores desse curso com os outros e recebo um iterador de alunos/professores;
-	 * 
-	 * - Pego em cada aluno/professor e passo-lhe o teste;
-	 * 
-	 * 		Classe Pessoa:
-	 * 		- O aluno/professor pega no teste e vai aos cursos em que est� inserido, � exce��o do curso em que o teste vai ser inserido,
-	 * 		e v� se h� conflito de data e hora, ou s� de data, entre o teste que vai ser marcado e os testes dos outros cursos;
-	 * 
-	 * - Se existir algum conflito, incremento um counter de estudante/professor em conflito, e retiro o tipo de conflito que tem;
-	 * 
-	 * - Assim que vi todos os alunos/professores, retorno � main um objeto do tipo conflito com o tipo de conflito,
-	 * n�mero de estudantes em conflito e n�mero de professores em conflito
-	 */
 	private static void processSchedule(Scanner in, EvalCalendar cal) {
 		
 		LocalDate testDate = LocalDate.of(in.nextInt(), in.nextInt(), in.nextInt());
 		LocalTime startTime = LocalTime.of(in.nextInt(), in.nextInt());
-		LocalTime endTime = startTime.plusMinutes(in.nextInt());
+		LocalTime endTime = startTime.plusHours(in.nextInt());
 		
 		DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern(WRITE_TIME_FORMAT);
 		
@@ -697,15 +670,13 @@ public class Main {
 			System.out.printf(CANNOT_SCHEDULE, testName);
 		}
 		else {
-			int numProfessorsConflict = cal.getProfessorsConflict(); // TODO
-			int numStudentsConflict = cal.getStudentsConflict(); // TODO
 			
 			cal.scheduleTest(testDate, startTime, endTime, courseName, testName);
 			
-			System.out.printf(TEST_SCHEDULED, cal.getTestConflictType(testDate, startTime, endTime, courseName, testName),
+			System.out.printf(TEST_SCHEDULED, "help",
 					courseName, testName, 
 					testDate.toString(), formatterTime.format(startTime), formatterTime.format(endTime),
-					numProfessorsConflict, numStudentsConflict); 
+					0, 0); 
 		}
 	}
 

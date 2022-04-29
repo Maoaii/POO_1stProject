@@ -60,6 +60,8 @@ public interface Person extends Comparable<Person>{
 	
 	public Array<Evaluation> getTests();
 	
+	//public Array<Evaluation> getSortedTests();
+	
 	public Array<Evaluation> getEvaluations();
 	
 	
