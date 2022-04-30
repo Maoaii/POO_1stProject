@@ -90,6 +90,7 @@ abstract public class AbstractPersonClass implements Person {
 		return tests.sort();
 	}
 	
+	@Override
 	public Array<Evaluation> getEvaluations(){
 		Array<Evaluation> deadlines = getDeadlines();
 		Array<Evaluation> tests = getTests();
@@ -98,6 +99,23 @@ abstract public class AbstractPersonClass implements Person {
 			deadlines.insertLast(it.next());
 		}
 		return deadlines.sort();
+	}
+	
+	
+	@Override
+	public int getNumConflicts(Array<Course> conflictCourses, Course courseToScheduleIn) {
+		int numConflicts = 0;
+		
+		Iterator<Course> coursesIt = conflictCourses.iterator();
+		
+		while (coursesIt.hasNext()) {
+			Course course = coursesIt.next();
+			if (courses.searchForward(course) && !course.equals(courseToScheduleIn)) {
+				numConflicts++;
+			}
+		}
+		
+		return numConflicts;
 	}
 	
 	@Override

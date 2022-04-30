@@ -1,6 +1,6 @@
 package client;
 
-public interface Stress {
+public interface Stress extends Comparable<Stress>{
 
 	public int compareTo(Stress other);
 	

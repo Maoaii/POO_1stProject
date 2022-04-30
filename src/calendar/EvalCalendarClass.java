@@ -9,6 +9,8 @@ import client.ProfessorClass;
 import client.Stress;
 import client.Student;
 import client.StudentClass;
+import course.Conflict;
+import course.ConflictClass;
 import course.Course;
 import course.CourseClass;
 import course.DeadlineClass;
@@ -269,11 +271,94 @@ public class EvalCalendarClass implements EvalCalendar {
 	}
 
 	@Override
-	public void scheduleTest(LocalDate date, LocalTime startTime, LocalTime endTime, 
+	public Conflict scheduleTest(LocalDate date, LocalTime startTime, LocalTime endTime, 
 			String courseName, String testName) {
+		int numProfsConflict = 0;
+		int numStudentsConflict = 0;
+		boolean isSevere = false;
+		boolean isMild = false;
+		
+		
+		
+		
+		Iterator<Course> coursesIt = courses.iterator();
+		Array<Course> coursesTestSameTime = new ArrayClass<Course>();
+		Array<Course> coursesTestSameDate = new ArrayClass<Course>();
+		
+		while (coursesIt.hasNext()) {
+			Course indexedCourse = coursesIt.next();
+			
+			if (indexedCourse.isTestTimeConflicting(date, startTime, endTime)) {
+				coursesTestSameTime.insertLast(indexedCourse);
+			}
+			else if (indexedCourse.isTestDateConflicting(date)) {
+				coursesTestSameDate.insertLast(indexedCourse);
+			}
+		}
+		
+		
+		// Pego no curso em que vamos inserir o teste
 		Course course = courses.get(courses.searchIndexOf(new CourseClass(courseName)));
 		
+		// Pego no array de estudantes e no de professores do curso
+		Iterator<Person> professorsIt = course.getProfessors().iterator();
+		Iterator<Person> studentsIt = course.getStudents().iterator();
+		
+		
+		// Itero pelas pessoas (primeiro professor, depois estudantes)
+		while (professorsIt.hasNext()) {
+			Person professor = professorsIt.next();
+			
+			// Em cada pessoa, vejo se ela está em mais algum curso do array
+			// Por cada curso a mais em que está, aumenta o counter de estudante/professor em conflito
+			int numConflictsTime = professor.getNumConflicts(coursesTestSameTime, course);
+			int numConflictsDate = professor.getNumConflicts(coursesTestSameDate, course);
+			
+			if (numConflictsTime > 0) {
+				isSevere = true;
+			}
+			else if (numConflictsDate > 0 && !isSevere) {
+				isMild = true;
+			}
+			
+			numProfsConflict = numProfsConflict + numConflictsTime + numConflictsDate;
+		}
+		
+		while (studentsIt.hasNext()) {
+			Person student = studentsIt.next();
+			
+			// Em cada pessoa, vejo se ela está em mais algum curso do array
+			// Por cada curso a mais em que está, aumenta o counter de estudante/professor em conflito
+			int numConflictsTime = student.getNumConflicts(coursesTestSameTime, course);
+			int numConflictsDate = student.getNumConflicts(coursesTestSameDate, course);
+			
+			if (numConflictsTime > 0) {
+				isSevere = true;
+			}
+			else if (numConflictsDate > 0 && !isSevere) {
+				isMild = true;
+			}
+			
+			numStudentsConflict = numStudentsConflict + numConflictsTime + numConflictsDate;
+		}
+		
+		
 		course.scheduleTest(new TestClass(date, startTime, endTime, courseName, testName));
+		
+		// Para saber o tipo de conflito:
+		// Retornar um objeto to tipo Conflict com essa informação toda
+		// Se contei alguém do array de conflito de tempo, é severe
+		if (isSevere) {
+			return new ConflictClass("severe", numProfsConflict, numStudentsConflict);
+		}
+		// Se não contei ninguém do conflito de tempo, mas contei do conflito de data, é mild
+		else if (isMild) {
+			return new ConflictClass("mild", numProfsConflict, numStudentsConflict);
+		}
+		// Se não há ninguém em conflito, é free
+		else {
+			return new ConflictClass("free", numProfsConflict, numStudentsConflict);
+		}
 	}
 
 	@Override

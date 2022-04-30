@@ -85,7 +85,6 @@ public class CourseClass implements Course {
 					hasConflictingTime = true;
 				}
 			}
-			
 		}
 		
 		

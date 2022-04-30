@@ -60,10 +60,9 @@ public interface Person extends Comparable<Person>{
 	
 	public Array<Evaluation> getTests();
 	
-	//public Array<Evaluation> getSortedTests();
-	
 	public Array<Evaluation> getEvaluations();
 	
+	public int getNumConflicts(Array<Course> conflictCourses, Course courseToScheduleIn);
 	
 	public boolean hasDeadlines();
 

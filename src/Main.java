@@ -9,6 +9,7 @@ import client.Person;
 import client.Professor;
 import client.Stress;
 import client.Student;
+import course.Conflict;
 import course.Course;
 import course.Evaluation;
 import course.Test;
@@ -133,7 +134,7 @@ public class Main {
 	
 		// STRESSOMETER COMMAND
 	private static final String STRESSOMETER_HEADER = "Most stressed students:";
-	private static final String STRESSOMETER_LISTING = "%s %s (%d days %d evaluations)\n";
+	private static final String STRESSOMETER_LISTING = "%s %s (%d days, %d evaluations)\n";
 	private static final String INVALID_NUM_STUDENTS = "Invalid number of students!";
 	private static final String NO_STRESS = "There are no stressed students right now!";
 
@@ -671,12 +672,12 @@ public class Main {
 		}
 		else {
 			
-			cal.scheduleTest(testDate, startTime, endTime, courseName, testName);
+			Conflict conflict = cal.scheduleTest(testDate, startTime, endTime, courseName, testName);
 			
-			System.out.printf(TEST_SCHEDULED, "help",
+			System.out.printf(TEST_SCHEDULED, conflict.getConflictType(),
 					courseName, testName, 
 					testDate.toString(), formatterTime.format(startTime), formatterTime.format(endTime),
-					0, 0); 
+					conflict.getNumProfsConflict(), conflict.getNumStudentsConflict()); 
 		}
 	}
 

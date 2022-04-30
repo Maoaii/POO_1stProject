@@ -5,6 +5,7 @@ import java.time.LocalTime;
 
 import client.Person;
 import client.Stress;
+import course.Conflict;
 import course.Course;
 import course.Evaluation;
 import dataStructures.*;
@@ -307,7 +308,7 @@ public interface EvalCalendar {
 	 * @param testName
 	 * @pre courseName != null && testName != null
 	 */
-	public void scheduleTest(LocalDate date, LocalTime startTime, LocalTime endTime, 
+	public Conflict scheduleTest(LocalDate date, LocalTime startTime, LocalTime endTime, 
 			String courseName, String testName);
 	
 	/**
