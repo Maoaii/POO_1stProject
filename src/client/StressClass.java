@@ -41,16 +41,16 @@ public class StressClass implements Stress {
 	
 	public int compareTo(Stress other){
 		if(numDays != other.getNumDays()) {
-			return numDays - other.getNumDays();
+			return other.getNumDays() - numDays;
 		}
 		else if(numEvaluations != other.getNumEvaluations()) {
-			return numEvaluations - other.getNumEvaluations();
+			return other.getNumEvaluations() - numEvaluations;
 		}
 		else if(numCourses != other.getNumCourses()) {
-			return numCourses - other.getNumCourses();
+			return other.getNumCourses() - numCourses;
 		}
 		else {
-			return student.getId().compareTo(other.getID());
+			return -student.getId().compareTo(other.getID());
 		}
 	}
 
