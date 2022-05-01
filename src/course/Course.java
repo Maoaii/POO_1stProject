@@ -5,7 +5,13 @@ import java.time.LocalTime;
 
 import client.Person;
 import dataStructures.Array;
+import dataStructures.Iterator;
 
+/**
+ * A course. Has professors assigned, students enrolled and deadlines and tests registered.
+ *
+ * @author Lucas Girotto / Pedro Afonso
+ */
 public interface Course extends Comparable<Course>{
 
 	/**
@@ -83,26 +89,27 @@ public interface Course extends Comparable<Course>{
 	 * @return true if this test has a conflicting date with another one
 	 */
 	public boolean isTestDateConflicting(LocalDate date);
-	
+
 	/**
 	 * @return this course's <code>deadlines</code>
 	 */
-	public Array<Evaluation> getDeadlines();
-	
+	public Iterator<Evaluation> getDeadlinesSorted();
+
+
 	/**
 	 * @return this course's <code>tests</code>
 	 */
-	public Array<Evaluation> getTests();
+	public Iterator<Evaluation> getTestsSorted();
 	
 	/**
 	 * @return this course's <code>students</code>
 	 */
-	public Array<Person> getStudents();
+	public Iterator<Person> getStudents();
 	
 	/**
 	 * @return this course's <code>professors</code>
 	 */
-	public Array<Person> getProfessors();
+	public Iterator<Person> getProfessors();
 	
 	/**
 	 * @return the number of professors assigned to this course

@@ -10,7 +10,7 @@ public class ProfessorClass extends AbstractPersonClass implements Professor {
 	/**
 	 * Professor constructor
 	 * 
-	 * @param name
+	 * @param name - name for new professor
 	 * @pre name != null
 	 */
 	public ProfessorClass(String name) {

@@ -15,6 +15,7 @@ public class StressClass implements Stress {
 		this.numCourses = numCourses;
 		numDays = 0;
 		numEvaluations = 0;
+
 		if(evaluations.size() > 0){
 			int currentNumDays = 1;
 			int currentNumEvaluations = 1;
@@ -36,7 +37,6 @@ public class StressClass implements Stress {
 				}
 			}
 		}
-		
 	}
 	
 	public int compareTo(Stress other){

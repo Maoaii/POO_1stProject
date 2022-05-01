@@ -15,8 +15,8 @@ public abstract class AbstractEvaluationClass implements Evaluation {
 	/**
 	 * Abstract Evaluation Constructor
 	 * 
-	 * @param name
-	 * @param date
+	 * @param name - name for this evaluation
+	 * @param date - date for this evaluation
 	 * @pre name != null && date != null
 	 */
 	public AbstractEvaluationClass(String name, LocalDate date, String courseName) {
@@ -47,9 +47,7 @@ public abstract class AbstractEvaluationClass implements Evaluation {
 		}
 		else {
 			if (this instanceof Test && other instanceof Test) {
-				if (((Test) this).getTestStartTime().equals(((Test) other).getTestStartTime())) {
-					return true;
-				}
+				return ((Test) this).getTestStartTime().equals(((Test) other).getTestStartTime());
 			}
 			
 			return false;

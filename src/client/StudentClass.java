@@ -8,8 +8,8 @@ public class StudentClass extends AbstractPersonClass implements Student {
 	/**
 	 * Student constructor
 	 * 
-	 * @param name
-	 * @param id
+	 * @param name - name for this student
+	 * @param id - unique identifier for this student
 	 * @pre name != null && id != null
 	 */
 	public StudentClass(String name, String id) {

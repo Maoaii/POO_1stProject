@@ -64,7 +64,7 @@ public class CourseClass implements Course {
 	
 	@Override
 	public boolean isDeadlineSet(String deadlineName) {
-		return deadlines.searchForward(new DeadlineClass(deadlineName, null, null));
+		return deadlines.searchForward(new DeadlineClass(null, null, deadlineName));
 	}
 	
 	@Override
@@ -109,23 +109,24 @@ public class CourseClass implements Course {
 	}
 
 	@Override
-	public Array<Evaluation> getTests() {
-		return tests;
+	public Iterator<Evaluation> getTestsSorted() {
+		return tests.sort().iterator();
 	}
 	
 	@Override
-	public Array<Evaluation> getDeadlines() {
-		return deadlines;
+	public Iterator<Evaluation> getDeadlinesSorted() {
+		return deadlines.sort().iterator();
+	}
+
+	
+	@Override
+	public Iterator<Person> getStudents() {
+		return students.iterator();
 	}
 	
 	@Override
-	public Array<Person> getStudents() {
-		return students;
-	}
-	
-	@Override
-	public Array<Person> getProfessors() {
-		return professors;
+	public Iterator<Person> getProfessors() {
+		return professors.iterator();
 	}
 
 	@Override

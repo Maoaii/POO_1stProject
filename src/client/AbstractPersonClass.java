@@ -16,7 +16,7 @@ abstract public class AbstractPersonClass implements Person {
 	/**
 	 * Abstract Person constructor
 	 * 
-	 * @param name
+	 * @param name - this person's name
 	 * @pre name != null
 	 */
 	public AbstractPersonClass(String name) {
@@ -54,7 +54,7 @@ abstract public class AbstractPersonClass implements Person {
 	}
 	
 	@Override
-	public Array<Evaluation> getDeadlines() {
+	public Iterator<Evaluation> getDeadlinesSorted() {
 		Array<Evaluation> deadlines = new ArrayClass<Evaluation>();
 		
 		Iterator<Course> courseIt = courses.iterator();
@@ -62,55 +62,60 @@ abstract public class AbstractPersonClass implements Person {
 		while (courseIt.hasNext()) {
 			Course course = courseIt.next();
 			
-			Iterator<Evaluation> courseDeadlinesIt = course.getDeadlines().iterator();
+			Iterator<Evaluation> courseDeadlinesIt = course.getDeadlinesSorted();
 			
 			while (courseDeadlinesIt.hasNext()) {
 				deadlines.insertLast(courseDeadlinesIt.next());
 			}
 		}
 
-		return deadlines.sort();
+		return deadlines.sort().iterator();
 	}
-	
-	public Array<Evaluation> getTests(){
+
+	@Override
+	public Iterator<Evaluation> getTests(){
 		Array<Evaluation> tests = new ArrayClass<Evaluation>();
-		
+
 		Iterator<Course> courseIt = courses.iterator();
-		
+
 		while (courseIt.hasNext()) {
 			Course course = courseIt.next();
-			
-			Iterator<Evaluation> courseTestsIt = course.getTests().iterator();
-			
+
+			Iterator<Evaluation> courseTestsIt = course.getTestsSorted();
+
 			while (courseTestsIt.hasNext()) {
 				tests.insertLast(courseTestsIt.next());
 			}
 		}
 
-		return tests.sort();
+		return tests.sort().iterator();
 	}
 	
 	@Override
 	public Array<Evaluation> getEvaluations(){
-		Array<Evaluation> deadlines = getDeadlines();
-		Array<Evaluation> tests = getTests();
-		Iterator<Evaluation> it = tests.iterator();
-		while(it.hasNext()){
-			deadlines.insertLast(it.next());
+		Array<Evaluation> evaluations = new ArrayClass<>();
+		Iterator<Evaluation> deadlinesIt = getDeadlinesSorted();
+		Iterator<Evaluation> testsIt = getTests();
+
+		while(deadlinesIt.hasNext()){
+			evaluations.insertLast(deadlinesIt.next());
 		}
-		return deadlines.sort();
+
+		while (testsIt.hasNext()) {
+			evaluations.insertLast(testsIt.next());
+		}
+		return evaluations.sort();
 	}
-	
-	
+
 	@Override
 	public int getNumConflicts(Array<Course> conflictCourses, Course courseToScheduleIn) {
 		int numConflicts = 0;
 		
-		Iterator<Course> coursesIt = conflictCourses.iterator();
+		Iterator<Course> conflictCoursesIt = conflictCourses.iterator();
 		
-		while (coursesIt.hasNext()) {
-			Course course = coursesIt.next();
-			if (courses.searchForward(course) && !course.equals(courseToScheduleIn)) {
+		while (conflictCoursesIt.hasNext()) {
+			Course conflictCourse = conflictCoursesIt.next();
+			if (courses.searchForward(conflictCourse) && !conflictCourse.equals(courseToScheduleIn)) {
 				numConflicts++;
 			}
 		}
@@ -126,7 +131,7 @@ abstract public class AbstractPersonClass implements Person {
 		while (!found && courseIt.hasNext()) {
 			Course course = courseIt.next();
 			
-			if (course.getDeadlines().size() > 0)
+			if (course.getDeadlinesSorted().hasNext())
 				found = true;
 		}
 		
@@ -137,22 +142,11 @@ abstract public class AbstractPersonClass implements Person {
 	public boolean equals(Object other) {
 		// If they're both students
 		if (this instanceof Student && other instanceof Student) {
-			if (((Student) this).getId().equals(((Student) other).getId()))
-				return true;
-			else
-				return false;
+			return ((Student) this).getId().equals(((Student) other).getId());
 		}
 		else {
-			if (this.getName().equals(((Person) other).getName()))
-				return true;
-			else
-				return false;
+			return this.getName().equals(((Person) other).getName());
 		}
-	}
-	
-	@Override
-	public int compareTo(Person other) {
-		return 0;
 	}
 }
 

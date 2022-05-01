@@ -5,7 +5,15 @@ public class ConflictClass implements Conflict {
 	private String conflictType;
 	private int numProfsConflict;
 	private int numStudentsConflict;
-	
+
+	/**
+	 * Conflict Class constructor
+	 *
+	 * @param conflictType - the type of conflict
+	 * @param numProfsConflict - the number of professors in conflict
+	 * @param numStudentsConflict - the number of students in conflict
+	 * @pre conflictType != null
+	 */
 	public ConflictClass(String conflictType, int numProfsConflict, int numStudentsConflict) {
 		this.conflictType = conflictType;
 		this.numProfsConflict = numProfsConflict;

@@ -21,6 +21,10 @@ import dataStructures.ArrayClass;
 import dataStructures.Iterator;
 
 public class EvalCalendarClass implements EvalCalendar {
+	// Constants
+	private static final String FREE = "free";
+	private static final String MILD = "mild";
+	private static final String SEVERE = "severe";
 
 	// Instance variables
 	private final Array<Person> people;
@@ -35,7 +39,6 @@ public class EvalCalendarClass implements EvalCalendar {
 		courses = new ArrayClass<>();
 		superProfessor = null;
 	}
-	
 	
 	@Override
 	public Iterator<Person> listPeople() {
@@ -68,7 +71,7 @@ public class EvalCalendarClass implements EvalCalendar {
 	}
 
 	@Override
-	public boolean isIdUsed(String name, String id) {
+	public boolean isIdUsed(String id) {
 		return people.searchForward(new StudentClass("", id));
 	}
 
@@ -96,14 +99,14 @@ public class EvalCalendarClass implements EvalCalendar {
 	public Iterator<Person> listCourseProfessors(String courseName) {
 		Course course = courses.get(courses.searchIndexOf(new CourseClass(courseName)));
 		
-		return course.getProfessors().iterator();
+		return course.getProfessors();
 	}
 	
 	@Override
 	public Iterator<Person> listCourseStudents(String courseName) {
 		Course course = courses.get(courses.searchIndexOf(new CourseClass(courseName)));
 		
-		return course.getStudents().iterator();
+		return course.getStudents();
 	}
 	
 	@Override
@@ -117,7 +120,8 @@ public class EvalCalendarClass implements EvalCalendar {
 	public void assignProfessor(String name, String courseName) {
 		Course course = courses.get(courses.searchIndexOf(new CourseClass(courseName)));
 		Person professor = people.get(people.searchIndexOf(new ProfessorClass(name)));
-		
+
+		// Assign professor to course and add course to professor
 		course.assignProfessor(professor);
 		professor.addCourse(course);
 		
@@ -134,7 +138,8 @@ public class EvalCalendarClass implements EvalCalendar {
 	@Override
 	public void enrolStudents(int numStudents, String courseName, String[] studentNames) {
 		Course course = courses.get(courses.searchIndexOf(new CourseClass(courseName)));
-		
+
+		// Enroll students to course and add course to students
 		for (int student = 0; student < numStudents; student++) {
 			Person person = people.get(people.searchIndexOf(new ProfessorClass(studentNames[student])));
 			course.enrolStudent(person);
@@ -162,9 +167,8 @@ public class EvalCalendarClass implements EvalCalendar {
 			}
 		}
 	}
-
 	@Override
-	public boolean isStudentEnroled(String name, String courseName) {
+	public boolean isStudentEnrolled(String name, String courseName) {
 		Person student = people.get(people.searchIndexOf(new ProfessorClass(name)));
 		
 		return student.isInCourse(courseName);
@@ -175,14 +179,14 @@ public class EvalCalendarClass implements EvalCalendar {
 		Array<Person> professorIntersection = new ArrayClass<>();
 		
 		Course course = courses.get(courses.searchIndexOf(new CourseClass(courseNames[0])));
-		Array<Person> professors = course.getProfessors();
+		Iterator<Person> professorsIt = course.getProfessors();
 			
-			
-		for (int professorIndex = 0; professorIndex < professors.size(); professorIndex++) {
-			Person professor = professors.get(professorIndex);
-			if (professor.isInAllCourses(courseNames, numCourses))
+		while (professorsIt.hasNext()) {
+			Person professor = professorsIt.next();
+			if (professor.isInAllCourses(courseNames, numCourses)) {
 				professorIntersection.insertLast(professor);
-			}	
+			}
+		}
 		
 		return professorIntersection.iterator();
 	}
@@ -192,13 +196,15 @@ public class EvalCalendarClass implements EvalCalendar {
 		Array<Person> studentIntersection = new ArrayClass<>();
 
 		Course course = courses.get(courses.searchIndexOf(new CourseClass(courseNames[0])));
-		Array<Person> students = course.getStudents();
-			
-		for (int studentIndex = 0; studentIndex < students.size(); studentIndex++) {
-			Person student = students.get(studentIndex);
-			if (student.isInAllCourses(courseNames, numCourses))
+		Iterator<Person> studentsIt = course.getStudents();
+
+		while (studentsIt.hasNext()) {
+			Person student = studentsIt.next();
+			if (student.isInAllCourses(courseNames, numCourses)) {
 				studentIntersection.insertLast(student);
 			}
+		}
+
 		return studentIntersection.iterator();
 	}
 
@@ -206,7 +212,7 @@ public class EvalCalendarClass implements EvalCalendar {
 	public Iterator<Evaluation> listCourseDeadlines(String courseName) {
 		Course course = courses.get(courses.searchIndexOf(new CourseClass(courseName)));
 		
-		return course.getDeadlines().sort().iterator();
+		return course.getDeadlinesSorted();
 	}
 	
 	@Override
@@ -220,12 +226,13 @@ public class EvalCalendarClass implements EvalCalendar {
 	public Iterator<Evaluation> listPersonalDeadlines(String name) {
 		Person student = people.get(people.searchIndexOf(new ProfessorClass(name)));
 		
-		return student.getDeadlines().iterator();
+		return student.getDeadlinesSorted();
 	}
 	
 	@Override
 	public boolean doesStudentHaveDeadlines(String name) {
 		Person student = people.get(people.searchIndexOf(new ProfessorClass(name)));
+
 		return student.hasDeadlines();
 	}
 
@@ -234,7 +241,7 @@ public class EvalCalendarClass implements EvalCalendar {
 			String deadlineName) {
 		Course course = courses.get(courses.searchIndexOf(new CourseClass(courseName)));
 		
-		course.addDeadline(new DeadlineClass(deadlineName, date, courseName));
+		course.addDeadline(new DeadlineClass(date, courseName, deadlineName));
 	}
 
 	@Override
@@ -249,16 +256,15 @@ public class EvalCalendarClass implements EvalCalendar {
 	public Iterator<Evaluation> listCourseTests(String courseName) {
 		Course course = courses.get(courses.searchIndexOf(new CourseClass(courseName)));
 		
-		return course.getTests().sort().iterator();
+		return course.getTestsSorted();
 
 	}
 
 	@Override
 	public Iterator<Evaluation> listStudentTests(String name) {
 		Person student = people.get(people.searchIndexOf(new ProfessorClass(name)));
-		
-		
-		return student.getTests().sort().iterator();
+
+		return student.getTests();
 	}
 	
 	@Override
@@ -278,7 +284,9 @@ public class EvalCalendarClass implements EvalCalendar {
 		Iterator<Course> coursesIt = courses.iterator();
 		Array<Course> coursesTestSameTime = new ArrayClass<>();
 		Array<Course> coursesTestSameDate = new ArrayClass<>();
-		
+
+		// Get courses that have atleast one test scheduled with date or time conflict
+		// with the one being scheduled
 		while (coursesIt.hasNext()) {
 			Course indexedCourse = coursesIt.next();
 			
@@ -289,24 +297,21 @@ public class EvalCalendarClass implements EvalCalendar {
 				coursesTestSameDate.insertLast(indexedCourse);
 			}
 		}
+
+		// Course that the test will be scheduled in
+		Course courseToScheduleTest = courses.get(courses.searchIndexOf(new CourseClass(courseName)));
 		
-		
-		// Pego no curso em que vamos inserir o teste
-		Course course = courses.get(courses.searchIndexOf(new CourseClass(courseName)));
-		
-		// Pego no array de estudantes e no de professores do curso
-		Iterator<Person> professorsIt = course.getProfessors().iterator();
-		Iterator<Person> studentsIt = course.getStudents().iterator();
-		
-		
-		// Itero pelas pessoas (primeiro professor, depois estudantes)
+		// Get the professors and students in the course that the test will be scheduled in
+		Iterator<Person> professorsIt = courseToScheduleTest.getProfessors();
+		Iterator<Person> studentsIt = courseToScheduleTest.getStudents();
+
+
 		while (professorsIt.hasNext()) {
 			Person professor = professorsIt.next();
 			
-			// Em cada pessoa, vejo se ela est� em mais algum curso do array
-			// Por cada curso a mais em que est�, aumenta o counter de estudante/professor em conflito
-			int numConflictsTime = professor.getNumConflicts(coursesTestSameTime, course);
-			int numConflictsDate = professor.getNumConflicts(coursesTestSameDate, course);
+			// Get the number of time and date conflicts with the tests that the professor has
+			int numConflictsTime = professor.getNumConflicts(coursesTestSameTime, courseToScheduleTest);
+			int numConflictsDate = professor.getNumConflicts(coursesTestSameDate, courseToScheduleTest);
 			
 			if (numConflictsTime > 0) {
 				isSevere = true;
@@ -321,10 +326,9 @@ public class EvalCalendarClass implements EvalCalendar {
 		while (studentsIt.hasNext()) {
 			Person student = studentsIt.next();
 			
-			// Em cada pessoa, vejo se ela est� em mais algum curso do array
-			// Por cada curso a mais em que est�, aumenta o counter de estudante/professor em conflito
-			int numConflictsTime = student.getNumConflicts(coursesTestSameTime, course);
-			int numConflictsDate = student.getNumConflicts(coursesTestSameDate, course);
+			// Get the number of time and date conflicts with the tests that the student has
+			int numConflictsTime = student.getNumConflicts(coursesTestSameTime, courseToScheduleTest);
+			int numConflictsDate = student.getNumConflicts(coursesTestSameDate, courseToScheduleTest);
 			
 			if (numConflictsTime > 0) {
 				isSevere = true;
@@ -335,29 +339,26 @@ public class EvalCalendarClass implements EvalCalendar {
 			
 			numStudentsConflict = numStudentsConflict + numConflictsTime + numConflictsDate;
 		}
+
+		// Schedule the test
+		courseToScheduleTest.scheduleTest(new TestClass(date, startTime, endTime, courseName, testName));
 		
-		
-		course.scheduleTest(new TestClass(date, startTime, endTime, courseName, testName));
-		
-		// Para saber o tipo de conflito:
-		// Retornar um objeto to tipo Conflict com essa informa��o toda
-		// Se contei algu�m do array de conflito de tempo, � severe
+
 		if (isSevere) {
-			return new ConflictClass("severe", numProfsConflict, numStudentsConflict);
+			return new ConflictClass(SEVERE, numProfsConflict, numStudentsConflict);
 		}
-		// Se n�o contei ningu�m do conflito de tempo, mas contei do conflito de data, � mild
 		else if (isMild) {
-			return new ConflictClass("mild", numProfsConflict, numStudentsConflict);
+			return new ConflictClass(MILD, numProfsConflict, numStudentsConflict);
 		}
-		// Se n�o h� ningu�m em conflito, � free
 		else {
-			return new ConflictClass("free", numProfsConflict, numStudentsConflict);
+			return new ConflictClass(FREE, numProfsConflict, numStudentsConflict);
 		}
 	}
 
 	@Override
 	public boolean isTestNameTaken(String courseName, String testName) {
 		Course course = courses.get(courses.searchIndexOf(new CourseClass(courseName)));
+
 		return course.isTestNameTaken(testName);
 	}
 
@@ -376,13 +377,13 @@ public class EvalCalendarClass implements EvalCalendar {
 	@Override
 	public boolean areProfessorsRegistered() {
 		boolean foundProfessor = false;
-		int personIndex = 0;
-		
-		while (!foundProfessor && personIndex < people.size()) {
-			if (people.get(personIndex) instanceof Professor) {
+
+		Iterator<Person> peopleIt = people.iterator();
+
+		while (!foundProfessor && peopleIt.hasNext()) {
+			if (peopleIt.next() instanceof Professor) {
 				foundProfessor = true;
 			}
-			personIndex++;
 		}
 		
 		return foundProfessor;
@@ -390,17 +391,21 @@ public class EvalCalendarClass implements EvalCalendar {
 
 	@Override
 	public Iterator<Stress> listStressedStudents() {
-		Array<Stress> strStudents = new ArrayClass<>();
-		
-		for(int index = 0; index < people.size(); index++) {
-			Person person = people.get(index);
-			if(person instanceof Student) {
-				Stress stress = ((Student)person).getStress();
-				if(stress.hasStress()) {
-					strStudents.insertLast(stress);
+		Array<Stress> stressedStudents = new ArrayClass<>();
+
+		Iterator<Person> peopleIt = people.iterator();
+
+		while (peopleIt.hasNext()) {
+			Person person = peopleIt.next();
+
+			if (person instanceof Student) {
+				Stress studentStress = ((Student) person).getStress();
+				if (studentStress.hasStress()) {
+					stressedStudents.insertLast(studentStress);
 				}
 			}
-		}		
-		return strStudents.sort().iterator();
+		}
+
+		return stressedStudents.sort().iterator();
 	}
 }

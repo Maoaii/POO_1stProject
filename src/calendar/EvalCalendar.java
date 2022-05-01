@@ -10,6 +10,11 @@ import course.Course;
 import course.Evaluation;
 import dataStructures.*;
 
+/**
+ * Evaluation Calendar. Holds courses and people from the system.
+ *
+ * @author Lucas Girotto / Pedro Afonso
+ */
 public interface EvalCalendar {
 
 	/*
@@ -39,7 +44,7 @@ public interface EvalCalendar {
 	/**
 	 * Adds a new <code>Professor</code> to the <code>EvalCalendar</code> system
 	 *
-	 * @param name
+	 * @param name - name for new professor
 	 * @pre name != null
 	 */
 	public void addProfessor(String name);
@@ -52,26 +57,25 @@ public interface EvalCalendar {
 	/**
 	 * Adds a new <code>Student</code> to the <code>EvalCalendar</code> system
 	 * 
-	 * @param id
-	 * @param name
+	 * @param id - identifier for new student
+	 * @param name - name for new student
 	 * @pre id != null && name != null
 	 */
 	public void addStudent(String name, String id);
 	
 	/**
-	 * @param name
+	 * @param name - name to check if its registered
 	 * @pre name != null
 	 * @return true if <code>Name</code> is registered in the <code>EvalCalendar</code> system
 	 */
 	public boolean isNameRegistered(String name);
 	
 	/**
-	 * @param name
-	 * @param id
-	 * @pre name != null && id != null
+	 * @param id - id to check if its registered
+	 * @pre id != null
 	 * @return true if <code>id</code> is used by a <code>Student</code>
 	 */
-	public boolean isIdUsed(String name, String id);
+	public boolean isIdUsed(String id);
 
 	
 	/*
@@ -100,13 +104,13 @@ public interface EvalCalendar {
 	/**
 	 * Adds a new course to the <code>EvalCalendar</code> system
 	 * 
-	 * @param courseName
+	 * @param courseName - name for new course
 	 * @pre courseName != null
 	 */
 	public void addCourse(String courseName);
 	
 	/**
-	 * @param courseName
+	 * @param courseName - name to check if its registered
 	 * @pre courseName != null
 	 * @return true if there's a course with <code>name</code> registered
 	 * in the <code>EvalCalendar</code> system
@@ -122,7 +126,7 @@ public interface EvalCalendar {
 	 * Lists all <code>professors</code> registered to course with <code>courseName</code>
 	 * by assignment order
 	 *
-	 * @param courseName
+	 * @param courseName - name of course to list professors from
 	 * @pre courseName != null
 	 * @return a <code>Professor Iterator</code> that iterates all <code>Professor</code>'s in
 	 * <code>Course</code> with <code>courseNames</code>
@@ -133,7 +137,7 @@ public interface EvalCalendar {
 	 * Lists all <code>Students</code> registered to course with <code>CourseName</code>
 	 * by enrollment order
 	 *
-	 * @param courseName
+	 * @param courseName - name of course to list students from
 	 * @pre courseName != null
 	 * @return a <code>Student Iterator</code> that iterates all <code>Student</code>'s in
 	 * <code>Course</code> with <code>courseName</code>
@@ -141,7 +145,7 @@ public interface EvalCalendar {
 	public Iterator<Person> listCourseStudents(String courseName);
 	
 	/**
-	 * @param courseName
+	 * @param courseName - name of course to check if its empty
 	 * @pre courseName != null
 	 * @return true if <code>Course</code> with <code>courseName</code> has any
 	 * <code>Students</code> enrolled or <code>Professors</code> assigned
@@ -157,15 +161,15 @@ public interface EvalCalendar {
 	 * Assign a new <code>Professor</code> with <code>name</code>
 	 * to <code>Course</code> with <code>courseName</code>
 	 * 
-	 * @param name
-	 * @param courseName
+	 * @param name - name of professor to assign
+	 * @param courseName - name of course to assign professor
 	 * @pre name != null && courseName != null
 	 */
 	public void assignProfessor(String name, String courseName);
 
 	/**
-	 * @param name
-	 * @param courseName
+	 * @param name - name of professor to check if its assigned
+	 * @param courseName - name of course to check if professor is assigned
 	 * @pre name != null && courseName != null
 	 * @return true if <code>Professor</code> with <code>name</code> is assigned to
 	 * <code>Course</code> with <code>courseName</code>
@@ -181,20 +185,20 @@ public interface EvalCalendar {
 	 * Enrolls <code>numStudents</code> of <code>Student</code>'s with <code>studentName</code>
 	 * to <code>Course</code> with <code>courseName</code>
 	 *
-	 * @param numStudents
-	 * @param courseName
-	 * @param studentNames
+	 * @param numStudents - number of students to enroll
+	 * @param courseName - name of course to enroll students
+	 * @param studentNames - name of students to enroll
 	 * @pre courseName != null && studentNames != null
 	 */
 	public void enrolStudents(int numStudents, String courseName, String[] studentNames);
 
 	/**
-	 * @param name
-	 * @param courseName
+	 * @param name - name of student to check if its enrolled
+	 * @param courseName - name of course to check if student is enrolled
 	 * @return true if <code>Student</code> with <code>name</code> is enrolled in
 	 * <code>Course</code> with <code>courseName</code>
 	 */
-	public boolean isStudentEnroled(String name, String courseName);
+	public boolean isStudentEnrolled(String name, String courseName);
 
 	
 	/*
@@ -205,8 +209,8 @@ public interface EvalCalendar {
 	 * Lists all <code>Professor</code>'s that are assigned in all <code>Course</code>'s
 	 * with <code>courseNames</code>
 	 * 
-	 * @param courseNames
-	 * @param numCourses
+	 * @param courseNames - names of courses to intersect professors with
+	 * @param numCourses - number of courses to intersect professors with
 	 * @pre courseNames != null
 	 * @return a <code>Professor Iterator</code> that iterates intersected <code>Professors</code>'s
 	 */
@@ -215,8 +219,8 @@ public interface EvalCalendar {
 	/**
 	 * Lists all students that are enroled in all courses given
 	 * 
-	 * @param courseNames
-	 * @param numCourses
+	 * @param courseNames - names of courses to intersect students with
+	 * @param numCourses - number of courses to intersect students with
 	 * @pre courseNames != null
 	 * @return a <code>Student Iterator</code> that iterates intersected <code>Student</code>'s
 	 */
@@ -229,7 +233,7 @@ public interface EvalCalendar {
 	/**
 	 * Lists the <code>Course</code> with <code>courseName</code> <code>Deadline</code>'s
 	 * 
-	 * @param courseName
+	 * @param courseName - name of course to list deadlines from
 	 * @pre courseName != null
 	 * @return an <code>Evaluation Iterator</code> that iterates all the <code>Course</code>'s
 	 * <code>Deadline</code>'s
@@ -237,7 +241,7 @@ public interface EvalCalendar {
 	public Iterator<Evaluation> listCourseDeadlines(String courseName);
 	
 	/**
-	 * @param courseName
+	 * @param courseName - name of course to check if has atleast one deadline
 	 * @pre courseName != null
 	 * @return true if there's at least one <code>Deadline</code> on
 	 * <code>Course</code> with <code>courseName</code>
@@ -252,7 +256,7 @@ public interface EvalCalendar {
 	/**
 	 * Lists the <code>Deadline</code>'s from <code>Person</code> with <code>name</code>
 	 * 
-	 * @param name
+	 * @param name - name of person to list deadlines from
 	 * @pre name != null
 	 * @return an <code>Evaluation Iterator</code> that iterates through all
 	 * <code>Deadline</code>'s from <code>Person</code> with <code>name</code>
@@ -260,7 +264,7 @@ public interface EvalCalendar {
 	public Iterator<Evaluation> listPersonalDeadlines(String name);
 	
 	/**
-	 * @param name
+	 * @param name - name of student to check if it has deadlines
 	 * @pre name != null
 	 * @return true if <code>Student</code> with <code>name</code> has atleast one <code>Deadline</code>
 	 */
@@ -275,9 +279,9 @@ public interface EvalCalendar {
 	 * Adds a new <code>Deadline</code> with <code>deadlineName</code> to
 	 * <code>Course</code> with <code>courseName</code>
 	 * 
-	 * @param courseName
-	 * @param date
-	 * @param deadlineName
+	 * @param courseName - name of course to add deadline to
+	 * @param date - date of deadline to add
+	 * @param deadlineName - name of deadline to add
 	 * @pre courseName != null && date != null && deadlineName != null
 	 */
 	public void addDeadline(String courseName, LocalDate date, String deadlineName);
@@ -285,9 +289,10 @@ public interface EvalCalendar {
 	/**
 	 * Checks if <code>Course</code> with <code>courseName</code>
 	 * has <code>Deadline</code> with <code>deadlineName</code>
-	 * 
-	 * @param deadlineName
-	 * @pre deadlineName != null
+	 *
+	 * @param courseName - name of course to check deadline
+	 * @param deadlineName - name of deadline
+	 * @pre courseName != null && deadlineName != null
 	 * @return true if <code>Course</code> with <code>courseName</code>
 	 * has <code>Deadline</code> with <code>deadlineName</code>
 	 */
@@ -301,7 +306,7 @@ public interface EvalCalendar {
 	/**
 	 * Lists <code>Course</code>'s (with <code>courseName</code>) <code>Test</code>'s
 	 * 
-	 * @param courseName
+	 * @param courseName - name of course to list tests from
 	 * @pre courseName != null
 	 * @return a <code>Test Iterator</code> that iterates through all the <code>Course</code>'s
 	 * <code>Test</code>'s
@@ -316,13 +321,18 @@ public interface EvalCalendar {
 	/**
 	 * Lists <code>Student</code>'s (with <code>name</code>) <code>Test</code>'s
 	 * 
-	 * @param name
+	 * @param name - name of students to list tests from
 	 * @pre name != null
 	 * @return a <code>Test Iterator</code> that iterates through all the <code>Student</code>'s
 	 * <code>Test</code>'s
 	 */
 	public Iterator<Evaluation> listStudentTests(String name);
-	
+
+	/**
+	 * @param name - name of person to check if its a Student
+	 * @pre name != null
+	 * @return true if <code>Person</code> with <code>name</code> is a <code>Student</code>
+	 */
 	public boolean isStudent(String name);
 	
 	/*
@@ -332,11 +342,11 @@ public interface EvalCalendar {
 	/**
 	 * Schedules a new <code>Test</code> for <code>Course</code> with <code>courseName</code>
 	 *
-	 * @param date
-	 * @param startTime
-	 * @param endTime
-	 * @param courseName
-	 * @param testName
+	 * @param date - date to add test to
+	 * @param startTime - start time to add test to
+	 * @param endTime - end time to add test to
+	 * @param courseName - name of course to add test to
+	 * @param testName - name of test
 	 * @pre date != null && startTime != null && endTime != null && courseName != null && testName != null
 	 * @return a <code>Conflict</code> that holds the information regarding a <code>Test</code>'s conflict
 	 */
@@ -346,8 +356,8 @@ public interface EvalCalendar {
 	/**
 	 * Checks if <code>Course</code> with <code>courseName</code> has a <code>Test</code> with <code>testName</code>
 	 * 
-	 * @param courseName
-	 * @param testName
+	 * @param courseName - name of course to check
+	 * @param testName - name of test to check if exists
 	 * @pre courseName != null && testName != null
 	 * @return true if <code>Course</code> has a <code>Test</code> with <code>testName</code>
 	 */
@@ -356,11 +366,11 @@ public interface EvalCalendar {
 	/**
 	 * Checks if <code>Test</code> with <code>testName</code> has conflicting time with another one
 	 *
-	 * @param date
-	 * @param startTime
-	 * @param endTime
-	 * @param courseName
-	 * @param testName
+	 * @param date - date of test to check
+	 * @param startTime - start time of test to check
+	 * @param endTime - end time of test to check
+	 * @param courseName - name of course the test is in
+	 * @param testName - name of teste to check
 	 * @pre date != null && startTime != null && endTime != null && courseName != null && testName != null
 	 * @return true if <code>Test</code> has conflicting times with another <code>Test</code>
 	 */

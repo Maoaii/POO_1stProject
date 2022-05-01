@@ -262,7 +262,7 @@ public class Main {
 		String id = in.next().trim();
 		String name = in.nextLine().trim();
 		
-		if (cal.isIdUsed(name, id))
+		if (cal.isIdUsed(id))
 			System.out.printf(STUDENT_ID_EXISTS, id);
 		else if (cal.isNameRegistered(name))
 			System.out.printf(PERSON_EXISTS, name);
@@ -415,7 +415,7 @@ public class Main {
 				
 				if (!cal.isNameRegistered(studentName))
 					System.out.printf(STUDENT_NOT_EXISTS, studentName);
-				else if (cal.isStudentEnroled(studentName, courseName))
+				else if (cal.isStudentEnrolled(studentName, courseName))
 					System.out.printf(STUDENT_ALREADY_ASSIGNED, studentName, courseName);
 				else {
 					studentNames[validStudents] = studentName;
