@@ -21,22 +21,18 @@ import dataStructures.ArrayClass;
 import dataStructures.Iterator;
 
 public class EvalCalendarClass implements EvalCalendar {
-	// Constants
-	private static final String FREE = "free ";
-	private static final String MILD = "mild ";
-	private static final String SEVERE = "severe ";
-	
+
 	// Instance variables
-	private Array<Person> people;
-	private Array<Course> courses;
+	private final Array<Person> people;
+	private final Array<Course> courses;
 	private Person superProfessor;
 	
 	/**
 	 * Evaluation Calendar constructor
 	 */
 	public EvalCalendarClass() {
-		people = new ArrayClass<Person>();
-		courses = new ArrayClass<Course>();
+		people = new ArrayClass<>();
+		courses = new ArrayClass<>();
 		superProfessor = null;
 	}
 	
@@ -176,7 +172,7 @@ public class EvalCalendarClass implements EvalCalendar {
 
 	@Override
 	public Iterator<Person> listProfessorIntersection(String[] courseNames, int numCourses) {
-		Array<Person> professorIntersection = new ArrayClass<Person>();
+		Array<Person> professorIntersection = new ArrayClass<>();
 		
 		Course course = courses.get(courses.searchIndexOf(new CourseClass(courseNames[0])));
 		Array<Person> professors = course.getProfessors();
@@ -193,7 +189,7 @@ public class EvalCalendarClass implements EvalCalendar {
 	
 	@Override
 	public Iterator<Person> listStudentIntersection(String[] courseNames, int numCourses) {
-		Array<Person> studentIntersection = new ArrayClass<Person>();
+		Array<Person> studentIntersection = new ArrayClass<>();
 
 		Course course = courses.get(courses.searchIndexOf(new CourseClass(courseNames[0])));
 		Array<Person> students = course.getStudents();
@@ -277,13 +273,11 @@ public class EvalCalendarClass implements EvalCalendar {
 		int numStudentsConflict = 0;
 		boolean isSevere = false;
 		boolean isMild = false;
-		
-		
-		
-		
+
+
 		Iterator<Course> coursesIt = courses.iterator();
-		Array<Course> coursesTestSameTime = new ArrayClass<Course>();
-		Array<Course> coursesTestSameDate = new ArrayClass<Course>();
+		Array<Course> coursesTestSameTime = new ArrayClass<>();
+		Array<Course> coursesTestSameDate = new ArrayClass<>();
 		
 		while (coursesIt.hasNext()) {
 			Course indexedCourse = coursesIt.next();
@@ -309,8 +303,8 @@ public class EvalCalendarClass implements EvalCalendar {
 		while (professorsIt.hasNext()) {
 			Person professor = professorsIt.next();
 			
-			// Em cada pessoa, vejo se ela está em mais algum curso do array
-			// Por cada curso a mais em que está, aumenta o counter de estudante/professor em conflito
+			// Em cada pessoa, vejo se ela estï¿½ em mais algum curso do array
+			// Por cada curso a mais em que estï¿½, aumenta o counter de estudante/professor em conflito
 			int numConflictsTime = professor.getNumConflicts(coursesTestSameTime, course);
 			int numConflictsDate = professor.getNumConflicts(coursesTestSameDate, course);
 			
@@ -327,8 +321,8 @@ public class EvalCalendarClass implements EvalCalendar {
 		while (studentsIt.hasNext()) {
 			Person student = studentsIt.next();
 			
-			// Em cada pessoa, vejo se ela está em mais algum curso do array
-			// Por cada curso a mais em que está, aumenta o counter de estudante/professor em conflito
+			// Em cada pessoa, vejo se ela estï¿½ em mais algum curso do array
+			// Por cada curso a mais em que estï¿½, aumenta o counter de estudante/professor em conflito
 			int numConflictsTime = student.getNumConflicts(coursesTestSameTime, course);
 			int numConflictsDate = student.getNumConflicts(coursesTestSameDate, course);
 			
@@ -346,16 +340,16 @@ public class EvalCalendarClass implements EvalCalendar {
 		course.scheduleTest(new TestClass(date, startTime, endTime, courseName, testName));
 		
 		// Para saber o tipo de conflito:
-		// Retornar um objeto to tipo Conflict com essa informação toda
-		// Se contei alguém do array de conflito de tempo, é severe
+		// Retornar um objeto to tipo Conflict com essa informaï¿½ï¿½o toda
+		// Se contei alguï¿½m do array de conflito de tempo, ï¿½ severe
 		if (isSevere) {
 			return new ConflictClass("severe", numProfsConflict, numStudentsConflict);
 		}
-		// Se não contei ninguém do conflito de tempo, mas contei do conflito de data, é mild
+		// Se nï¿½o contei ninguï¿½m do conflito de tempo, mas contei do conflito de data, ï¿½ mild
 		else if (isMild) {
 			return new ConflictClass("mild", numProfsConflict, numStudentsConflict);
 		}
-		// Se não há ninguém em conflito, é free
+		// Se nï¿½o hï¿½ ninguï¿½m em conflito, ï¿½ free
 		else {
 			return new ConflictClass("free", numProfsConflict, numStudentsConflict);
 		}
@@ -396,7 +390,7 @@ public class EvalCalendarClass implements EvalCalendar {
 
 	@Override
 	public Iterator<Stress> listStressedStudents() {
-		Array<Stress> strStudents = new ArrayClass<Stress>();
+		Array<Stress> strStudents = new ArrayClass<>();
 		
 		for(int index = 0; index < people.size(); index++) {
 			Person person = people.get(index);

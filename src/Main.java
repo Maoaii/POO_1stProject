@@ -17,13 +17,13 @@ import dataStructures.Iterator;
 
 public class Main {
 	
-	// Constants
+	// Constant
 		// Commands
 	private enum Command {
 		UNKNOWN, EXIT, HELP, PEOPLE, PROFESSOR, STUDENT, COURSES, COURSE, ROSTER, ASSIGN, ENROL, INTERSECTION,
 		COURSEDEADLINES, PERSONALDEADLINES, DEADLINE, COURSETESTS, PERSONALTESTS, SCHEDULE, SUPERPROFESSOR,
-		STRESSOMETER;
-	};
+		STRESSOMETER
+	}
 	
 		// Output messages
 	private static final String UNKNOWN_COMMAND = "Unknown command %s. Type help to see available commands.\n";
@@ -224,7 +224,7 @@ public class Main {
 			System.out.println(PEOPLE_HEADER);
 			
 			while (it.hasNext()) {
-				Person person = (Person) it.next();
+				Person person = it.next();
 				if (person instanceof Student)
 					System.out.printf(PEOPLE_STUDENT, ((Student) person).getId(), person.getName(), person.getNumCourses());
 				else
@@ -347,7 +347,6 @@ public class Main {
 	 * Lists out all professors on given <code>course</code> by
 	 * assignment order
 	 * 
-	 * @param itProfessors
 	 * @pre itProfessors != null
 	 */
 	private static void listProfessors(Iterator<Person> itProfessors) {
@@ -362,7 +361,6 @@ public class Main {
 	 * Lists out all students on given <code>course</code> by
 	 * enrollment order
 	 * 
-	 * @param itStudents
 	 * @pre itStudents != null
 	 */
 	private static void listStudents(Iterator<Person> itStudents) {
@@ -537,9 +535,7 @@ public class Main {
 	}
 
 	/**
-	 * 
-	 * @param in
-	 * @param cal
+	 *
 	 */
 	private static void processPersonalDeadlines(Scanner in, EvalCalendar cal) {
 		String name = in.nextLine().trim();
@@ -614,9 +610,7 @@ public class Main {
 	}
 
 	/**
-	 * 
-	 * @param in
-	 * @param cal
+	 *
 	 */
 	private static void processPersonalTests(Scanner in, EvalCalendar cal) {
 		String name = in.nextLine().trim();
@@ -646,9 +640,7 @@ public class Main {
 	}
 
 	/**
-	 * 
-	 * @param in
-	 * @param cal
+	 *
 	 */
 	private static void processSchedule(Scanner in, EvalCalendar cal) {
 		
@@ -682,8 +674,7 @@ public class Main {
 	}
 
 	/**
-	 * 
-	 * @param cal
+	 *
 	 */
 	private static void processSuperProfessor(EvalCalendar cal) {
 		if (!cal.areProfessorsRegistered()) {
@@ -722,8 +713,8 @@ public class Main {
 
 
 	/**
-	 * @param in: input reader
-	 * @pre in != null
+	 * @param cmd
+	 * @pre cmd != null
 	 * @return a command of type <code>Command</code> 
 	 */
 	private static Command getCommand(String cmd) {
