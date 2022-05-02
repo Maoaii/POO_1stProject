@@ -399,7 +399,7 @@ public interface EvalCalendar {
 	
 	/**
 	 * Lists the top <code>nStudents</code> stressed <code>Student</code>'s
-	 * A <code>Student</code> is stressed based on the amount of <code>Evaluation</code>'s in one week
+	 * A <code>Student</code> is stressed based on the amount of consecutive <code>Evaluation</code>'s in an amount of time
 	 * 
 	 * @return a <code>Stress Iterator</code> that iterates through all <code>Student</code>'s that
 	 * are stressed

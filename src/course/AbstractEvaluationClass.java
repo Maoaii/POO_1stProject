@@ -3,9 +3,8 @@ package course;
 import java.time.LocalDate;
 
 public abstract class AbstractEvaluationClass implements Evaluation {
-	// Constants
-	private static final int IS_BEFORE = -1;
-	private static final int IS_AFTER = 1;
+	// Constant
+	private static final int IS_EQUAL = 0;
 	
 	// Instance variables
 	private final String name;
@@ -60,29 +59,17 @@ public abstract class AbstractEvaluationClass implements Evaluation {
 		int cmpCourseName = this.getCourseName().compareTo(other.getCourseName());
 		int cmpEvalName = this.getEvalName().compareTo(other.getEvalName());
 		
-		if (cmpDate > 0) {
-			return IS_AFTER;
+		if(cmpDate != IS_EQUAL) {
+			return cmpDate;
 		}
-		else if (cmpDate < 0) {
-			return IS_BEFORE;
-		}
-		else if (this instanceof Test && other instanceof Test) {
+		else if(this instanceof Test && other instanceof Test) {
 			int cmpTime = ((Test) this).getTestStartTime().compareTo(((Test) other).getTestStartTime());
-			if (cmpTime > 0) {
-				return IS_AFTER;
-			}
-			else if (cmpTime < 0) {
-				return IS_BEFORE;
-			}
-			else {
-				return cmpCourseName;
+			if(cmpTime != IS_EQUAL) {
+				return cmpTime;
 			}
 		}
-		else if (cmpCourseName > 0) {
-			return IS_AFTER;
-		}
-		else if (cmpCourseName < 0) {
-			return IS_BEFORE;
+		if(cmpCourseName != IS_EQUAL) {
+			return cmpCourseName;
 		}
 		else {
 			return cmpEvalName;

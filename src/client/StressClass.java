@@ -1,7 +1,7 @@
 package client;
 
-import dataStructures.*;
-import course.*;
+import dataStructures.Array;
+import course.Evaluation;
 
 public class StressClass implements Stress {
 
@@ -10,12 +10,28 @@ public class StressClass implements Stress {
 	private final int numCourses;
 	private final Student student;
 	
+	/**
+	 * Stress Class constructor
+	 * 
+	 * @param evaluations: all of the student's evaluations
+	 * @param numCourses: the number of courses the student is enroled
+	 * @param student: the student himself
+	 */
 	public StressClass(Array<Evaluation> evaluations, int numCourses, Student student){
 		this.student = student;
 		this.numCourses = numCourses;
+		calculateConsecutiveDays(evaluations);
+	}
+	
+	
+	/**
+	 * Calculates the number of consecutive days and evaluations based on all of the student's evaluations
+	 * 
+	 * @param evaluations: array with a student's evaluations
+	 */
+	private void calculateConsecutiveDays(Array<Evaluation>  evaluations) {
 		numDays = 0;
 		numEvaluations = 0;
-
 		if(evaluations.size() > 0){
 			int currentNumDays = 1;
 			int currentNumEvaluations = 1;

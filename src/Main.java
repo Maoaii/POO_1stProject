@@ -736,7 +736,7 @@ public class Main {
 	/**
 	 * Lists out the top n stressed <code>Student</code>'s in the <code>EvalCalendar</code> system.
 	 * A <code>Student</code> is stressed based on the amount of <code>Evaluation</code>'s
-	 * in a single week.
+	 * in any amount of consecutive days.
 	 *
 	 * @param in - input reader
 	 * @param cal - Evaluation Calendar
