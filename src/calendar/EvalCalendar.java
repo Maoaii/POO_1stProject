@@ -28,13 +28,13 @@ public interface EvalCalendar {
 	 * @return a <code>Person Iterator</code> that iterates through all <code>Person</code>'s
 	 * registered
 	 */
-	public Iterator<Person> listPeople();
+	Iterator<Person> listPeople();
 
 	/**
 	 * @return true if there's at least one person 
 	 *         registered in the <code>EvalCalendar</code> system
 	 */
-	public boolean arePeopleRegistered();
+	boolean arePeopleRegistered();
 	
 	
 	/*
@@ -47,7 +47,7 @@ public interface EvalCalendar {
 	 * @param name - name for new professor
 	 * @pre name != null
 	 */
-	public void addProfessor(String name);
+	void addProfessor(String name);
 
 
 	/*
@@ -61,21 +61,21 @@ public interface EvalCalendar {
 	 * @param name - name for new student
 	 * @pre id != null && name != null
 	 */
-	public void addStudent(String name, String id);
+	void addStudent(String name, String id);
 	
 	/**
 	 * @param name - name to check if its registered
 	 * @pre name != null
 	 * @return true if <code>Name</code> is registered in the <code>EvalCalendar</code> system
 	 */
-	public boolean isNameRegistered(String name);
+	boolean isNameRegistered(String name);
 	
 	/**
 	 * @param id - id to check if its registered
 	 * @pre id != null
 	 * @return true if <code>id</code> is used by a <code>Student</code>
 	 */
-	public boolean isIdUsed(String id);
+	boolean isIdUsed(String id);
 
 	
 	/*
@@ -88,13 +88,13 @@ public interface EvalCalendar {
 	 *
 	 * @return a <code>Course Iterator</code> that iterates through all <code>Course</code>'s
 	 */
-	public Iterator<Course> listCourses();
+	Iterator<Course> listCourses();
 	
 	/**
 	 * @return true if there's atleast one course registered in the
 	 * <code>EvalCalendar</code> system
 	 */
-	public boolean areCoursesRegistered();
+	boolean areCoursesRegistered();
 
 	
 	/*
@@ -107,7 +107,7 @@ public interface EvalCalendar {
 	 * @param courseName - name for new course
 	 * @pre courseName != null
 	 */
-	public void addCourse(String courseName);
+	void addCourse(String courseName);
 	
 	/**
 	 * @param courseName - name to check if its registered
@@ -115,7 +115,7 @@ public interface EvalCalendar {
 	 * @return true if there's a course with <code>name</code> registered
 	 * in the <code>EvalCalendar</code> system
 	 */
-	public boolean isCourseRegistered(String courseName);
+	boolean isCourseRegistered(String courseName);
 	
 	
 	/*
@@ -131,7 +131,7 @@ public interface EvalCalendar {
 	 * @return a <code>Professor Iterator</code> that iterates all <code>Professor</code>'s in
 	 * <code>Course</code> with <code>courseNames</code>
 	 */
-	public Iterator<Person> listCourseProfessors(String courseName);
+	Iterator<Person> listCourseProfessors(String courseName);
 	
 	/**
 	 * Lists all <code>Students</code> registered to course with <code>CourseName</code>
@@ -142,7 +142,7 @@ public interface EvalCalendar {
 	 * @return a <code>Student Iterator</code> that iterates all <code>Student</code>'s in
 	 * <code>Course</code> with <code>courseName</code>
 	 */
-	public Iterator<Person> listCourseStudents(String courseName);
+	Iterator<Person> listCourseStudents(String courseName);
 	
 	/**
 	 * @param courseName - name of course to check if its empty
@@ -150,7 +150,7 @@ public interface EvalCalendar {
 	 * @return true if <code>Course</code> with <code>courseName</code> has any
 	 * <code>Students</code> enrolled or <code>Professors</code> assigned
 	 */
-	public boolean isCourseEmpty(String courseName);
+	boolean isCourseEmpty(String courseName);
 	
 	
 	/*
@@ -165,7 +165,7 @@ public interface EvalCalendar {
 	 * @param courseName - name of course to assign professor
 	 * @pre name != null && courseName != null
 	 */
-	public void assignProfessor(String name, String courseName);
+	void assignProfessor(String name, String courseName);
 
 	/**
 	 * @param name - name of professor to check if its assigned
@@ -174,7 +174,7 @@ public interface EvalCalendar {
 	 * @return true if <code>Professor</code> with <code>name</code> is assigned to
 	 * <code>Course</code> with <code>courseName</code>
 	 */
-	public boolean isProfessorAssigned(String name, String courseName);
+	boolean isProfessorAssigned(String name, String courseName);
 
 
 	/*
@@ -190,7 +190,7 @@ public interface EvalCalendar {
 	 * @param studentNames - name of students to enroll
 	 * @pre courseName != null && studentNames != null
 	 */
-	public void enrolStudents(int numStudents, String courseName, String[] studentNames);
+	void enrolStudents(int numStudents, String courseName, String[] studentNames);
 
 	/**
 	 * @param name - name of student to check if its enrolled
@@ -198,7 +198,7 @@ public interface EvalCalendar {
 	 * @return true if <code>Student</code> with <code>name</code> is enrolled in
 	 * <code>Course</code> with <code>courseName</code>
 	 */
-	public boolean isStudentEnrolled(String name, String courseName);
+	boolean isStudentEnrolled(String name, String courseName);
 
 	
 	/*
@@ -214,7 +214,7 @@ public interface EvalCalendar {
 	 * @pre courseNames != null
 	 * @return a <code>Professor Iterator</code> that iterates intersected <code>Professors</code>'s
 	 */
-	public Iterator<Person> listProfessorIntersection(String[] courseNames, int numCourses);
+	Iterator<Person> listProfessorIntersection(String[] courseNames, int numCourses);
 	
 	/**
 	 * Lists all students that are enroled in all courses given
@@ -224,7 +224,7 @@ public interface EvalCalendar {
 	 * @pre courseNames != null
 	 * @return a <code>Student Iterator</code> that iterates intersected <code>Student</code>'s
 	 */
-	public Iterator<Person> listStudentIntersection(String[] courseNames, int numCourses);
+	Iterator<Person> listStudentIntersection(String[] courseNames, int numCourses);
 	
 	/*
 	 * 2.12 coursedeadlines COMMAND
@@ -238,7 +238,7 @@ public interface EvalCalendar {
 	 * @return an <code>Evaluation Iterator</code> that iterates all the <code>Course</code>'s
 	 * <code>Deadline</code>'s
 	 */
-	public Iterator<Evaluation> listCourseDeadlines(String courseName);
+	Iterator<Evaluation> listCourseDeadlines(String courseName);
 	
 	/**
 	 * @param courseName - name of course to check if has atleast one deadline
@@ -246,7 +246,7 @@ public interface EvalCalendar {
 	 * @return true if there's at least one <code>Deadline</code> on
 	 * <code>Course</code> with <code>courseName</code>
 	 */
-	public boolean atleastOneDeadline(String courseName);
+	boolean atleastOneDeadline(String courseName);
 	
 	
 	/*
@@ -261,14 +261,14 @@ public interface EvalCalendar {
 	 * @return an <code>Evaluation Iterator</code> that iterates through all
 	 * <code>Deadline</code>'s from <code>Person</code> with <code>name</code>
 	 */
-	public Iterator<Evaluation> listPersonalDeadlines(String name);
+	Iterator<Evaluation> listPersonalDeadlines(String name);
 	
 	/**
 	 * @param name - name of student to check if it has deadlines
 	 * @pre name != null
 	 * @return true if <code>Student</code> with <code>name</code> has atleast one <code>Deadline</code>
 	 */
-	public boolean doesStudentHaveDeadlines(String name);
+	boolean doesStudentHaveDeadlines(String name);
 
 	
 	/*
@@ -284,7 +284,7 @@ public interface EvalCalendar {
 	 * @param deadlineName - name of deadline to add
 	 * @pre courseName != null && date != null && deadlineName != null
 	 */
-	public void addDeadline(String courseName, LocalDate date, String deadlineName);
+	void addDeadline(String courseName, LocalDate date, String deadlineName);
 
 	/**
 	 * Checks if <code>Course</code> with <code>courseName</code>
@@ -296,7 +296,7 @@ public interface EvalCalendar {
 	 * @return true if <code>Course</code> with <code>courseName</code>
 	 * has <code>Deadline</code> with <code>deadlineName</code>
 	 */
-	public boolean doesCourseHaveDeadline(String courseName, String deadlineName);
+	boolean doesCourseHaveDeadline(String courseName, String deadlineName);
 
 
 	/*
@@ -311,7 +311,7 @@ public interface EvalCalendar {
 	 * @return a <code>Test Iterator</code> that iterates through all the <code>Course</code>'s
 	 * <code>Test</code>'s
 	 */
-	public Iterator<Evaluation> listCourseTests(String courseName);
+	Iterator<Evaluation> listCourseTests(String courseName);
 	
 
 	/*
@@ -326,14 +326,14 @@ public interface EvalCalendar {
 	 * @return a <code>Test Iterator</code> that iterates through all the <code>Student</code>'s
 	 * <code>Test</code>'s
 	 */
-	public Iterator<Evaluation> listStudentTests(String name);
+	Iterator<Evaluation> listStudentTests(String name);
 
 	/**
 	 * @param name - name of person to check if its a Student
 	 * @pre name != null
 	 * @return true if <code>Person</code> with <code>name</code> is a <code>Student</code>
 	 */
-	public boolean isStudent(String name);
+	boolean isStudent(String name);
 	
 	/*
 	 * 2.17 schedule COMMAND
@@ -350,7 +350,7 @@ public interface EvalCalendar {
 	 * @pre date != null && startTime != null && endTime != null && courseName != null && testName != null
 	 * @return a <code>Conflict</code> that holds the information regarding a <code>Test</code>'s conflict
 	 */
-	public Conflict scheduleTest(LocalDate date, LocalTime startTime, LocalTime endTime, 
+	Conflict scheduleTest(LocalDate date, LocalTime startTime, LocalTime endTime,
 			String courseName, String testName);
 	
 	/**
@@ -361,7 +361,7 @@ public interface EvalCalendar {
 	 * @pre courseName != null && testName != null
 	 * @return true if <code>Course</code> has a <code>Test</code> with <code>testName</code>
 	 */
-	public boolean isTestNameTaken(String courseName, String testName);
+	boolean isTestNameTaken(String courseName, String testName);
 
 	/**
 	 * Checks if <code>Test</code> with <code>testName</code> has conflicting time with another one
@@ -374,7 +374,7 @@ public interface EvalCalendar {
 	 * @pre date != null && startTime != null && endTime != null && courseName != null && testName != null
 	 * @return true if <code>Test</code> has conflicting times with another <code>Test</code>
 	 */
-	public boolean isTestTimeTaken(LocalDate date, LocalTime startTime, LocalTime endTime, String courseName, String testName);
+	boolean isTestTimeTaken(LocalDate date, LocalTime startTime, LocalTime endTime, String courseName, String testName);
 	
 	/*
 	 * 2.18 superprofessor COMMAND
@@ -385,13 +385,13 @@ public interface EvalCalendar {
 	 * 
 	 * @return <code>SuperProfessor</code>
 	 */
-	public Person getSuperProfessor();
+	Person getSuperProfessor();
 	
 	/**
 	 * @return true if there's atleast one <code>Professor</code> registered
 	 * in the <code>EvalCalendar</code> system
 	 */
-	public boolean areProfessorsRegistered();
+	boolean areProfessorsRegistered();
 	
 	/*
 	 * 2.19 stressometer COMMAND
@@ -404,5 +404,5 @@ public interface EvalCalendar {
 	 * @return a <code>Stress Iterator</code> that iterates through all <code>Student</code>'s that
 	 * are stressed
 	 */
-	public Iterator<Stress> listStressedStudents();
+	Iterator<Stress> listStressedStudents();
 }

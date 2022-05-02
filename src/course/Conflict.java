@@ -2,7 +2,7 @@ package course;
 
 /**
  * A Conflict is an object that defines the severeness of a test conflict.
- * Also holds the amount of professors and students envolved in the test conflict,
+ * Also holds the amount of professors and students involved in the test conflict,
  * such that they have two tests, from different courses, on the same day and/or time.
  *
  * A conflict might be of type:
@@ -22,17 +22,47 @@ package course;
 public interface Conflict {
 
 	/**
-	 * @return the number of <code>Professor</code>'s with this <code>Conflict</code>
+	 * Sets a new type of conflict for this <code>Conflict</code>
+	 *
+	 * @param conflictType - type of conflict to set
+	 * @pre conflictType != null
 	 */
-	public int getNumProfsConflict();
-
-	/**
-	 * @return the number of <code>Student</code>'s with this <code>Conflict</code>
-	 */
-	public int getNumStudentsConflict();
+	void setConflictType(String conflictType);
 
 	/**
 	 * @return the <code>conflictType</code> of this <code>Conflict</code>
 	 */
-	public String getConflictType();
+	String getConflictType();
+
+	/**
+	 * Adds new <code>Professor</code>'s with conflict
+	 *
+	 * @param num - number of professors with conflict to add
+	 */
+	void addProfessorsConflict(int num);
+
+	/**
+	 * @return the number of <code>Professor</code>'s with this <code>Conflict</code>
+	 */
+	int getNumProfsConflict();
+
+	/**
+	 * Adds new <code>Student</code>'s with conflict
+	 *
+	 * @param num - number of students with conflict to add
+	 */
+	void addStudentsConflict(int num);
+
+	/**
+	 * @return the number of <code>Student</code>'s with this <code>Conflict</code>
+	 */
+	int getNumStudentsConflict();
+
+
+
+
+
+
+
+
 }

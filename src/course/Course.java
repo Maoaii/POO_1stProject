@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import client.Person;
-import dataStructures.Array;
 import dataStructures.Iterator;
 
 /**
@@ -17,129 +16,134 @@ public interface Course extends Comparable<Course>{
 	/**
 	 * @return this courses' name
 	 */
-	public String getCourseName();
+	String getCourseName();
 	
 	/**
-	 * Assigns a new <code>professor</code> to this course
+	 * Assigns a new <code>professor</code> to this <code>Course</code>
 	 * 
-	 * @param professor
+	 * @param professor - professor to assign
 	 * @pre professor != null
 	 */
-	public void assignProfessor(Person professor);
+	void assignProfessor(Person professor);
 
 	/**
-	 * Enrolls a new <code>student</code> to this course 
-	 * 
-	 * @param student
+	 * @return a <code>Person Iterator</code> that iterates through
+	 * this <code>Course</code>'s <code>Professor</code>'s
+	 */
+	Iterator<Person> getProfessors();
+
+	/**
+	 * @return the number of <code>Professor</code>'s assigned to this <code>Course</code>
+	 */
+	int getNumProfessors();
+
+	/**
+	 * Enrolls a new <code>student</code> to this <code>Course</code>
+	 *
+	 * @param student - student to enroll
 	 * @pre student != null
 	 */
 	void enrolStudent(Person student);
-	
+
 	/**
-	 * @param name
-	 * @pre name != null
-	 * @return true if student with <code>name</code> is enrolled in this course
+	 * @return a <code>Person Iterator</code> that iterates through
+	 * this <code>Course</code>'s <code>Student</code>'s
 	 */
-	public boolean isStudentEnrolled(String name);
-	
+	Iterator<Person> getStudents();
+
 	/**
-	 * Adds a new <code>test</code> to this course
-	 * 
-	 * @param test
-	 * @pre test != null
+	 * @return the number of <code>Student</code>'s enrolled in this <code>Course</code>
 	 */
-	void scheduleTest(Evaluation test);
-	
+	int getNumStudents();
+
 	/**
-	 * Adds a new <code>deadline</code> to this course
-	 * 
-	 * @param deadline
+	 * Adds a new <code>Deadline</code> to this <code>Course</code>
+	 *
+	 * @param deadline - deadline to add to this course
 	 * @pre deadline != null
 	 */
 	void addDeadline(Evaluation deadline);
-	
+
 	/**
-	 * @param deadlineName
+	 * @param deadlineName - name of deadline to check
 	 * @pre deadlineName != null
-	 * @return true if deadline with <code>deadlineName</code> is in course
+	 * @return true if <code>Deadline</code> with <code>deadlineName</code> is in this <code>Course</code>
 	 */
-	public boolean isDeadlineSet(String deadlineName);
-	
-	/**
-	 * @param testName
-	 * @pre testName != null
-	 * @return true if test with <code>testName</code> is in course
-	 */
-	public boolean isTestNameTaken(String testName);
-	
-	/**
-	 * @param date
-	 * @param startTime
-	 * @param endTime
-	 * @pre date != null && startTime != null && endTime != null
-	 * @return true if this test has a conflicting time with another one
-	 */
-	public boolean isTestTimeConflicting(LocalDate date, LocalTime startTime, LocalTime endTime);
-	
-	/**
-	 * @param date
-	 * @param startTime
-	 * @param endTime
-	 * @pre date != null && startTime != null && endTime != null
-	 * @return true if this test has a conflicting date with another one
-	 */
-	public boolean isTestDateConflicting(LocalDate date);
+	boolean isDeadlineSet(String deadlineName);
 
 	/**
-	 * @return this course's <code>deadlines</code>
+	 * @return an <code>Evaluation Iterator</code> that iterates through
+	 * this <code>Course</code>'s <code>Deadline</code>'s, sorted by
+	 * ascending order of date and alphabetic order of course name
 	 */
-	public Iterator<Evaluation> getDeadlinesSorted();
+	Iterator<Evaluation> getDeadlinesSorted();
 
+	/**
+	 * @return the number of <code>Deadline</code>'s from this <code>Course</code>
+	 */
+	int getNumDeadlines();
 
 	/**
-	 * @return this course's <code>tests</code>
-	 */
-	public Iterator<Evaluation> getTestsSorted();
-	
-	/**
-	 * @return this course's <code>students</code>
-	 */
-	public Iterator<Person> getStudents();
-	
-	/**
-	 * @return this course's <code>professors</code>
-	 */
-	public Iterator<Person> getProfessors();
-	
-	/**
-	 * @return the number of professors assigned to this course
-	 */
-	public int getNumProfessors();
-	
-	/**
-	 * @return the number of students enrolled in this course
-	 */
-	public int getNumStudents();
-	
-	/**
-	 * @return the number of tests from this course
-	 */
-	public int getNumTests();
-	
-	/**
-	 * @return the number of deadlines from this course
-	 */
-	public int getNumDeadlines();
-	
-	/**
-	 * Compare's two courses names
+	 * Adds a new <code>Test</code> to this <code>Course</code>
 	 * 
-	 * @param other
+	 * @param test - test to schedule
+	 * @pre test != null
+	 */
+	void scheduleTest(Evaluation test);
+
+	/**
+	 * @param testName - name of test to check
+	 * @pre testName != null
+	 * @return true if <code>Test</code> with <code>testName</code> is in this <code>Course</code>
+	 */
+	boolean isTestNameTaken(String testName);
+	
+	/**
+	 * @param date - date of scheduling test
+	 * @param startTime - start time of scheduling test
+	 * @param endTime - end time of scheduling test
+	 * @pre date != null && startTime != null && endTime != null
+	 * @return true if this <code>Test</code> has a conflicting time with another <code>Test</code>
+	 */
+	boolean isTestTimeConflicting(LocalDate date, LocalTime startTime, LocalTime endTime);
+
+	/**
+	 * @param date - date of scheduling test
+	 * @pre date != null
+	 * @return true if this <code>Test</code> has a conflicting date with another <code>Test</code>
+	 */
+	boolean isTestDateConflicting(LocalDate date);
+
+	/**
+	 * @return an <code>Evaluation Iterator</code> that iterates through
+	 * this <code>Course</code>'s <code>Test</code>'s, sorted by
+	 * ascending order of date, starting time and alphabetic order of course name;
+	 */
+	Iterator<Evaluation> getTestsSorted();
+	
+	/**
+	 * @return the number of <code>Test</code>'s from this <code>Course</code>
+	 */
+	int getNumTests();
+
+	/**
+	 * Checks if two <code>Course</code>'s are the same
+	 * 
+	 * @param other - other course to compare with
 	 * @pre other != null
 	 * @return true if this course has the same 
 	 * 		   <code>courseName</code> as <code>other</code> course
 	 */
-	public boolean equals(Object other);
-	
-	public int compareTo(Course other);
+	boolean equals(Object other);
+
+	/**
+	 * Compares two <code>Course</code>'s for sorting purposes
+	 *
+	 * @param other - the course to be compared
+	 * @return an int:
+	 * bigger than 0 if <code>this Course</code> is sorted before <code>other</code>;
+	 * equals to 0 if <code>this Course</code> is the same as <code>other</code>;
+	 * lesser than 0 if <code>this Course</code> is sorted after <code>other</code>;
+	 */
+	int compareTo(Course other);
 }

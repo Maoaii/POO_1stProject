@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import client.Person;
-import client.ProfessorClass;
 import dataStructures.Array;
 import dataStructures.ArrayClass;
 import dataStructures.Iterator;
@@ -12,24 +11,24 @@ import dataStructures.Iterator;
 public class CourseClass implements Course {
 	
 	// Instance variables
-	private String courseName;
-	private Array<Person> students;
-	private Array<Person> professors;
-	private Array<Evaluation> tests;
-	private Array<Evaluation> deadlines;
+	private final String courseName;
+	private final Array<Person> students;
+	private final Array<Person> professors;
+	private final Array<Evaluation> tests;
+	private final Array<Evaluation> deadlines;
 	
 	/**
 	 * Course class constructor
 	 * 
-	 * @param courseName
+	 * @param courseName - name for this course
 	 * @pre courseName != null
 	 */
 	public CourseClass(String courseName) {
 		this.courseName = courseName;
-		students = new ArrayClass<Person>();
-		professors = new ArrayClass<Person>();
-		tests = new ArrayClass<Evaluation>();
-		deadlines = new ArrayClass<Evaluation>();
+		students = new ArrayClass<>();
+		professors = new ArrayClass<>();
+		tests = new ArrayClass<>();
+		deadlines = new ArrayClass<>();
 	}
 
 	@Override
@@ -43,30 +42,50 @@ public class CourseClass implements Course {
 	}
 
 	@Override
+	public Iterator<Person> getProfessors() {
+		return professors.iterator();
+	}
+
+	@Override
+	public int getNumProfessors() {
+		return professors.size();
+	}
+
+	@Override
 	public void enrolStudent(Person student) {
 		students.insertLast(student);
 	}
-	
+
 	@Override
-	public boolean isStudentEnrolled(String name) {
-		return students.searchForward(new ProfessorClass(name));
+	public Iterator<Person> getStudents() {
+		return students.iterator();
+	}
+
+	@Override
+	public int getNumStudents() {
+		return students.size();
+	}
+
+	@Override
+	public void addDeadline(Evaluation deadline) {
+		deadlines.insertLast(deadline);
+	}
+
+	@Override
+	public boolean isDeadlineSet(String deadlineName) {
+		return deadlines.searchForward(new DeadlineClass(null, null, deadlineName));
+	}
+
+	@Override
+	public Iterator<Evaluation> getDeadlinesSorted() {
+		return deadlines.sort().iterator();
 	}
 
 	@Override
 	public void scheduleTest(Evaluation test) {
 		tests.insertLast(test);
 	}
-	
-	@Override
-	public void addDeadline(Evaluation deadline) {
-		deadlines.insertLast(deadline);
-	}
-	
-	@Override
-	public boolean isDeadlineSet(String deadlineName) {
-		return deadlines.searchForward(new DeadlineClass(null, null, deadlineName));
-	}
-	
+
 	@Override
 	public boolean isTestNameTaken(String testName) {
 		return tests.searchForward(new TestClass(null, null, null, null, testName));
@@ -80,7 +99,7 @@ public class CourseClass implements Course {
 		while (!hasConflictingTime && testIt.hasNext()) {
 			Evaluation test = testIt.next();
 			
-			if (date.equals(((Evaluation) test).getEvalDate())) {
+			if (date.equals(test.getEvalDate())) {
 				if (!(endTime.isBefore(((Test) test).getTestStartTime()) || startTime.isAfter(((Test) test).getTestEndTime()))) {
 					hasConflictingTime = true;
 				}
@@ -99,7 +118,7 @@ public class CourseClass implements Course {
 		while (!hasConflictingDate && testIt.hasNext()) {
 			Evaluation test = testIt.next();
 			
-			if (date.equals(((Evaluation) test).getEvalDate())) {
+			if (date.equals(test.getEvalDate())) {
 				hasConflictingDate = true;
 			}
 		}
@@ -112,32 +131,6 @@ public class CourseClass implements Course {
 	public Iterator<Evaluation> getTestsSorted() {
 		return tests.sort().iterator();
 	}
-	
-	@Override
-	public Iterator<Evaluation> getDeadlinesSorted() {
-		return deadlines.sort().iterator();
-	}
-
-	
-	@Override
-	public Iterator<Person> getStudents() {
-		return students.iterator();
-	}
-	
-	@Override
-	public Iterator<Person> getProfessors() {
-		return professors.iterator();
-	}
-
-	@Override
-	public int getNumProfessors() {
-		return professors.size();
-	}
-
-	@Override
-	public int getNumStudents() {
-		return students.size();
-	}
 
 	@Override
 	public int getNumTests() {
@@ -148,24 +141,14 @@ public class CourseClass implements Course {
 	public int getNumDeadlines() {
 		return deadlines.size();
 	}
-	
+
 	@Override
 	public boolean equals(Object other) {
-		if (this.getCourseName().equals(((CourseClass) other).getCourseName()))
-			return true;
-		return false;
+		return this.getCourseName().equals(((CourseClass) other).getCourseName());
 	}
-	
+
 	@Override
 	public int compareTo(Course other) {
-		int cmpName = this.getCourseName().compareTo(other.getCourseName());
-		if (cmpName > 0) {
-			return -1;
-		}
-		else if (cmpName < 0) {
-			return 1;
-		}
-		
-		return cmpName;
+		return this.getCourseName().compareTo(other.getCourseName());
 	}
 }

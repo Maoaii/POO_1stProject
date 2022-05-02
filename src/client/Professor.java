@@ -11,5 +11,5 @@ public interface Professor {
 	/**
 	 * @return the amount of <code>Student</code>'s this <code>Professor</code> has
 	 */
-	public int getNumStudents();
+	int getNumStudents();
 }

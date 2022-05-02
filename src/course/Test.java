@@ -12,10 +12,10 @@ public interface Test {
 	/**
 	 * @return this <code>Test</code>'s <code>startTime</code>
 	 */
-	public LocalTime getTestStartTime();
+    LocalTime getTestStartTime();
 	
 	/**
 	 * @return this <code>Test</code>'s <code>endTime</code>
 	 */
-	public LocalTime getTestEndTime();
+    LocalTime getTestEndTime();
 }

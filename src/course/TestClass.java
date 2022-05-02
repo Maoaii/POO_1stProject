@@ -5,8 +5,8 @@ import java.time.LocalTime;
 
 public class TestClass extends AbstractEvaluationClass implements Test {
 	// Instance variables
-	private LocalTime startTime;
-	private LocalTime endTime;
+	private final LocalTime startTime;
+	private final LocalTime endTime;
 	
 	
 	/**

@@ -8,9 +8,9 @@ public abstract class AbstractEvaluationClass implements Evaluation {
 	private static final int IS_AFTER = 1;
 	
 	// Instance variables
-	private String name;
-	private LocalDate date;
-	private String courseName;
+	private final String name;
+	private final LocalDate date;
+	private final String courseName;
 	
 	/**
 	 * Abstract Evaluation Constructor

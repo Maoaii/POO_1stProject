@@ -123,7 +123,7 @@ public class ArrayClass<E> implements Array<E> {
 
 	@SuppressWarnings("unchecked")
 	private void resize() {
-		E tmp[] = (E[]) new Object[2*elems.length];
+		E[] tmp = (E[]) new Object[2*elems.length];
 		for (int i=0;i<counter; i++)
 			tmp[i] = elems[i];
 		elems = tmp;

@@ -3,7 +3,7 @@ package client;
 public class StudentClass extends AbstractPersonClass implements Student {
 	
 	// Instance variables
-	private String id;
+	private final String id;
 	
 	/**
 	 * Student constructor

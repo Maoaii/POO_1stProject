@@ -13,17 +13,17 @@ public interface Evaluation extends Comparable<Evaluation>{
 	/**
 	 * @return this <code>Evaluation</code>'s <code>name</code>
 	 */
-	public String getEvalName();
+    String getEvalName();
 	
 	/**
 	 * @return this <code>Evaluation</code>'s <code>date</code>
 	 */
-	public LocalDate getEvalDate();
+    LocalDate getEvalDate();
 	
 	/**
 	 * @return the <code>Course</code> this <code>Evaluation</code> belongs to
 	 */
-	public String getCourseName();
+    String getCourseName();
 	
 	/**
 	 * Checks if <code>this Evaluation</code> is equal to <code>other</code>
@@ -34,7 +34,7 @@ public interface Evaluation extends Comparable<Evaluation>{
 	 * @pre other != null
 	 * @return true if both are equal
 	 */
-	public boolean equals(Object other);
+    boolean equals(Object other);
 	
 	/**
 	 * Compares <code>this Evaluation</code> is sorted before or after <code>other</code>.
@@ -46,5 +46,5 @@ public interface Evaluation extends Comparable<Evaluation>{
 	 * 0 if <code>this</code> is the same as <code>other</code>
 	 * lesser than zero if <code>this</code> is sorted before <code>other</code>
 	 */
-	public int compareTo(Evaluation other);
+    int compareTo(Evaluation other);
 }

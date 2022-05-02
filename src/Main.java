@@ -15,6 +15,11 @@ import course.Evaluation;
 import course.Test;
 import dataStructures.Iterator;
 
+/**
+ * Main Class. Does all operations regarding input and output of information from and to the user.
+ *
+ * @author Lucas Girotto / Pedro Afonso
+ */
 public class Main {
 	
 	// Constant
@@ -146,7 +151,7 @@ public class Main {
 	
 	
 	/**
-	 * Processs the user's commands
+	 * Processes the user's commands
 	 */
 	private static void processCommand() {
 		Scanner in = new Scanner(System.in);
@@ -184,7 +189,7 @@ public class Main {
 	}
 	
 	/**
-	 * Lists out all the available commands
+	 * Lists out all the available <code>Command</code>'s
 	 */
 	private static void processHelp() {
 		System.out.println(HELP_MESSAGE_HEADER);
@@ -210,10 +215,10 @@ public class Main {
 	}
 
 	/**
-	 * Lists all people in the <code>EvalCalendar</code> system,
-	 * by insertion order
+	 * Lists all <code>Person</code> in the <code>EvalCalendar</code> system,by:
+	 * insertion order
 	 * 
-	 * @param cal: Evaluation Calendar
+	 * @param cal - Evaluation Calendar system
 	 * @pre cal != null
 	 */
 	private static void processPeople(EvalCalendar cal) {
@@ -234,10 +239,10 @@ public class Main {
 	}
 
 	/**
-	 * Adds a new professor to the <code>EvalCalendar</code> system
+	 * Adds a new <code>Professor</code> to the <code>EvalCalendar</code> system
 	 * 
-	 * @param in: input reader
-	 * @param cal: Evaluation Calendar
+	 * @param in - input reader
+	 * @param cal - Evaluation Calendar
 	 * @pre in != null && cal != null
 	 */
 	private static void processProfessor(Scanner in, EvalCalendar cal) {
@@ -252,10 +257,10 @@ public class Main {
 	}
 	
 	/**
-	 * Adds a new student to the <code>EvalCalendar</code> system
+	 * Adds a new <code>Student</code> to the <code>EvalCalendar</code> system
 	 * 
-	 * @param in: input reader
-	 * @param cal: Evaluation Calendar
+	 * @param in - input reader
+	 * @param cal - Evaluation Calendar
 	 * @pre in != null && cal != null
 	 */
 	private static void processStudent(Scanner in, EvalCalendar cal) {
@@ -273,13 +278,13 @@ public class Main {
 	}
 
 	/**
-	 * Lists all the courses in the <code>EvalCalendar</code> with:
-	 * The name of the course;
-	 * The number of students enrolled;
-	 * The number of professors assigned;
-	 * The number of tests and deadlines;
+	 * Lists all the <code>Course</code>'s in the <code>EvalCalendar</code> with:
+	 * The <code>name</code> of the <code>Course</code>;
+	 * The number of <code>Student</code>'s enrolled;
+	 * The number of <code>Professor</code>'s assigned;
+	 * The number of <code>Test</code>'s and <code>Deadline</code>'s;
 	 * 
-	 * @param cal: Evaluation Calendar
+	 * @param cal - Evaluation Calendar
 	 * @pre cal != null
 	 */
 	private static void processCourses(EvalCalendar cal) {
@@ -299,10 +304,10 @@ public class Main {
 	}
 
 	/**
-	 * Adds a new course to the <code>EvalCalendar</code> system
+	 * Adds a new <code>Course</code> to the <code>EvalCalendar</code> system
 	 * 
-	 * @param in: input reader
-	 * @param cal: Evaluation Calendar
+	 * @param in - input reader
+	 * @param cal - Evaluation Calendar
 	 * @pre in != null && cal != null
 	 */
 	private static void processCourse(Scanner in, EvalCalendar cal) {
@@ -317,12 +322,12 @@ public class Main {
 	}
 
 	/**
-	 * Lists out all the professors and students in a given <code>course</code>.
-	 * The professors are listed first, by assigned order, and then the students,
-	 * by enrolled order.
+	 * Lists out all the <code>Professor</code>'s and <code>Student</code>'s in a given <code>course</code>.
+	 * The <code>Professor</code>'s are listed first, by assignment order,
+	 * and then the <code>Student</code>'s, by enrollment order.
 	 * 
-	 * @param cal: Evaluation Calendar
-	 * @param in: input reader
+	 * @param cal - Evaluation Calendar
+	 * @param in - input reader
 	 * @pre in != null && cal != null
 	 */
 	private static void processRoster(Scanner in, EvalCalendar cal) {
@@ -344,9 +349,10 @@ public class Main {
 	}
 	
 	/**
-	 * Lists out all professors on given <code>course</code> by
+	 * Lists out all <code>Professor</code>'s on given <code>Course</code>, by
 	 * assignment order
-	 * 
+	 *
+	 * @param itProfessors - professor iterator
 	 * @pre itProfessors != null
 	 */
 	private static void listProfessors(Iterator<Person> itProfessors) {
@@ -358,9 +364,10 @@ public class Main {
 	}
 	
 	/**
-	 * Lists out all students on given <code>course</code> by
+	 * Lists out all <code>Student</code>'s on given <code>Course</code>, by
 	 * enrollment order
-	 * 
+	 *
+	 * @param itStudents - student iterator
 	 * @pre itStudents != null
 	 */
 	private static void listStudents(Iterator<Person> itStudents) {
@@ -372,10 +379,10 @@ public class Main {
 	}
 
 	/**
-	 * Assigns a new professor to a given course
+	 * Assigns a new <code>Professor</code> to a given <code>Course</code>
 	 * 
-	 * @param in: input reader
-	 * @param cal: Evaluation Calendar
+	 * @param in - input reader
+	 * @param cal - Evaluation Calendar
 	 * @pre in != null && cal != null
 	 */
 	private static void processAssign(Scanner in, EvalCalendar cal) {
@@ -395,10 +402,10 @@ public class Main {
 	}
 
 	/**
-	 * Enrolls a new student to a given course
+	 * Enrolls a new <code>Student</code> to a given <code>Course</code>
 	 * 
-	 * @param in: input reader
-	 * @param cal: Evaluation Calendar
+	 * @param in - input reader
+	 * @param cal - Evaluation Calendar
 	 * @pre in != null && cal != null
 	 */
 	private static void processEnrol(Scanner in, EvalCalendar cal) {
@@ -435,9 +442,11 @@ public class Main {
 	}
 	
 	/**
-	 * 
-	 * @param in: input reader
-	 * @param cal: Evaluation Calendar
+	 * Lists all the <code>Person</code> that are enrolled or assigned
+	 * to all the <code>Course</code>'s provided
+	 *
+	 * @param in - input reader
+	 * @param cal - Evaluation Calendar
 	 * @pre in != null && cal != null
 	 */
 	private static void processIntersection(Scanner in, EvalCalendar cal) {
@@ -479,12 +488,17 @@ public class Main {
 				else {
 					System.out.println(NO_INTERSECTION);
 				}
-				
 			}
 		}
-
 	}
-	
+
+	/**
+	 * Private method to do the listing in <code>peopleIntersection</code>
+	 *
+	 * @param professorIt - professor iterator
+	 * @param studentIt - student iterator
+	 * @pre professorIt != null && studentIt != null
+	 */
 	private static void listPeople(Iterator<Person> professorIt, Iterator<Person> studentIt) {
 		System.out.println(INTERSECTION_HEADER);
 		
@@ -506,12 +520,12 @@ public class Main {
 	}
 
 	/**
-	 * Lists all the deadlines for a given course in:
+	 * Lists all the <code>Deadline</code>'s for a given <code>Course</code> in:
 	 * ascending order of date;
 	 * ascending order of deadline name;
 	 * 
-	 * @param in: input reader
-	 * @param cal: Evaluation Calendar
+	 * @param in - input reader
+	 * @param cal - Evaluation Calendar
 	 * @pre in != null && cal != null
 	 */
 	private static void processCourseDeadlines(Scanner in, EvalCalendar cal) {
@@ -535,7 +549,13 @@ public class Main {
 	}
 
 	/**
+	 * Lists all the <code>Deadline</code>'s for a given <code>Person</code> by:
+	 * ascending order of date;
+	 * alphabetic order of <code>Course</code> name;
 	 *
+	 * @param in - input reader
+	 * @param cal - Evaluation Calendar
+	 * @pre in != null && cal != null
 	 */
 	private static void processPersonalDeadlines(Scanner in, EvalCalendar cal) {
 		String name = in.nextLine().trim();
@@ -557,10 +577,10 @@ public class Main {
 	}
 
 	/**
-	 * Adds a new deadline to a given course
+	 * Adds a new <code>Deadline</code> to a given <code>Course</code>
 	 * 
-	 * @param in: input reader
-	 * @param cal: Evaluation Calendar
+	 * @param in - input reader
+	 * @param cal - Evaluation Calendar
 	 * @pre in != null && cal != null
 	 */
 	private static void processDeadline(Scanner in, EvalCalendar cal) {
@@ -579,11 +599,19 @@ public class Main {
 			LocalDate date = LocalDate.of(year, month, day);
 			cal.addDeadline(courseName, date, deadlineName);
 			
-			System.out.printf(DEADLINE_ADDED, date.toString(), courseName);
+			System.out.printf(DEADLINE_ADDED, date, courseName);
 		}
 	}
 
-
+	/**
+	 * Lists out all <code>Test</code>'s from a given <code>Course</code>, by:
+	 * ascending order of date;
+	 * starting time;
+	 *
+	 * @param in - input reader
+	 * @param cal - Evaluation Calendar
+	 * @pre in != null && cal != null
+	 */
 	private static void processCourseTests(Scanner in, EvalCalendar cal) {
 		String courseName = in.nextLine().trim();
 		if(!cal.isCourseRegistered(courseName)) {
@@ -610,7 +638,14 @@ public class Main {
 	}
 
 	/**
+	 * Lists out all <code>Test</code>'s for a given <code>Person</code>, by:
+	 * ascending order of date;
+	 * starting time;
+	 * alphabetic order of the <code>Course</code> name;
 	 *
+	 * @param in - input reader
+	 * @param cal - Evaluation Calendar
+	 * @pre in != null && cal != null
 	 */
 	private static void processPersonalTests(Scanner in, EvalCalendar cal) {
 		String name = in.nextLine().trim();
@@ -640,7 +675,11 @@ public class Main {
 	}
 
 	/**
+	 * Schedules a new <code>Test</code> for a given <code>Course</code>
 	 *
+	 * @param in - input reader
+	 * @param cal - Evaluation Calendar
+	 * @pre in != null && cal != null
 	 */
 	private static void processSchedule(Scanner in, EvalCalendar cal) {
 		
@@ -667,14 +706,21 @@ public class Main {
 			Conflict conflict = cal.scheduleTest(testDate, startTime, endTime, courseName, testName);
 			
 			System.out.printf(TEST_SCHEDULED, conflict.getConflictType(),
-					courseName, testName, 
-					testDate.toString(), formatterTime.format(startTime), formatterTime.format(endTime),
+					courseName, testName,
+					testDate, formatterTime.format(startTime), formatterTime.format(endTime),
 					conflict.getNumProfsConflict(), conflict.getNumStudentsConflict()); 
 		}
 	}
 
 	/**
+	 * Writes out who is the <code>superProfessor</code> in the <code>EvalCalendar</code> system.
+	 * A <code>superProfessor</code> is the <code>Professor</code> that has the most
+	 * <code>Student</code>'s. If two <code>Professor</code>'s have the same amount
+	 * of <code>Student</code>'s, the one that got that amount first is the
+	 * <code>superProfessor</code>.
 	 *
+	 * @param cal - Evaluation Calendar
+	 * @pre cal != null
 	 */
 	private static void processSuperProfessor(EvalCalendar cal) {
 		if (!cal.areProfessorsRegistered()) {
@@ -687,7 +733,15 @@ public class Main {
 		
 	}
 
-
+	/**
+	 * Lists out the top n stressed <code>Student</code>'s in the <code>EvalCalendar</code> system.
+	 * A <code>Student</code> is stressed based on the amount of <code>Evaluation</code>'s
+	 * in a single week.
+	 *
+	 * @param in - input reader
+	 * @param cal - Evaluation Calendar
+	 * @pre in != null && cal != null
+	 */
 	private static void processStressometer(Scanner in, EvalCalendar cal) {
 		int numStudents = in.nextInt();
 		in.nextLine();
@@ -713,7 +767,9 @@ public class Main {
 
 
 	/**
-	 * @param cmd
+	 * Gets the value of a <code>Command</code> given by the user
+	 *
+	 * @param cmd - command to interpret
 	 * @pre cmd != null
 	 * @return a command of type <code>Command</code> 
 	 */

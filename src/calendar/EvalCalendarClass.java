@@ -9,20 +9,13 @@ import client.ProfessorClass;
 import client.Stress;
 import client.Student;
 import client.StudentClass;
-import course.Conflict;
-import course.ConflictClass;
-import course.Course;
-import course.CourseClass;
-import course.DeadlineClass;
-import course.Evaluation;
-import course.TestClass;
+import course.*;
 import dataStructures.Array;
 import dataStructures.ArrayClass;
 import dataStructures.Iterator;
 
 public class EvalCalendarClass implements EvalCalendar {
 	// Constants
-	private static final String FREE = "free";
 	private static final String MILD = "mild";
 	private static final String SEVERE = "severe";
 
@@ -273,85 +266,134 @@ public class EvalCalendarClass implements EvalCalendar {
 	}
 
 	@Override
-	public Conflict scheduleTest(LocalDate date, LocalTime startTime, LocalTime endTime, 
-			String courseName, String testName) {
-		int numProfsConflict = 0;
-		int numStudentsConflict = 0;
-		boolean isSevere = false;
-		boolean isMild = false;
-
-
-		Iterator<Course> coursesIt = courses.iterator();
-		Array<Course> coursesTestSameTime = new ArrayClass<>();
-		Array<Course> coursesTestSameDate = new ArrayClass<>();
-
-		// Get courses that have atleast one test scheduled with date or time conflict
-		// with the one being scheduled
-		while (coursesIt.hasNext()) {
-			Course indexedCourse = coursesIt.next();
-			
-			if (indexedCourse.isTestTimeConflicting(date, startTime, endTime)) {
-				coursesTestSameTime.insertLast(indexedCourse);
-			}
-			else if (indexedCourse.isTestDateConflicting(date)) {
-				coursesTestSameDate.insertLast(indexedCourse);
-			}
-		}
+	public Conflict scheduleTest(LocalDate date, LocalTime startTime, LocalTime endTime,
+								 String courseName, String testName) {
 
 		// Course that the test will be scheduled in
 		Course courseToScheduleTest = courses.get(courses.searchIndexOf(new CourseClass(courseName)));
-		
-		// Get the professors and students in the course that the test will be scheduled in
-		Iterator<Person> professorsIt = courseToScheduleTest.getProfessors();
-		Iterator<Person> studentsIt = courseToScheduleTest.getStudents();
 
+		// Test to be scheduled
+		Evaluation testToSchedule = new TestClass(date, startTime, endTime, courseName, testName);
+
+		// The conflict this test has
+		Conflict conflict = new ConflictClass();
+
+		// Store the courses that have tests on the same day and/or time
+		Array<Course> coursesTestSameTime = new ArrayClass<>();
+		Array<Course> coursesTestSameDate = new ArrayClass<>();
+
+
+		// Get courses that have atleast one test scheduled with date or time conflict
+		// with the one being scheduled
+		computeCoursesWithDateOrTimeConflict(coursesTestSameTime, coursesTestSameDate, testToSchedule);
+
+
+		// Get the professors and students in the course that the test will be scheduled in
+		computeProfessorsWithConflict(conflict, courseToScheduleTest, coursesTestSameTime, coursesTestSameDate);
+		computeStudentsWithConflict(conflict, courseToScheduleTest, coursesTestSameTime, coursesTestSameDate);
+
+
+		// Schedule the test
+		courseToScheduleTest.scheduleTest(testToSchedule);
+		
+
+		return conflict;
+	}
+
+	/**
+	 * Computes the <code>Course</code>'s that have a <code>Test</code> on the
+	 * same day and/or time as the one being scheduled
+	 *
+	 * @param coursesTestSameTime - courses that have a test at the same time as the one being scheduled
+	 * @param coursesTestSameDate - courses that have a test at the same day as the one being scheduled
+	 * @param testToSchedule - test that's being scheduled
+	 * @pre coursesTestSameTime != null && coursesTestSameDate != null && testToSchedule != null
+	 */
+	private void computeCoursesWithDateOrTimeConflict(Array<Course> coursesTestSameTime,
+													  Array<Course> coursesTestSameDate,
+													  Evaluation testToSchedule) {
+		Iterator<Course> coursesIt = courses.iterator();
+		while (coursesIt.hasNext()) {
+			Course indexedCourse = coursesIt.next();
+
+			if (indexedCourse.isTestTimeConflicting(testToSchedule.getEvalDate(),
+					((Test)testToSchedule).getTestStartTime(),
+					((Test)testToSchedule).getTestEndTime())) {
+				coursesTestSameTime.insertLast(indexedCourse);
+			}
+			else if (indexedCourse.isTestDateConflicting(testToSchedule.getEvalDate())) {
+				coursesTestSameDate.insertLast(indexedCourse);
+			}
+		}
+	}
+
+	/**
+	 * Sets the <code>conflictType</code> this <code>Test</code> has,
+	 * and adds the amount of <code>Professor</code>'s that have the <code>Conflict</code>
+	 *
+	 * @param conflict - the conflict derived from scheduling test
+	 * @param courseToScheduleTest - course that the test will be scheduled in
+	 * @param coursesTestSameTime - courses that have a test at the same time as the one being scheduled
+	 * @param coursesTestSameDate - courses that have a test at the same day as the one being scheduled
+	 * @pre conflict != null && courseToScheduleTest != null &&
+	 * 		coursesTestSameTime != null && coursesTestSameDate != null
+	 */
+	private void computeProfessorsWithConflict(Conflict conflict,
+											   Course courseToScheduleTest,
+											   Array<Course> coursesTestSameTime,
+											   Array<Course> coursesTestSameDate) {
+
+		Iterator<Person> professorsIt = courseToScheduleTest.getProfessors();
 
 		while (professorsIt.hasNext()) {
 			Person professor = professorsIt.next();
-			
+
 			// Get the number of time and date conflicts with the tests that the professor has
 			int numConflictsTime = professor.getNumConflicts(coursesTestSameTime, courseToScheduleTest);
 			int numConflictsDate = professor.getNumConflicts(coursesTestSameDate, courseToScheduleTest);
-			
+
 			if (numConflictsTime > 0) {
-				isSevere = true;
+				conflict.setConflictType(SEVERE);
 			}
-			else if (numConflictsDate > 0 && !isSevere) {
-				isMild = true;
+			else if (numConflictsDate > 0 && !conflict.getConflictType().equals(SEVERE)) {
+				conflict.setConflictType(MILD);
 			}
-			
-			numProfsConflict = numProfsConflict + numConflictsTime + numConflictsDate;
+
+			conflict.addProfessorsConflict(numConflictsTime + numConflictsDate);
 		}
-		
+	}
+
+	/**
+	 * Sets the <code>conflictType</code> this <code>Test</code> has,
+	 * and adds the amount of <code>Student</code>'s that have the <code>Conflict</code>
+	 *
+	 * @param conflict - the conflict derived from scheduling test
+	 * @param courseToScheduleTest - course that the test will be scheduled in
+	 * @param coursesTestSameTime - courses that have a test at the same time as the one being scheduled
+	 * @param coursesTestSameDate - courses that have a test at the same day as the one being scheduled
+	 * @pre conflict != null && courseToScheduleTest != null &&
+	 * 		coursesTestSameTime != null && coursesTestSameDate != null
+	 */
+	private void computeStudentsWithConflict(Conflict conflict,
+											 Course courseToScheduleTest,
+											 Array<Course> coursesTestSameTime,
+											 Array<Course> coursesTestSameDate) {
+
+		Iterator<Person> studentsIt = courseToScheduleTest.getStudents();
 		while (studentsIt.hasNext()) {
 			Person student = studentsIt.next();
-			
+
 			// Get the number of time and date conflicts with the tests that the student has
 			int numConflictsTime = student.getNumConflicts(coursesTestSameTime, courseToScheduleTest);
 			int numConflictsDate = student.getNumConflicts(coursesTestSameDate, courseToScheduleTest);
-			
+
 			if (numConflictsTime > 0) {
-				isSevere = true;
+				conflict.setConflictType(SEVERE);
 			}
-			else if (numConflictsDate > 0 && !isSevere) {
-				isMild = true;
+			else if (numConflictsDate > 0 && !conflict.getConflictType().equals(SEVERE)) {
+				conflict.setConflictType(MILD);
 			}
-			
-			numStudentsConflict = numStudentsConflict + numConflictsTime + numConflictsDate;
-		}
-
-		// Schedule the test
-		courseToScheduleTest.scheduleTest(new TestClass(date, startTime, endTime, courseName, testName));
-		
-
-		if (isSevere) {
-			return new ConflictClass(SEVERE, numProfsConflict, numStudentsConflict);
-		}
-		else if (isMild) {
-			return new ConflictClass(MILD, numProfsConflict, numStudentsConflict);
-		}
-		else {
-			return new ConflictClass(FREE, numProfsConflict, numStudentsConflict);
+			conflict.addStudentsConflict(numConflictsTime + numConflictsDate);
 		}
 	}
 

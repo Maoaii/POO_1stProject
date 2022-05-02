@@ -7,8 +7,8 @@ public class StressClass implements Stress {
 
 	private int numDays;
 	private int numEvaluations;
-	private int numCourses;
-	private Student student;
+	private final int numCourses;
+	private final Student student;
 	
 	public StressClass(Array<Evaluation> evaluations, int numCourses, Student student){
 		this.student = student;

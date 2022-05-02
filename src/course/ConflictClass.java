@@ -6,34 +6,50 @@ public class ConflictClass implements Conflict {
 	private int numProfsConflict;
 	private int numStudentsConflict;
 
+
 	/**
 	 * Conflict Class constructor
-	 *
-	 * @param conflictType - the type of conflict
-	 * @param numProfsConflict - the number of professors in conflict
-	 * @param numStudentsConflict - the number of students in conflict
-	 * @pre conflictType != null
 	 */
-	public ConflictClass(String conflictType, int numProfsConflict, int numStudentsConflict) {
-		this.conflictType = conflictType;
-		this.numProfsConflict = numProfsConflict;
-		this.numStudentsConflict = numStudentsConflict;
+	public ConflictClass() {
+		this.conflictType = "free";
+		this.numProfsConflict = 0;
+		this.numStudentsConflict = 0;
 	}
-	
+
+	@Override
+	public void setConflictType(String conflictType) {
+		this.conflictType = conflictType;
+	}
+
 	@Override
 	public String getConflictType() {
 		return conflictType;
 	}
-	
+
+	@Override
+	public void addProfessorsConflict(int num) {
+		numProfsConflict += num;
+	}
+
 	@Override
 	public int getNumProfsConflict() {
 		return numProfsConflict;
 	}
 
 	@Override
+	public void addStudentsConflict(int num) {
+		numStudentsConflict += num;
+	}
+
+	@Override
 	public int getNumStudentsConflict() {
 		return numStudentsConflict;
 	}
+
+
+
+
+
 
 	
 

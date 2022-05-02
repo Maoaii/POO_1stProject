@@ -1,8 +1,6 @@
 package client;
 
 import course.Course;
-import course.Evaluation;
-import dataStructures.Array;
 import dataStructures.Iterator;
 
 public class ProfessorClass extends AbstractPersonClass implements Professor {

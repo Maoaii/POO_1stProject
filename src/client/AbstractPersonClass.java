@@ -10,7 +10,7 @@ import dataStructures.Iterator;
 abstract public class AbstractPersonClass implements Person {
 	
 	// Instance variables
-	private String name;
+	private final String name;
 	protected Array<Course> courses;
 	
 	/**
@@ -21,24 +21,24 @@ abstract public class AbstractPersonClass implements Person {
 	 */
 	public AbstractPersonClass(String name) {
 		this.name = name;
-		courses = new ArrayClass<Course>();
+		courses = new ArrayClass<>();
 	}
 	
 	@Override
 	public String getName() {
 		return name;
 	}
-	
-	@Override
-	public int getNumCourses() {
-		return courses.size();
-	}
-	
+
 	@Override
 	public void addCourse(Course course) {
 		courses.insertLast(course);
 	}
-	
+
+	@Override
+	public int getNumCourses() {
+		return courses.size();
+	}
+
 	@Override
 	public boolean isInCourse(String courseName) {
 		return courses.searchForward(new CourseClass(courseName));
@@ -52,10 +52,25 @@ abstract public class AbstractPersonClass implements Person {
 		}
 		return true;
 	}
+
+	@Override
+	public boolean hasDeadlines() {
+		Iterator<Course> courseIt = courses.iterator();
+		boolean found = false;
+
+		while (!found && courseIt.hasNext()) {
+			Course course = courseIt.next();
+
+			if (course.getDeadlinesSorted().hasNext())
+				found = true;
+		}
+
+		return found;
+	}
 	
 	@Override
 	public Iterator<Evaluation> getDeadlinesSorted() {
-		Array<Evaluation> deadlines = new ArrayClass<Evaluation>();
+		Array<Evaluation> deadlines = new ArrayClass<>();
 		
 		Iterator<Course> courseIt = courses.iterator();
 		
@@ -74,7 +89,7 @@ abstract public class AbstractPersonClass implements Person {
 
 	@Override
 	public Iterator<Evaluation> getTests(){
-		Array<Evaluation> tests = new ArrayClass<Evaluation>();
+		Array<Evaluation> tests = new ArrayClass<>();
 
 		Iterator<Course> courseIt = courses.iterator();
 
@@ -121,21 +136,6 @@ abstract public class AbstractPersonClass implements Person {
 		}
 		
 		return numConflicts;
-	}
-	
-	@Override
-	public boolean hasDeadlines() {
-		Iterator<Course> courseIt = courses.iterator();
-		boolean found = false;
-		
-		while (!found && courseIt.hasNext()) {
-			Course course = courseIt.next();
-			
-			if (course.getDeadlinesSorted().hasNext())
-				found = true;
-		}
-		
-		return found;
 	}
 	
 	@Override
